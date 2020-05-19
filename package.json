@@ -12,11 +12,36 @@
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-elements": "^2.0.0",
+    "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "babel-eslint": "^10.1.0",
     "babel-preset-expo": "~8.1.0",
-    "@babel/core": "^7.8.6"
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.4",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint",
+      "pretty-quick --staged",
+      "git add"
+    ]
   },
   "private": true
 }
