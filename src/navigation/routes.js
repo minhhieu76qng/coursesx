@@ -1,31 +1,32 @@
 import Login from 'screens/Authentication/Login';
 import Register from 'screens/Authentication/Register';
 import ForgotPassword from 'screens/Authentication/ForgotPassword';
+import routesName from 'constants/routesName';
 
 export default {
   login: {
-    name: 'Login',
+    name: routesName.login,
     component: Login,
     options: {
       headerShown: false,
     },
   },
   register: {
-    name: 'Register',
+    name: routesName.register,
     component: Register,
     options: {
       headerShown: false,
     },
   },
   forgotPassword: {
-    name: 'ForgotPassword',
+    name: routesName.forgotPassword,
     component: ForgotPassword,
     options: {
       headerShown: false,
     },
   },
   verifyAccount: {
-    name: 'VerifyAccount',
+    name: routesName.verifyAccount,
     component: ForgotPassword,
     options: {
       headerShown: false,

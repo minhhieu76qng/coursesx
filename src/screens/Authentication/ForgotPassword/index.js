@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { Text, Input, Button, Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'themes/Icon';
 import styles from 'screens/Authentication/styles';
 import AppLogo from 'components/AppLogo';
+import routesName from 'constants/routesName';
 
-const VerifyAccount = () => {
+const VerifyAccount = ({ navigation }) => {
   const { colors } = useTheme();
+  const onSignInPress = useCallback(() => navigation.navigate(routesName.login), [navigation]);
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -34,6 +36,7 @@ const VerifyAccount = () => {
           icon={
             <Icon name="user-plus" size={18} color={colors.primary} style={{ marginRight: 20 }} />
           }
+          onPress={onSignInPress}
         />
       </View>
     </View>

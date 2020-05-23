@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { Input, Button, Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'themes/Icon';
 import styles from 'screens/Authentication/styles';
 import AppLogo from 'components/AppLogo';
+import routesName from 'constants/routesName';
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const { colors } = useTheme();
+
+  const onForgotPasswordPress = useCallback(() => navigation.navigate(routesName.forgotPassword), [
+    navigation,
+  ]);
+
+  const onSignUpPress = useCallback(() => navigation.navigate(routesName.register), [navigation]);
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -35,6 +43,7 @@ const Login = () => {
           titleStyle={styles.outlineTitle}
           buttonStyle={styles.btnOutline}
           icon={<Icon name="key" size={18} color={colors.primary} style={{ marginRight: 20 }} />}
+          onPress={onForgotPasswordPress}
         />
 
         <Button
@@ -45,6 +54,7 @@ const Login = () => {
           icon={
             <Icon name="user-plus" size={18} color={colors.primary} style={{ marginRight: 20 }} />
           }
+          onPress={onSignUpPress}
         />
       </View>
     </View>

@@ -30,6 +30,7 @@
           ["screens", "./src/screens"],
           ["themes", "./src/themes"],
           ["assets", "./src/assets"],
+          ["constants", "./src/constants"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".json"]
       }

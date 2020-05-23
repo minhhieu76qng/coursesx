@@ -14,6 +14,7 @@ function babel(api) {
             '@themes': './themes',
             '@components': './components',
             '@assets': './assets',
+            '@constants': './constants',
           },
         },
       ],

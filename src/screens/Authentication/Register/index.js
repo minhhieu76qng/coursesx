@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Text, Input, Button, Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'themes/Icon';
 import styles from 'screens/Authentication/styles';
 import AppLogo from 'components/AppLogo';
+import routesName from 'constants/routesName';
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const { colors } = useTheme();
+  const onSignInPress = useCallback(() => navigation.navigate(routesName.login), [navigation]);
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView>
@@ -52,6 +54,7 @@ const Register = () => {
             icon={
               <Icon name="user-plus" size={18} color={colors.primary} style={{ marginRight: 20 }} />
             }
+            onPress={onSignInPress}
           />
         </View>
       </ScrollView>
