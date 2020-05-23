@@ -5,6 +5,9 @@ export default {
   forgotPassword: 'ForgotPassword',
   verifyAccount: 'VerifyAccount',
   home: 'Home',
+  downloads: 'Downloads',
+  browse: 'Browse',
+  search: 'Search',
 
   // tabs
   appHome: 'AppHome',

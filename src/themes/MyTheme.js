@@ -4,6 +4,8 @@ export const Dark = {
   card: 'rgb(255, 255, 255)',
   text: '#ecf0f1',
   border: 'rgb(199, 199, 204)',
+  tabBar: '#57606f',
+  tabBarIcon_Inactive: '#f1f2f6',
 };
 
 export const Light = {
@@ -12,4 +14,6 @@ export const Light = {
   card: 'rgb(255, 255, 255)',
   text: '#2f3640',
   border: 'rgb(199, 199, 204)',
+  tabBar: '#fff',
+  tabBarIcon_Inactive: '#a4b0be',
 };

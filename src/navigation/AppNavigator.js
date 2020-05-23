@@ -5,9 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Dark, Light } from 'themes/MyTheme';
 
 import { authRoutes, appTabRoutes } from 'routes';
-// import authRoutes from 'routes/authenticationRoutes';
-
-console.log(authRoutes);
 
 const Stack = createStackNavigator();
 

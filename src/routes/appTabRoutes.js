@@ -7,12 +7,14 @@ function getHeaderTitle(route) {
     : route.params?.screen || 'Home';
 
   switch (routeName) {
-    case 'Home':
+    case routesName.home:
       return 'Home';
-    case 'Downloads':
+    case routesName.downloads:
       return 'Downloads';
-    case 'Browse':
+    case routesName.browse:
       return 'Browse';
+    case routesName.search:
+      return 'Search';
     default:
       return '';
   }
