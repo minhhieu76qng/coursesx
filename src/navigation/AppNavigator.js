@@ -24,7 +24,7 @@ const AppNavigator = () => {
     <AppearanceProvider>
       <NavigationContainer theme={scheme === 'dark' ? customDark : customLight}>
         {/* <NavigationContainer theme={customDark}> */}
-        <Stack.Navigator initialRouteName={appTabRoutes.appHome.name}>
+        <Stack.Navigator initialRouteName={authRoutes.splash.name}>
           <Stack.Screen
             name={authRoutes.splash.name}
             component={authRoutes.splash.component}

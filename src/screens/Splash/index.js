@@ -28,7 +28,7 @@ const Splash = ({ navigation }) => {
 
   useEffect(() => {
     if (!loadingFont) {
-      navigation.navigate(routesName.login);
+      navigation.navigate(routesName.appHome);
     }
   }, [loadingFont]);
 

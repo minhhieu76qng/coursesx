@@ -1,11 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import AppLayout from 'layouts/AppLayout';
 
 const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <AppLayout>
+      <View>
+        <Text>Home</Text>
+      </View>
+    </AppLayout>
   );
 };
 

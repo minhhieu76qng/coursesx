@@ -26,6 +26,7 @@ export default {
     component: AppHome,
     options: ({ route }) => ({
       headerTitle: getHeaderTitle(route),
+      headerShown: false,
     }),
   },
 };
