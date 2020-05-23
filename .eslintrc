@@ -7,6 +7,7 @@
     }
   },
   "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
   "env": {
     "browser": true,
     "jest": true
@@ -17,5 +18,20 @@
     "react/jsx-filename-extension": ["off"],
     "react/prop-types": ["warn"],
     "no-return-assign": ["off"]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["components", "./src/components"],
+          ["layouts", "./src/layouts"],
+          ["navigation", "./src/navigation"],
+          ["services", "./src/services"],
+          ["screens", "./src/screens"],
+          ["themes", "./src/themes"],
+        ],
+        "extensions": [".ts", ".js", ".jsx", ".json"]
+      }
+    }
   }
 }

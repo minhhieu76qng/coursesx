@@ -1,13 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text } from 'react-native-elements';
+import AppNavigator from './src/navigation/AppNavigator';
 
 const App = () => {
-  return (
-    <View>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+  return <AppNavigator />;
 };
 
 export default App;
