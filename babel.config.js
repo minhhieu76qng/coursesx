@@ -13,6 +13,7 @@ function babel(api) {
             '@screens': './screens',
             '@themes': './themes',
             '@components': './components',
+            '@assets': './assets',
           },
         },
       ],

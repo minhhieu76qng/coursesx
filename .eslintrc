@@ -29,6 +29,7 @@
           ["services", "./src/services"],
           ["screens", "./src/screens"],
           ["themes", "./src/themes"],
+          ["assets", "./src/assets"],
         ],
         "extensions": [".ts", ".js", ".jsx", ".json"]
       }

@@ -24,7 +24,7 @@ const AppNavigator = () => {
     <AppearanceProvider>
       <NavigationContainer theme={scheme === 'dark' ? customDark : customLight}>
         {/* <NavigationContainer theme={customDark}> */}
-        <Stack.Navigator initialRouteName={routes.register.name}>
+        <Stack.Navigator initialRouteName={routes.login.name}>
           <Stack.Screen
             name={routes.login.name}
             component={routes.login.component}
@@ -34,6 +34,16 @@ const AppNavigator = () => {
             name={routes.register.name}
             component={routes.register.component}
             options={routes.register.options}
+          />
+          <Stack.Screen
+            name={routes.forgotPassword.name}
+            component={routes.forgotPassword.component}
+            options={routes.forgotPassword.options}
+          />
+          <Stack.Screen
+            name={routes.verifyAccount.name}
+            component={routes.verifyAccount.component}
+            options={routes.verifyAccount.options}
           />
         </Stack.Navigator>
       </NavigationContainer>

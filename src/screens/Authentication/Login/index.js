@@ -1,18 +1,19 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Input, Button, Divider } from 'react-native-elements';
+import { Input, Button, Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from './styles';
+import Icon from 'themes/Icon';
+import styles from 'screens/Authentication/styles';
+import AppLogo from 'components/AppLogo';
 
 const Login = () => {
   const { colors } = useTheme();
   return (
     <View style={styles.container}>
-      <View>
-        <Text>Logo</Text>
+      <View style={styles.logoContainer}>
+        <AppLogo />
       </View>
-      <View style={styles.loginForm}>
+      <View style={styles.form}>
         <Input
           labelStyle={styles.inputLabelStyle}
           inputStyle={{ color: colors.text }}

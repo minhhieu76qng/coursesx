@@ -2,8 +2,9 @@ import React from 'react';
 import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Text, Input, Button, Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from './styles';
+import Icon from 'themes/Icon';
+import styles from 'screens/Authentication/styles';
+import AppLogo from 'components/AppLogo';
 
 const Register = () => {
   const { colors } = useTheme();
@@ -11,7 +12,7 @@ const Register = () => {
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView>
         <View style={styles.logoContainer}>
-          <Text>Logo</Text>
+          <AppLogo />
         </View>
         <View style={styles.form}>
           <Text h3 style={{ ...styles.screenTitle, color: colors.text }}>
