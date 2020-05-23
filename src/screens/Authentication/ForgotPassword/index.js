@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import { Text, Input, Button, Divider } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'themes/Icon';
 import styles from 'screens/Authentication/styles';
 import AppLogo from 'components/AppLogo';
 import routesName from 'constants/routesName';
+import Text from 'components/Text';
+import Input from 'components/Input';
+import Button from 'components/Button';
 
 const VerifyAccount = ({ navigation }) => {
   const { colors } = useTheme();
@@ -16,7 +19,7 @@ const VerifyAccount = ({ navigation }) => {
         <AppLogo />
       </View>
       <View style={styles.form}>
-        <Text h3 style={{ ...styles.screenTitle, color: colors.text }}>
+        <Text type="h2" weight="medium" style={{ ...styles.screenTitle, color: colors.text }}>
           Forgot Password
         </Text>
         <Input

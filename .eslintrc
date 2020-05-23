@@ -14,10 +14,15 @@
   },
   "rules": {
     "max-len": ["error", { "code": 100 }],
+    "global-require": ["off"],
     "prefer-promise-reject-errors": ["off"],
+    "react/prop-types": ["off"],
     "react/jsx-filename-extension": ["off"],
-    "react/prop-types": ["warn"],
-    "no-return-assign": ["off"]
+    "no-return-assign": ["off"],
+    "react/jsx-props-no-spreading": [
+      "error",
+      { "exceptions": ["CustomText", "CustomInput", "CustomButton"] }
+    ]
   },
   "settings": {
     "import/resolver": {
