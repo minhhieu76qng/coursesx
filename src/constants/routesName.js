@@ -4,4 +4,8 @@ export default {
   register: 'Register',
   forgotPassword: 'ForgotPassword',
   verifyAccount: 'VerifyAccount',
+  home: 'Home',
+
+  // tabs
+  appHome: 'AppHome',
 };

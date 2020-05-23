@@ -15,6 +15,7 @@ function babel(api) {
             '@components': './components',
             '@assets': './assets',
             '@constants': './constants',
+            '@routes': './routes',
           },
         },
       ],
