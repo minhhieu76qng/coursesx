@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text as CustomText, StyleSheet } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 import colors from 'themes/colors';
 
 const styles = StyleSheet.create({
@@ -50,11 +51,12 @@ const weightMapping = {
 
 const StyledText = ({ type = 'body', color, size, weight, style, ...props }) => {
   const textWeight = type ? weight : weight || 'regular';
+  const { colors: themeColors } = useTheme();
   return (
     <CustomText
       style={[
         styles[type],
-        color ? { color: colors[color] || color } : {},
+        color ? { color: colors[color] || color } : { color: themeColors.text },
         size ? { fontSize: size } : {},
         textWeight ? { fontFamily: weightMapping[textWeight] } : {},
         style,

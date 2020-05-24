@@ -12,7 +12,7 @@ import styles from './styles';
 const Header = ({ paddingTop }) => {
   const route = useRoute();
   const scheme = useColorScheme();
-  const themeMode = useMemo(() => (scheme === 'dark' ? Dark : Light), [scheme, Dark, Light]);
+  const themeMode = useMemo(() => (scheme === 'light' ? Dark : Light), [scheme, Dark, Light]);
   return (
     <View style={{ ...styles.headerContainer, paddingTop, backgroundColor: themeMode.tabBar }}>
       {route && route.params?.backBtnVisibility === true && (
@@ -25,11 +25,7 @@ const Header = ({ paddingTop }) => {
           />
         </TouchableOpacity>
       )}
-      {route && route.name && (
-        <Text type="h3" color={themeMode.text}>
-          {route.name}
-        </Text>
-      )}
+      {route && route.name && <Text type="h3">{route.name}</Text>}
       <View style={styles.rightWidgets}>
         <TouchableOpacity>
           <Avatar

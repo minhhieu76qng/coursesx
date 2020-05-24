@@ -23,28 +23,10 @@ const Register = ({ navigation }) => {
           <Text type="h2" weight="medium" style={{ ...styles.screenTitle, color: colors.text }}>
             Sign Up
           </Text>
-          <Input
-            labelStyle={styles.inputLabelStyle}
-            inputStyle={{ color: colors.text }}
-            label="Username"
-          />
-          <Input
-            labelStyle={styles.inputLabelStyle}
-            inputStyle={{ color: colors.text }}
-            label="Email"
-          />
-          <Input
-            labelStyle={styles.inputLabelStyle}
-            inputStyle={{ color: colors.text }}
-            secureTextEntry
-            label="Password"
-          />
-          <Input
-            labelStyle={styles.inputLabelStyle}
-            inputStyle={{ color: colors.text }}
-            secureTextEntry
-            label="Confirm password"
-          />
+          <Input labelStyle={styles.inputLabelStyle} label="Username" />
+          <Input labelStyle={styles.inputLabelStyle} label="Email" />
+          <Input labelStyle={styles.inputLabelStyle} secureTextEntry label="Password" />
+          <Input labelStyle={styles.inputLabelStyle} secureTextEntry label="Confirm password" />
           <Button title="Sign up" titleStyle={styles.btnSubmitTitle} />
 
           <Divider style={{ ...styles.divider, backgroundColor: colors.text }} />

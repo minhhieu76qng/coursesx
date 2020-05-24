@@ -10,7 +10,7 @@ import Text from 'components/Text';
 import Input from 'components/Input';
 import Button from 'components/Button';
 
-const VerifyAccount = ({ navigation }) => {
+const ForgotPassword = ({ navigation }) => {
   const { colors } = useTheme();
   const onSignInPress = useCallback(() => navigation.navigate(routesName.login), [navigation]);
   return (
@@ -19,17 +19,13 @@ const VerifyAccount = ({ navigation }) => {
         <AppLogo />
       </View>
       <View style={styles.form}>
-        <Text type="h2" weight="medium" style={{ ...styles.screenTitle, color: colors.text }}>
+        <Text type="h2" weight="medium" style={styles.screenTitle}>
           Forgot Password
         </Text>
-        <Input
-          labelStyle={styles.inputLabelStyle}
-          inputStyle={{ color: colors.text }}
-          label="Email"
-        />
+        <Input labelStyle={styles.inputLabelStyle} label="Email" />
         <Button title="Submit" titleStyle={styles.btnSubmitTitle} />
 
-        <Divider style={{ ...styles.divider, backgroundColor: colors.text }} />
+        <Divider style={[styles.divider, { backgroundColor: colors.text }]} />
 
         <Button
           title="Sign in now"
@@ -46,4 +42,4 @@ const VerifyAccount = ({ navigation }) => {
   );
 };
 
-export default VerifyAccount;
+export default ForgotPassword;

@@ -8,10 +8,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const StyledButton = ({ style, titleStyle, ...props }) => {
+const StyledButton = ({ style, titleStyle, type = 'solid', ...props }) => {
   return (
     <CustomButton
-      titleStyle={{ ...styles.buttonStyle, ...titleStyle }}
+      type={type}
+      titleStyle={[styles.buttonStyle, titleStyle]}
       style={styles.buttonStyle}
       {...props}
     />

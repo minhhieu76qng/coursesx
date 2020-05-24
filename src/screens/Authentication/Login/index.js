@@ -25,20 +25,11 @@ const Login = ({ navigation }) => {
         <AppLogo />
       </View>
       <View style={styles.form}>
-        <Text type="h2" weight="medium" style={{ ...styles.screenTitle, color: colors.text }}>
+        <Text type="h2" weight="medium" style={styles.screenTitle}>
           Log In
         </Text>
-        <Input
-          labelStyle={styles.inputLabelStyle}
-          inputStyle={{ color: colors.text }}
-          label="Username"
-        />
-        <Input
-          labelStyle={styles.inputLabelStyle}
-          inputStyle={{ color: colors.text }}
-          secureTextEntry
-          label="Password"
-        />
+        <Input labelStyle={styles.inputLabelStyle} label="Username" />
+        <Input labelStyle={styles.inputLabelStyle} secureTextEntry label="Password" />
         <Button title="Sign in" titleStyle={styles.btnSubmitTitle} />
 
         <Divider style={{ ...styles.divider, backgroundColor: colors.text }} />

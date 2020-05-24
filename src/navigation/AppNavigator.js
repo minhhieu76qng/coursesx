@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Dark, Light } from 'themes/MyTheme';
+import { getThemeMode } from 'getters/inApp';
+import { themeMode } from 'constants';
 
 import { authRoutes, appTabRoutes } from 'routes';
 
@@ -19,10 +22,21 @@ const customLight = {
 };
 
 const AppNavigator = () => {
+  const currentTheme = useSelector(getThemeMode) || null;
   const scheme = useColorScheme();
+  const theme = useMemo(() => {
+    if (currentTheme === themeMode.dark) {
+      return customDark;
+    }
+    if (currentTheme === themeMode.light) {
+      return customLight;
+    }
+
+    return scheme === 'dark' ? customDark : customLight;
+  }, [currentTheme, customDark, customLight]);
   return (
     <AppearanceProvider>
-      <NavigationContainer theme={scheme === 'dark' ? customDark : customLight}>
+      <NavigationContainer theme={theme}>
         {/* <NavigationContainer theme={customDark}> */}
         <Stack.Navigator initialRouteName={authRoutes.splash.name}>
           <Stack.Screen

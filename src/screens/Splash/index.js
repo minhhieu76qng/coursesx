@@ -1,6 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { View, Dimensions } from 'react-native';
-import { Text } from 'react-native-elements';
 import * as Font from 'expo-font';
 import AppLogo from 'components/AppLogo';
 import routesName from 'constants/routesName';
@@ -28,7 +27,9 @@ const Splash = ({ navigation }) => {
 
   useEffect(() => {
     if (!loadingFont) {
-      navigation.navigate(routesName.appHome);
+      setTimeout(() => {
+        navigation.navigate(routesName.login);
+      }, 5000);
     }
   }, [loadingFont]);
 
@@ -37,9 +38,6 @@ const Splash = ({ navigation }) => {
   return (
     <View style={styles.splashContainer}>
       <AppLogo width={logoWidth} />
-      <Text h4 style={styles.loadingText}>
-        App Booting ...
-      </Text>
     </View>
   );
 };
