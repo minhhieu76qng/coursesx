@@ -44,26 +44,38 @@ const AppHome = () => {
   }, [scheme, Dark, Light]);
 
   return (
-    <Tab.Navigator screenOptions={screenOptions} tabBarOptions={tabBarOptions}>
+    <Tab.Navigator
+      screenOptions={screenOptions}
+      tabBarOptions={{
+        ...tabBarOptions,
+        labelStyle: {
+          fontFamily: 'Quicksand-Medium',
+        },
+      }}
+    >
       <Tab.Screen
         name={appHomeRoutes.home.name}
         component={appHomeRoutes.home.component}
         options={appHomeRoutes.home.options}
+        initialParams={appHomeRoutes.home.initialParams}
       />
       <Tab.Screen
         name={appHomeRoutes.downloads.name}
         component={appHomeRoutes.downloads.component}
         options={appHomeRoutes.downloads.options}
+        initialParams={appHomeRoutes.downloads.initialParams}
       />
       <Tab.Screen
         name={appHomeRoutes.browse.name}
         component={appHomeRoutes.browse.component}
         options={appHomeRoutes.browse.options}
+        initialParams={appHomeRoutes.downloads.initialParams}
       />
       <Tab.Screen
         name={appHomeRoutes.search.name}
         component={appHomeRoutes.search.component}
         options={appHomeRoutes.search.options}
+        initialParams={appHomeRoutes.downloads.initialParams}
       />
     </Tab.Navigator>
   );

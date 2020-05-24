@@ -15,14 +15,16 @@ const Header = ({ paddingTop }) => {
   const themeMode = useMemo(() => (scheme === 'dark' ? Dark : Light), [scheme, Dark, Light]);
   return (
     <View style={{ ...styles.headerContainer, paddingTop, backgroundColor: themeMode.tabBar }}>
-      <TouchableOpacity style={styles.backButton}>
-        <Icon
-          name="angle-left"
-          size={40}
-          color={Colors.blueSky}
-          style={{ marginLeft: -5, marginTop: -2 }}
-        />
-      </TouchableOpacity>
+      {route && route.params?.backBtnVisibility === true && (
+        <TouchableOpacity style={styles.backButton}>
+          <Icon
+            name="angle-left"
+            size={40}
+            color={Colors.blueSky}
+            style={{ marginLeft: -5, marginTop: -2 }}
+          />
+        </TouchableOpacity>
+      )}
       {route && route.name && (
         <Text type="h3" color={themeMode.text}>
           {route.name}
@@ -30,7 +32,13 @@ const Header = ({ paddingTop }) => {
       )}
       <View style={styles.rightWidgets}>
         <TouchableOpacity>
-          <Avatar containerStyle={{ backgroundColor: 'red' }} rounded title="MD" size="small" />
+          <Avatar
+            containerStyle={{ backgroundColor: 'red' }}
+            rounded
+            title="MD"
+            size="small"
+            titleStyle={styles.avatarTitle}
+          />
         </TouchableOpacity>
       </View>
     </View>

@@ -1,11 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import AppLayout from 'layouts/AppLayout';
 
 const Downloads = () => {
   return (
-    <View>
-      <Text>Downloads</Text>
-    </View>
+    <AppLayout>
+      <View>
+        <Text>Downloads</Text>
+      </View>
+    </AppLayout>
   );
 };
 

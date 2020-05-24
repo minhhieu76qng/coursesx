@@ -9,6 +9,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: 5,
+    paddingHorizontal: 15,
   },
   backButton: {
     width: 40,
@@ -17,10 +18,11 @@ export default StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 5,
   },
   rightWidgets: {
     minWidth: 40,
-    marginRight: 5,
+  },
+  avatarTitle: {
+    fontFamily: 'Quicksand-Regular',
   },
 });
