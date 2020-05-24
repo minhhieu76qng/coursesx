@@ -13,12 +13,14 @@ const Stack = createStackNavigator();
 
 const customDark = {
   ...DarkTheme,
-  colors: { ...Dark },
+  // colors: { ...Dark },
+  ...Dark,
 };
 
 const customLight = {
   ...DefaultTheme,
-  colors: { ...Light },
+  // colors: { ...Light },
+  ...Light,
 };
 
 const AppNavigator = () => {

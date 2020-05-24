@@ -2,7 +2,7 @@ import themeMode from 'constants/themeMode';
 import { SET_THEME } from 'actions/inApp';
 
 const initialState = {
-  themeMode: themeMode.light,
+  themeMode: themeMode.dark,
 };
 
 function inApp(state = initialState, action) {

@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
 import Icon from 'themes/Icon';
-import { useColorScheme } from 'react-native-appearance';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import routesName from 'constants/routesName';
 import appHomeRoutes from 'routes/appHomeRoutes';
-import { Dark, Light } from 'themes/MyTheme';
+import { useTheme } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,14 +33,13 @@ const screenOptions = ({ route }) => ({
 });
 
 const AppHome = () => {
-  const scheme = useColorScheme();
+  const { colors } = useTheme();
   const tabBarOptions = useMemo(() => {
-    const colors = scheme === 'dark' ? Dark : Light;
     return {
       inactiveTintColor: colors.tabBarIcon_Inactive,
       style: { backgroundColor: colors.tabBar, paddingTop: 10 },
     };
-  }, [scheme, Dark, Light]);
+  }, [colors]);
 
   return (
     <Tab.Navigator

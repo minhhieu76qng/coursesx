@@ -1,5 +1,6 @@
 import Home from 'screens/AppHome/Home';
 import Downloads from 'screens/AppHome/Downloads';
+import Browse from 'screens/AppHome/Browse';
 import routesName from 'constants/routesName';
 
 export default {
@@ -19,7 +20,7 @@ export default {
   },
   browse: {
     name: routesName.browse,
-    component: Downloads,
+    component: Browse,
     initialParams: {
       backBtnVisibility: false,
     },

@@ -29,7 +29,7 @@ const Splash = ({ navigation }) => {
     if (!loadingFont) {
       setTimeout(() => {
         navigation.navigate(routesName.appHome);
-      }, 5000);
+      }, 2000);
     }
   }, [loadingFont]);
 

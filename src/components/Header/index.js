@@ -11,7 +11,13 @@ const Header = ({ paddingTop }) => {
   const route = useRoute();
   const { colors } = useTheme();
   return (
-    <View style={{ ...styles.headerContainer, paddingTop, backgroundColor: colors.tabBar }}>
+    <View
+      style={{
+        ...styles.headerContainer,
+        paddingTop,
+        backgroundColor: colors.tabBar,
+      }}
+    >
       {route && route.params?.backBtnVisibility === true && (
         <TouchableOpacity style={styles.backButton}>
           <Icon
