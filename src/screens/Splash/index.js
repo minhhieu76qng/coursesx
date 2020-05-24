@@ -28,7 +28,7 @@ const Splash = ({ navigation }) => {
   useEffect(() => {
     if (!loadingFont) {
       setTimeout(() => {
-        navigation.navigate(routesName.login);
+        navigation.navigate(routesName.appHome);
       }, 5000);
     }
   }, [loadingFont]);

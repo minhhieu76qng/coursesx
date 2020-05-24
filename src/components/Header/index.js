@@ -1,20 +1,17 @@
-import React, { useMemo } from 'react';
-import { useColorScheme } from 'react-native-appearance';
+import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useTheme } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
 import Icon from 'themes/Icon';
 import Colors from 'themes/colors';
 import Text from 'components/Text';
-import { Dark, Light } from 'themes/MyTheme';
 import styles from './styles';
 
 const Header = ({ paddingTop }) => {
   const route = useRoute();
-  const scheme = useColorScheme();
-  const themeMode = useMemo(() => (scheme === 'light' ? Dark : Light), [scheme, Dark, Light]);
+  const { colors } = useTheme();
   return (
-    <View style={{ ...styles.headerContainer, paddingTop, backgroundColor: themeMode.tabBar }}>
+    <View style={{ ...styles.headerContainer, paddingTop, backgroundColor: colors.tabBar }}>
       {route && route.params?.backBtnVisibility === true && (
         <TouchableOpacity style={styles.backButton}>
           <Icon
