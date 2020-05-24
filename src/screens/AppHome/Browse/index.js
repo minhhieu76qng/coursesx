@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import CategoryItem from 'components/CategoryItem';
 import AppLayout from 'layouts/AppLayout';
 import styles from './styles';
@@ -22,6 +22,42 @@ const Browse = () => {
           title="RECOMMEND FOR YOU"
           background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
         />
+
+        <ScrollView horizontal style={styles.categoryList}>
+          <View style={styles.categoryItemContainer}>
+            <CategoryItem
+              title="Software Development"
+              background="https://miro.medium.com/max/2560/1*Rc3ff_4T_ZeAPGiU9ai9nw.png"
+            />
+            <CategoryItem
+              style={styles.category2ndItem}
+              title="IT Ops"
+              background="https://miro.medium.com/max/2700/0*Wz93rPzLLTq1VwVW"
+            />
+          </View>
+          <View style={styles.categoryItemContainer}>
+            <CategoryItem
+              title="Data Professional"
+              background="https://miro.medium.com/max/1200/1*0wCRD_rBsvtksdVc69NZog.png"
+            />
+            <CategoryItem
+              style={styles.category2ndItem}
+              title="Business Professional"
+              background="https://miro.medium.com/max/5760/1*CdmOkpEVHZ8TXA9tvtlvXA@2x.png"
+            />
+          </View>
+          <View style={styles.categoryItemContainer}>
+            <CategoryItem
+              title="Creative Professional"
+              background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
+            />
+            <CategoryItem
+              style={styles.category2ndItem}
+              title="Certifications"
+              background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
+            />
+          </View>
+        </ScrollView>
 
         {/* recommend for you */}
 

@@ -8,8 +8,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   imageStyle: {
-    opacity: 0.5,
-    backgroundColor: '#000',
+    opacity: 0.6,
+    // backgroundColor: '#000',
     width: '100%',
     minHeight: 130,
     maxHeight: 150,
