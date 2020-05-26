@@ -24,7 +24,7 @@ const CategoryItem = ({
         style={styles.imageStyle}
         PlaceholderContent={<LogoLoadingIndicator logoWidth={130} indicatorSize="large" />}
       />
-      {title && (
+      {imageLoaded && title && (
         <Animatable.View animation="bounceIn" delay={200} duration={800} style={styles.textWrapper}>
           <Text style={[styles.text, titleStyle]} color="#fff" type="h2" weight="bold">
             {title}

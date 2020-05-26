@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
 import CategoryItem from 'components/CategoryItem';
 import AppLayout from 'layouts/AppLayout';
+import Section from 'components/Section';
+import Badge from 'components/Badge';
 import styles from './styles';
 
 const Browse = () => {
+  const listPopulateSkills = useMemo(
+    () => [
+      { id: 1, name: 'Angular' },
+      { id: 2, name: 'JavaScript' },
+      { id: 3, name: 'C#' },
+      { id: 4, name: 'Java' },
+      { id: 5, name: 'ASP.Net' },
+    ],
+    [],
+  );
   return (
     <AppLayout>
       <ScrollView style={styles.container}>
@@ -16,14 +28,14 @@ const Browse = () => {
             'RpTe7c65J8-ZEX5hrp7j6JG38tNnIEqJ_mvAeYe-Gu14JNy7pg&usqp=CAU'
           }
         />
-
+        {/* recommend for you */}
         <CategoryItem
           style={{ marginTop: 10 }}
           title="RECOMMEND FOR YOU"
           background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
         />
-
-        <ScrollView horizontal style={styles.categoryList}>
+        {/* scrollview list of categories */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryList}>
           <View style={styles.categoryItemContainer}>
             <CategoryItem
               title="Software Development"
@@ -59,11 +71,21 @@ const Browse = () => {
           </View>
         </ScrollView>
 
-        {/* recommend for you */}
-
-        {/* scrollview list of categories */}
-
         {/* popular skills */}
+        <Section sectionTitle="Paths" onSeeAllPress={() => {}}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {listPopulateSkills &&
+              listPopulateSkills.map((skill) => (
+                <Badge
+                  key={skill.id}
+                  id={skill.id}
+                  text={skill.name}
+                  wrapperStyle={{ marginRight: 10 }}
+                  badgePress={() => {}}
+                />
+              ))}
+          </ScrollView>
+        </Section>
 
         {/* path */}
 
