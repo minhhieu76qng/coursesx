@@ -3,7 +3,7 @@ export const Dark = {
   colors: {
     primary: '#3498db',
     background: '#353b48',
-    card: 'rgb(255, 255, 255)',
+    card: '#1e272e',
     // text: '#ecf0f1',
     text: '#fff',
     textSecondary: '#b2bec3',
@@ -18,7 +18,7 @@ export const Light = {
   colors: {
     primary: '#3498db',
     background: '#f5f6fa',
-    card: 'rgb(255, 255, 255)',
+    card: '#2f3640',
     text: '#2f3640',
     textSecondary: '#535c68',
     border: 'rgb(199, 199, 204)',
