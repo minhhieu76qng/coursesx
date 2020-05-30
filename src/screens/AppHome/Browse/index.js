@@ -5,6 +5,7 @@ import AppLayout from 'layouts/AppLayout';
 import Section from 'components/Section';
 import Badge from 'components/Badge';
 import Card from 'components/Card';
+import Avatar from 'components/Avatar';
 import styles from './styles';
 
 const cardWidth = ((Dimensions.get('window').width - 10 * 2 - 15) * 2) / 3;
@@ -54,6 +55,68 @@ const Browse = () => {
       },
     ];
   }, []);
+
+  const authors = useMemo(() => {
+    return [
+      {
+        id: 1,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+      {
+        id: 2,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+      {
+        id: 3,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+      {
+        id: 4,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+      {
+        id: 5,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+      {
+        id: 6,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+      {
+        id: 7,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+      {
+        id: 8,
+        authorName: 'Hieu Do',
+        authorAvatar:
+          'https://image.freepik.com/free-vector/businessman-character-' +
+          'avatar-icon-vector-illustration-design_24877-18271.jpg',
+      },
+    ];
+  }, []);
+
   return (
     <AppLayout>
       <View style={styles.container}>
@@ -145,6 +208,21 @@ const Browse = () => {
             />
           </Section>
           {/* top authors */}
+          <Section sectionTitle="Authors" onSeeAllPress={() => {}}>
+            <FlatList
+              data={authors}
+              keyExtractor={(path) => `${path.id}`}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <Avatar
+                  userName={item.authorName}
+                  userAvatar={item.authorAvatar}
+                  onAvatarPress={null}
+                />
+              )}
+            />
+          </Section>
         </ScrollView>
       </View>
     </AppLayout>
