@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
-import { ScrollView, FlatList, View } from 'react-native';
+import { ScrollView, FlatList, View, Dimensions } from 'react-native';
 import CategoryItem from 'components/CategoryItem';
 import AppLayout from 'layouts/AppLayout';
 import Section from 'components/Section';
 import Badge from 'components/Badge';
+import Card from 'components/Card';
 import styles from './styles';
-// import Card from '../../../components/Card';
+
+const cardWidth = ((Dimensions.get('window').width - 10 * 2 - 15) * 2) / 3;
 
 const Browse = () => {
   const listPopulateSkills = useMemo(
@@ -18,6 +20,40 @@ const Browse = () => {
     ],
     [],
   );
+  const listPaths = useMemo(() => {
+    return [
+      {
+        id: 1,
+        name: 'C# Unity Testing with xUnit',
+        descriptions: ['3 courses'],
+        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
+      },
+      {
+        id: 2,
+        name: 'Java Fundamental',
+        descriptions: ['3 courses'],
+        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
+      },
+      {
+        id: 3,
+        name: 'JavaScript Crash Course',
+        descriptions: ['3 courses'],
+        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
+      },
+      {
+        id: 4,
+        name: 'Deep dive to React Hooks',
+        descriptions: ['3 courses'],
+        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
+      },
+      {
+        id: 5,
+        name: 'NodeJS + React native + GraphQL - create a movie app',
+        descriptions: ['3 courses'],
+        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
+      },
+    ];
+  }, []);
   return (
     <AppLayout>
       <View style={styles.container}>
@@ -92,23 +128,23 @@ const Browse = () => {
           </Section>
 
           {/* path */}
-          {/* <Section sectionTitle="Paths" onSeeAllPress={() => {}}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {listPopulateSkills &&
-                listPopulateSkills.map((skill) => (
-                  <Badge
-                    key={skill.id}
-                    id={skill.id}
-                    text={skill.name}
-                    wrapperStyle={{ marginRight: 10 }}
-                    badgePress={() => {}}
-                  />
-                ))}
-            </ScrollView>
-          </Section> */}
+          <Section sectionTitle="Paths" onSeeAllPress={() => {}}>
+            <FlatList
+              data={listPaths}
+              keyExtractor={(path) => `${path.id}`}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <Card
+                  width={cardWidth}
+                  cardTitle={item.name}
+                  cardDescriptions={item.descriptions}
+                  cardImage={item.image}
+                />
+              )}
+            />
+          </Section>
           {/* top authors */}
-
-          {/* <Card /> */}
         </ScrollView>
       </View>
     </AppLayout>
