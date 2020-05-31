@@ -33,6 +33,7 @@
           ["navigation", "./src/navigation"],
           ["services", "./src/services"],
           ["screens", "./src/screens"],
+          ["views", "./src/views"],
           ["themes", "./src/themes"],
           ["assets", "./src/assets"],
           ["constants", "./src/constants"],

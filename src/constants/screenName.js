@@ -10,5 +10,11 @@ export default {
   search: 'Search',
 
   // tabs
-  appHome: 'AppHome',
+  mainTab: 'MainTab',
+
+  // tab
+  homeTab: 'HomeTab',
+  downloadsTab: 'DownloadsTab',
+  browseTab: 'BrowseTab',
+  searchTab: 'SearchTab',
 };

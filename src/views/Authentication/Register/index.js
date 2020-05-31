@@ -3,16 +3,16 @@ import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'themes/Icon';
-import styles from 'screens/Authentication/styles';
+import styles from 'views/Authentication/styles';
 import AppLogo from 'components/AppLogo';
-import routesName from 'constants/routesName';
+import screenName from 'constants/screenName';
 import Text from 'components/Text';
 import Input from 'components/Input';
 import Button from 'components/Button';
 
 const Register = ({ navigation }) => {
   const { colors } = useTheme();
-  const onSignInPress = useCallback(() => navigation.navigate(routesName.login), [navigation]);
+  const onSignInPress = useCallback(() => navigation.navigate(screenName.login), [navigation]);
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView>

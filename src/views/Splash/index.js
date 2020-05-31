@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useState } from 'react';
 import { View, Dimensions } from 'react-native';
 import * as Font from 'expo-font';
 import AppLogo from 'components/AppLogo';
-import routesName from 'constants/routesName';
+import screenName from 'constants/screenName';
 import styles from './styles';
 
 const Splash = ({ navigation }) => {
@@ -28,7 +28,7 @@ const Splash = ({ navigation }) => {
   useEffect(() => {
     if (!loadingFont) {
       setTimeout(() => {
-        navigation.navigate(routesName.appHome);
+        navigation.navigate(screenName.mainTab);
       }, 2000);
     }
   }, [loadingFont]);

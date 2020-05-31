@@ -1,4 +1,4 @@
-import routesName from './routesName';
+import screenName from './screenName';
 import themeMode from './themeMode';
 
-export { routesName, themeMode };
+export { screenName, themeMode };

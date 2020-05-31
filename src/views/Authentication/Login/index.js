@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 import Icon from 'themes/Icon';
-import styles from 'screens/Authentication/styles';
+import styles from 'views/Authentication/styles';
 import AppLogo from 'components/AppLogo';
-import routesName from 'constants/routesName';
+import screenName from 'constants/screenName';
 import Text from 'components/Text';
 import Input from 'components/Input';
 import Button from 'components/Button';
@@ -13,11 +13,11 @@ import Button from 'components/Button';
 const Login = ({ navigation }) => {
   const { colors } = useTheme();
 
-  const onForgotPasswordPress = useCallback(() => navigation.navigate(routesName.forgotPassword), [
+  const onForgotPasswordPress = useCallback(() => navigation.navigate(screenName.forgotPassword), [
     navigation,
   ]);
 
-  const onSignUpPress = useCallback(() => navigation.navigate(routesName.register), [navigation]);
+  const onSignUpPress = useCallback(() => navigation.navigate(screenName.register), [navigation]);
 
   return (
     <View style={styles.container}>

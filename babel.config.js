@@ -11,6 +11,7 @@ function babel(api) {
             '@navigation': './navigation',
             '@services': './services',
             '@screens': './screens',
+            '@views': './views',
             '@themes': './themes',
             '@components': './components',
             '@assets': './assets',

@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useRoute, useTheme } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
+import _ from 'lodash';
 import Icon from 'themes/Icon';
 import Colors from 'themes/colors';
 import Text from 'components/Text';
 import styles from './styles';
 
 const Header = ({ paddingTop }) => {
-  const {
-    params: { header },
-  } = useRoute();
+  const route = useRoute();
+
+  const header = useMemo(() => {
+    return _.get(route, 'params.header');
+  }, [route]);
+
   const { colors } = useTheme();
   return (
     <View

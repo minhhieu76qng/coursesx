@@ -6,20 +6,23 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Dark, Light } from 'themes/MyTheme';
 import { getThemeMode } from 'getters/inApp';
 import { themeMode } from 'constants';
+import screenName from 'constants/screenName';
+import Splash from 'views/Splash';
+import Login from 'views/Authentication/Login';
+import ForgotPassword from 'views/Authentication/ForgotPassword';
+import Register from 'views/Authentication/Register';
+// import VerifyAccount from 'views/Authentication/VerifyAccount';
+import MainTab from './MainTab';
 
-import { authRoutes, appTabRoutes } from 'routes';
-
-const Stack = createStackNavigator();
+const RootStack = createStackNavigator();
 
 const customDark = {
   ...DarkTheme,
-  // colors: { ...Dark },
   ...Dark,
 };
 
 const customLight = {
   ...DefaultTheme,
-  // colors: { ...Light },
   ...Light,
 };
 
@@ -39,39 +42,51 @@ const AppNavigator = () => {
   return (
     <AppearanceProvider>
       <NavigationContainer theme={theme}>
-        {/* <NavigationContainer theme={customDark}> */}
-        <Stack.Navigator initialRouteName={authRoutes.splash.name}>
-          <Stack.Screen
-            name={authRoutes.splash.name}
-            component={authRoutes.splash.component}
-            options={authRoutes.splash.options}
+        <RootStack.Navigator initialRouteName={screenName.splash}>
+          <RootStack.Screen
+            name={screenName.splash}
+            component={Splash}
+            options={{
+              headerShown: false,
+            }}
           />
-          <Stack.Screen
-            name={authRoutes.login.name}
-            component={authRoutes.login.component}
-            options={authRoutes.login.options}
+          <RootStack.Screen
+            name={screenName.login}
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
           />
-          <Stack.Screen
-            name={authRoutes.register.name}
-            component={authRoutes.register.component}
-            options={authRoutes.register.options}
+          <RootStack.Screen
+            name={screenName.register}
+            component={Register}
+            options={{
+              headerShown: false,
+            }}
           />
-          <Stack.Screen
-            name={authRoutes.forgotPassword.name}
-            component={authRoutes.forgotPassword.component}
-            options={authRoutes.forgotPassword.options}
+          <RootStack.Screen
+            name={screenName.forgotPassword}
+            component={ForgotPassword}
+            options={{
+              headerShown: false,
+            }}
           />
-          <Stack.Screen
-            name={authRoutes.verifyAccount.name}
-            component={authRoutes.verifyAccount.component}
-            options={authRoutes.verifyAccount.options}
+          {/* <RootStack.Screen
+            name={screenName.verifyAccount}
+            component={VerifyAccount}
+            options={{
+              headerShown: false,
+            }}
+          /> */}
+
+          <RootStack.Screen
+            name={screenName.mainTab}
+            component={MainTab}
+            options={{
+              headerShown: false,
+            }}
           />
-          <Stack.Screen
-            name={appTabRoutes.appHome.name}
-            component={appTabRoutes.appHome.component}
-            options={appTabRoutes.appHome.options}
-          />
-        </Stack.Navigator>
+        </RootStack.Navigator>
       </NavigationContainer>
     </AppearanceProvider>
   );
