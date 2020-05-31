@@ -67,13 +67,13 @@ const AppHome = () => {
         name={appHomeRoutes.browse.name}
         component={appHomeRoutes.browse.component}
         options={appHomeRoutes.browse.options}
-        initialParams={appHomeRoutes.downloads.initialParams}
+        initialParams={appHomeRoutes.browse.initialParams}
       />
       <Tab.Screen
         name={appHomeRoutes.search.name}
         component={appHomeRoutes.search.component}
         options={appHomeRoutes.search.options}
-        initialParams={appHomeRoutes.downloads.initialParams}
+        initialParams={appHomeRoutes.search.initialParams}
       />
     </Tab.Navigator>
   );

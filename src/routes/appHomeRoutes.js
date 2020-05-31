@@ -8,28 +8,40 @@ export default {
     name: routesName.home,
     component: Home,
     initialParams: {
-      backBtnVisibility: false,
+      header: {
+        backBtnVisibility: false,
+        headerTitle: 'Home',
+      },
     },
   },
   downloads: {
     name: routesName.downloads,
     component: Downloads,
     initialParams: {
-      backBtnVisibility: false,
+      header: {
+        backBtnVisibility: false,
+        headerTitle: 'Downloads',
+      },
     },
   },
   browse: {
     name: routesName.browse,
     component: Browse,
     initialParams: {
-      backBtnVisibility: false,
+      header: {
+        backBtnVisibility: false,
+        headerTitle: 'Browse',
+      },
     },
   },
   search: {
     name: routesName.search,
     component: Downloads,
     initialParams: {
-      backBtnVisibility: false,
+      header: {
+        backBtnVisibility: false,
+        headerTitle: 'Search',
+      },
     },
   },
 };

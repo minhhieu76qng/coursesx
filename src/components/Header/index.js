@@ -8,7 +8,9 @@ import Text from 'components/Text';
 import styles from './styles';
 
 const Header = ({ paddingTop }) => {
-  const route = useRoute();
+  const {
+    params: { header },
+  } = useRoute();
   const { colors } = useTheme();
   return (
     <View
@@ -18,7 +20,7 @@ const Header = ({ paddingTop }) => {
         backgroundColor: colors.tabBar,
       }}
     >
-      {route && route.params?.backBtnVisibility === true && (
+      {header && header?.backBtnVisibility === true && (
         <TouchableOpacity style={styles.backButton}>
           <Icon
             name="angle-left"
@@ -28,7 +30,7 @@ const Header = ({ paddingTop }) => {
           />
         </TouchableOpacity>
       )}
-      {route && route.name && <Text type="h3">{route.name}</Text>}
+      {header && header?.headerTitle && <Text type="h3">{header?.headerTitle}</Text>}
       <View style={styles.rightWidgets}>
         <TouchableOpacity>
           <Avatar
