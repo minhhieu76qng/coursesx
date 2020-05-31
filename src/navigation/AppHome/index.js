@@ -16,7 +16,7 @@ const screenOptions = ({ route }) => ({
         iconName = 'home';
         break;
       case routesName.downloads:
-        iconName = 'download';
+        iconName = 'arrow-circle-o-down';
         break;
       case routesName.browse:
         iconName = 'list';
