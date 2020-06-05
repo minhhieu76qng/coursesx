@@ -193,6 +193,7 @@ const Browse = () => {
           {/* path */}
           <Section sectionTitle="Paths" onSeeAllPress={() => {}}>
             <FlatList
+              contentContainerStyle={{ padding: 5 }}
               data={listPaths}
               keyExtractor={(path) => `${path.id}`}
               horizontal

@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 import { Image } from 'react-native-elements';
 import Text from 'components/Text';
 import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
+import IconButton from 'components/IconButton';
 import styles from './styles';
-import IconButton from '../IconButton';
 
 const CourseListItem = ({ courseData }) => {
+  const { colors } = useTheme();
+
   const {
     courseName = '',
     author = '',
@@ -18,7 +21,7 @@ const CourseListItem = ({ courseData }) => {
     // ratingCount = 0,
   } = courseData;
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={[styles.container, { backgroundColor: colors.card }]}>
       <View style={styles.leftBox}>
         <Image
           style={styles.courseImage}

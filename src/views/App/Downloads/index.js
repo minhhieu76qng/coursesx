@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 // import { useTheme } from '@react-navigation/native';
 import AppLayout from 'layouts/AppLayout';
 // import EmptyState from 'components/EmptyState';
@@ -70,11 +70,13 @@ const Downloads = () => {
         />
 
       </View> */}
-      <FlatList
-        data={courses}
-        keyExtractor={(item) => `${item.id}`}
-        renderItem={({ item }) => <CourseListItem courseData={item} />}
-      />
+      <View style={{ padding: 10 }}>
+        <FlatList
+          data={courses}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({ item }) => <CourseListItem courseData={item} />}
+        />
+      </View>
     </AppLayout>
   );
 };

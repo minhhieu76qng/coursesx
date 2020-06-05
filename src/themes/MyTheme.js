@@ -18,7 +18,8 @@ export const Light = {
   colors: {
     primary: '#3498db',
     background: '#f5f6fa',
-    card: '#2f3640',
+    // card: '#f5f6fa',
+    card: '#fff',
     text: '#2f3640',
     textSecondary: '#535c68',
     border: 'rgb(199, 199, 204)',
