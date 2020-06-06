@@ -9,6 +9,7 @@ export default StyleSheet.create({
     borderBottomColor: '#dadada',
     borderBottomWidth: 0.4,
     paddingVertical: 10,
+    overflow: 'visible',
   },
   leftBox: {
     width: 150,
@@ -17,6 +18,7 @@ export default StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     paddingRight: 50,
+    overflow: 'visible',
   },
   courseImage: {
     width: '100%',
@@ -32,9 +34,5 @@ export default StyleSheet.create({
   },
   rating: {
     backgroundColor: 'red',
-  },
-  iconContextMenu: {
-    top: 0,
-    right: 10,
   },
 });

@@ -10,6 +10,7 @@ export const Dark = {
     border: 'rgb(199, 199, 204)',
     tabBar: '#57606f',
     tabBarIcon_Inactive: '#f1f2f6',
+    contextMenuBg: '#222f3e',
   },
 };
 
@@ -25,5 +26,6 @@ export const Light = {
     border: 'rgb(199, 199, 204)',
     tabBar: '#fff',
     tabBarIcon_Inactive: '#a4b0be',
+    contextMenuBg: '#ecf0f1',
   },
 };

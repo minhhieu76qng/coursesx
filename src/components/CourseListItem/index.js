@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Image } from 'react-native-elements';
 import Text from 'components/Text';
 import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
-import IconButton from 'components/IconButton';
 import styles from './styles';
+import ContextMenu from '../ContextMenu';
 
 const CourseListItem = ({ courseData }) => {
   const { colors } = useTheme();
+
+  const onBookmarkPress = useCallback(() => {}, []);
+
+  const onDownloadPress = useCallback(() => {}, []);
+
+  const courseOptions = useMemo(() => {
+    return [
+      {
+        name: 'Bookmark',
+        onPress: onBookmarkPress,
+      },
+      {
+        name: 'Download',
+        onPress: onDownloadPress,
+      },
+    ];
+  }, []);
 
   const {
     courseName = '',
@@ -47,7 +64,7 @@ const CourseListItem = ({ courseData }) => {
           <Text>({ratingCount})</Text>
         </View> */}
 
-        <IconButton name="ellipsis-v" containerStyle={styles.iconContextMenu} />
+        <ContextMenu options={courseOptions} />
       </View>
     </TouchableOpacity>
   );
