@@ -4,9 +4,10 @@ import { FlatList, View } from 'react-native';
 import AppLayout from 'layouts/AppLayout';
 // import EmptyState from 'components/EmptyState';
 // import styles from './styles';
-import CourseListItem from '../../../components/CourseListItem';
+import screenName from 'constants/screenName';
+import CourseListItem from 'components/CourseListItem';
 
-const Downloads = () => {
+const Downloads = ({ navigation }) => {
   // const { colors } = useTheme();
 
   const courses = useMemo(() => {
@@ -74,7 +75,12 @@ const Downloads = () => {
         <FlatList
           data={courses}
           keyExtractor={(item) => `${item.id}`}
-          renderItem={({ item }) => <CourseListItem courseData={item} />}
+          renderItem={({ item }) => (
+            <CourseListItem
+              courseData={item}
+              onPress={() => navigation.navigate(screenName.courseDetail)}
+            />
+          )}
         />
       </View>
     </AppLayout>

@@ -7,6 +7,7 @@ import screenName from 'constants/screenName';
 import Home from 'views/App/Home';
 import Downloads from 'views/App/Downloads';
 import Browse from 'views/App/Browse';
+import CourseDetail from 'views/App/CourseDetail';
 // import Search from 'views/App/Search';
 
 const AppTab = createBottomTabNavigator();
@@ -38,6 +39,23 @@ const screenOptions = ({ route }) => ({
 
 const Stack = createStackNavigator();
 
+const CourseDetailScreen = (
+  <Stack.Screen
+    name={screenName.courseDetail}
+    component={CourseDetail}
+    options={{
+      headerShown: false,
+    }}
+    initialParams={{
+      header: {
+        backBtnVisibility: true,
+        headerTitle: 'Course detail',
+        headerShown: true,
+      },
+    }}
+  />
+);
+
 const HomeStackComp = () => {
   return (
     <Stack.Navigator>
@@ -60,7 +78,8 @@ const HomeStackComp = () => {
 
 const DownloadsStackComp = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={screenName.downloads} mode="modal">
+      {CourseDetailScreen}
       <Stack.Screen
         name={screenName.downloads}
         component={Downloads}
@@ -74,6 +93,20 @@ const DownloadsStackComp = () => {
           },
         }}
       />
+      {/* <Stack.Screen
+        name={screenName.courseDetail}
+        component={CourseDetail}
+        options={{
+          headerShown: false,
+        }}
+        initialParams={{
+          header: {
+            backBtnVisibility: true,
+            headerTitle: 'Search',
+            headerShown: true,
+          },
+        }}
+      /> */}
     </Stack.Navigator>
   );
 };
@@ -100,7 +133,7 @@ const BrowseStackComp = () => {
 
 const SearchStackComp = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name={screenName.search}
         component={Downloads}
@@ -118,6 +151,7 @@ const SearchStackComp = () => {
     </Stack.Navigator>
   );
 };
+
 const MainTab = () => {
   const { colors } = useTheme();
   const tabBarOptions = useMemo(() => {

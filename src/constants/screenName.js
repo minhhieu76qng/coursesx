@@ -8,6 +8,7 @@ export default {
   downloads: 'Downloads',
   browse: 'Browse',
   search: 'Search',
+  courseDetail: 'courseDetail',
 
   // tabs
   mainTab: 'MainTab',

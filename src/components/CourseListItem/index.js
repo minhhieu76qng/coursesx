@@ -7,7 +7,7 @@ import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
 import styles from './styles';
 import ContextMenu from '../ContextMenu';
 
-const CourseListItem = ({ courseData }) => {
+const CourseListItem = ({ courseData, onPress }) => {
   const { colors } = useTheme();
 
   const onBookmarkPress = useCallback(() => {}, []);
@@ -38,7 +38,10 @@ const CourseListItem = ({ courseData }) => {
     // ratingCount = 0,
   } = courseData;
   return (
-    <TouchableOpacity style={[styles.container, { backgroundColor: colors.card }]}>
+    <TouchableOpacity
+      style={[styles.container, { backgroundColor: colors.card }]}
+      onPress={onPress}
+    >
       <View style={styles.leftBox}>
         <Image
           style={styles.courseImage}

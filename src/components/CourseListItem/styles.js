@@ -12,7 +12,7 @@ export default StyleSheet.create({
     overflow: 'visible',
   },
   leftBox: {
-    width: 150,
+    width: 120,
   },
   rightBox: {
     flex: 1,
