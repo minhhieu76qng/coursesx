@@ -11,13 +11,13 @@ const CategoryItem = ({
   title,
   description,
   background,
-  onItemClick,
+  onPress,
   titleStyle = {},
   descriptionStyle = {},
 }) => {
   const [imageLoaded, setLoaded] = useState(false);
   return (
-    <TouchableOpacity activeOpacity={!imageLoaded ? 1 : 0.4} onPress={onItemClick} style={style}>
+    <TouchableOpacity activeOpacity={!imageLoaded ? 1 : 0.4} onPress={onPress} style={style}>
       <Image
         onLoadEnd={() => setLoaded(true)}
         source={{ uri: background }}

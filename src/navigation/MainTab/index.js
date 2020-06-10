@@ -8,6 +8,7 @@ import Home from 'views/App/Home';
 import Downloads from 'views/App/Downloads';
 import Browse from 'views/App/Browse';
 import CourseDetail from 'views/App/CourseDetail';
+import CoursesInSection from '../../views/App/CoursesInSection';
 // import Search from 'views/App/Search';
 
 const AppTab = createBottomTabNavigator();
@@ -56,9 +57,28 @@ const CourseDetailScreen = (
   />
 );
 
+const CoursesInSectionScreen = (
+  <Stack.Screen
+    name={screenName.coursesInSection}
+    component={CoursesInSection}
+    options={{
+      headerShown: false,
+    }}
+    initialParams={{
+      header: {
+        backBtnVisibility: true,
+        headerTitle: 'Course list',
+        headerShown: true,
+      },
+    }}
+  />
+);
+
 const HomeStackComp = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={screenName.home} mode="modal">
+      {CourseDetailScreen}
+      {CoursesInSectionScreen}
       <Stack.Screen
         name={screenName.home}
         component={Home}
@@ -80,6 +100,7 @@ const DownloadsStackComp = () => {
   return (
     <Stack.Navigator initialRouteName={screenName.downloads} mode="modal">
       {CourseDetailScreen}
+      {CoursesInSectionScreen}
       <Stack.Screen
         name={screenName.downloads}
         component={Downloads}
@@ -113,7 +134,9 @@ const DownloadsStackComp = () => {
 
 const BrowseStackComp = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={screenName.browse} mode="modal">
+      {CourseDetailScreen}
+      {CoursesInSectionScreen}
       <Stack.Screen
         name={screenName.browse}
         component={Browse}
@@ -133,7 +156,13 @@ const BrowseStackComp = () => {
 
 const SearchStackComp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName={screenName.search}
+      mode="modal"
+    >
+      {CourseDetailScreen}
+      {CoursesInSectionScreen}
       <Stack.Screen
         name={screenName.search}
         component={Downloads}

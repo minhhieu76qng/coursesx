@@ -11,13 +11,13 @@ const CustomCard = ({
   cardTitle = '',
   cardImage = '',
   cardDescriptions = [],
-  onCardPress = null,
+  onPress = null,
 }) => {
   const { colors } = useTheme();
   return (
     <TouchableOpacity
       style={[{ backgroundColor: colors.card, width }, styles.cardContainer]}
-      onPress={onCardPress}
+      onPress={onPress}
     >
       <View style={styles.cardImage}>
         <Image

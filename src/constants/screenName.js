@@ -9,6 +9,7 @@ export default {
   browse: 'Browse',
   search: 'Search',
   courseDetail: 'courseDetail',
+  coursesInSection: 'coursesInSection',
 
   // tabs
   mainTab: 'MainTab',

@@ -1,17 +1,15 @@
 import React, { useMemo } from 'react';
 import { ScrollView, FlatList, View, Dimensions } from 'react-native';
-import CategoryItem from 'components/CategoryItem';
 import AppLayout from 'layouts/AppLayout';
 import Section from 'components/Section';
 import Badge from 'components/Badge';
 import Card from 'components/Card';
 import Avatar from 'components/Avatar';
-import screenName from 'constants/screenName';
 import styles from './styles';
 
 const cardWidth = ((Dimensions.get('window').width - 10 * 2 - 15) * 2) / 3;
 
-const Browse = ({ navigation }) => {
+const CoursesInSection = () => {
   const listPopulateSkills = useMemo(
     () => [
       { id: 1, name: 'Angular' },
@@ -122,65 +120,6 @@ const Browse = ({ navigation }) => {
     <AppLayout>
       <View style={styles.container}>
         <ScrollView>
-          {/* new release */}
-          <CategoryItem
-            title="NEW RELEASES"
-            background={
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9Gc' +
-              'RpTe7c65J8-ZEX5hrp7j6JG38tNnIEqJ_mvAeYe-Gu14JNy7pg&usqp=CAU'
-            }
-            onPress={() => navigation.navigate(screenName.coursesInSection)}
-          />
-          {/* recommend for you */}
-          <CategoryItem
-            style={{ marginTop: 10 }}
-            title="RECOMMEND FOR YOU"
-            background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
-            onPress={() => navigation.navigate(screenName.coursesInSection)}
-          />
-          {/* scrollview list of categories */}
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryList}>
-            <View style={styles.categoryItemContainer}>
-              <CategoryItem
-                title="Software Development"
-                background="https://miro.medium.com/max/2560/1*Rc3ff_4T_ZeAPGiU9ai9nw.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-              <CategoryItem
-                style={styles.category2ndItem}
-                title="IT Ops"
-                background="https://miro.medium.com/max/2700/0*Wz93rPzLLTq1VwVW"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-            </View>
-            <View style={styles.categoryItemContainer}>
-              <CategoryItem
-                title="Data Professional"
-                background="https://miro.medium.com/max/1200/1*0wCRD_rBsvtksdVc69NZog.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-              <CategoryItem
-                style={styles.category2ndItem}
-                title="Business Professional"
-                background="https://miro.medium.com/max/5760/1*CdmOkpEVHZ8TXA9tvtlvXA@2x.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-            </View>
-            <View style={styles.categoryItemContainer}>
-              <CategoryItem
-                title="Creative Professional"
-                background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-              <CategoryItem
-                style={styles.category2ndItem}
-                title="Certifications"
-                background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-            </View>
-          </ScrollView>
-
           {/* popular skills */}
           <Section sectionTitle="Popular Skills">
             <FlatList
@@ -193,7 +132,7 @@ const Browse = ({ navigation }) => {
                   id={item.id}
                   text={item.name}
                   wrapperStyle={{ marginRight: 10 }}
-                  onPress={() => navigation.navigate(screenName.coursesInSection)}
+                  badgePress={() => {}}
                 />
               )}
             />
@@ -213,7 +152,6 @@ const Browse = ({ navigation }) => {
                   cardTitle={item.name}
                   cardDescriptions={item.descriptions}
                   cardImage={item.image}
-                  onPress={() => navigation.navigate(screenName.coursesInSection)}
                 />
               )}
             />
@@ -240,4 +178,4 @@ const Browse = ({ navigation }) => {
   );
 };
 
-export default Browse;
+export default CoursesInSection;
