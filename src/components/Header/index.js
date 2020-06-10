@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { useRoute, useTheme } from '@react-navigation/native';
+import { useRoute, useTheme, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
 import _ from 'lodash';
 import Icon from 'themes/Icon';
@@ -15,6 +15,8 @@ const Header = ({ paddingTop }) => {
     return _.get(route, 'params.header');
   }, [route]);
 
+  const navigation = useNavigation();
+
   const { colors } = useTheme();
   return (
     <View
@@ -25,7 +27,14 @@ const Header = ({ paddingTop }) => {
       }}
     >
       {header && header?.backBtnVisibility === true && (
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            }
+          }}
+        >
           <Icon
             name="angle-left"
             size={40}
