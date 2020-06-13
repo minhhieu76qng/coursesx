@@ -21,7 +21,15 @@
     "no-return-assign": ["off"],
     "react/jsx-props-no-spreading": [
       "error",
-      { "exceptions": ["CustomText", "CustomInput", "CustomButton", "WrappedComponent"] }
+      {
+        "exceptions": [
+          "CustomText",
+          "CustomInput",
+          "CustomButton",
+          "WrappedComponent",
+          "CustomIcon"
+        ]
+      }
     ]
   },
   "settings": {

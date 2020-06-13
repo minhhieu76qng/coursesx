@@ -11,6 +11,7 @@ export const Dark = {
     tabBar: '#57606f',
     tabBarIcon_Inactive: '#f1f2f6',
     contextMenuBg: '#222f3e',
+    iconBg: 'rgba(178, 190, 195,0.2)',
   },
 };
 
@@ -27,5 +28,6 @@ export const Light = {
     tabBar: '#fff',
     tabBarIcon_Inactive: '#a4b0be',
     contextMenuBg: '#ecf0f1',
+    iconBg: 'rgba(178, 190, 195,0.8)',
   },
 };

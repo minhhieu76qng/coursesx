@@ -1,19 +1,29 @@
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { useMemo } from 'react';
+import { TouchableOpacity, View } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import Text from 'components/Text';
 import styles from './styles';
 
-const CustomAvatar = ({ userName = '', userAvatar, avatarSize = 'medium', onAvatarPress }) => {
+const CustomAvatar = ({
+  userName = null,
+  userAvatar,
+  avatarSize = 'medium',
+  onAvatarPress = null,
+  containerStyle = {},
+}) => {
+  const WrappedComponent = useMemo(() => (onAvatarPress ? TouchableOpacity : View), [
+    onAvatarPress,
+  ]);
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onAvatarPress}>
+    <WrappedComponent style={[styles.container, containerStyle]} onPress={onAvatarPress}>
       <Avatar size={avatarSize} rounded source={{ uri: userAvatar }} title={userName} />
       {userName && (
         <Text weight="bold" style={styles.avatarName}>
           {userName}
         </Text>
       )}
-    </TouchableOpacity>
+    </WrappedComponent>
   );
 };
 

@@ -7,6 +7,7 @@ export default StyleSheet.create({
     right: 0,
   },
   iconContextMenu: {
+    position: 'absolute',
     top: 0,
     right: 10,
   },
