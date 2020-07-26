@@ -31,7 +31,7 @@ const Splash = ({ navigation }) => {
     loadFont();
     dispatch({
       type: FETCH_USER_DATA,
-      payload: {
+      meta: {
         callback: () => {
           setFetched(true);
         },

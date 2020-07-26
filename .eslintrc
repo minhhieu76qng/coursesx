@@ -44,7 +44,8 @@
           ["views", "./src/views"],
           ["themes", "./src/themes"],
           ["assets", "./src/assets"],
-          ["constants", "./src/constants"]
+          ["constants", "./src/constants"],
+          ["utils", "./src/utils"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".json"]
       }

@@ -32,4 +32,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
+  errorTextMessage: {
+    color: 'red',
+    marginVertical: 5,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });

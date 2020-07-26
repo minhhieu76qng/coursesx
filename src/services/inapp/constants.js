@@ -1,3 +1,5 @@
 // redux actions
 export const SET_THEME = 'SET_THEME';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const SHOW_FLASH_MESSAGE = 'SHOW_FLASH_MESSAGE';
+export const REMOVE_FLASH_MESSAGE = 'REMOVE_FLASH_MESSAGE';
