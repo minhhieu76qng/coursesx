@@ -44,11 +44,7 @@
           ["views", "./src/views"],
           ["themes", "./src/themes"],
           ["assets", "./src/assets"],
-          ["constants", "./src/constants"],
-          ["routes", "./src/routes"],
-          ["actions", "./src/actions"],
-          ["reducers", "./src/reducers"],
-          ["getters", "./src/getters"]
+          ["constants", "./src/constants"]
         ],
         "extensions": [".ts", ".js", ".jsx", ".json"]
       }

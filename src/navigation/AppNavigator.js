@@ -4,7 +4,7 @@ import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Dark, Light } from 'themes/MyTheme';
-import { getThemeMode } from 'getters/inApp';
+import { getThemeMode } from 'services/inapp/getters';
 import { themeMode } from 'constants';
 import screenName from 'constants/screenName';
 import Splash from 'views/Splash';

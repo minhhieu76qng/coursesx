@@ -1,5 +1,5 @@
 import themeMode from 'constants/themeMode';
-import { SET_THEME } from 'actions/inApp';
+import { SET_THEME } from './constants';
 
 const initialState = {
   themeMode: themeMode.dark,
