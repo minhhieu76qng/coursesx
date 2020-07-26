@@ -18,7 +18,21 @@ class UserRepo {
       return data;
     } catch (e) {
       console.log('UserRepo -> registerAccount -> e', e);
-      return null;
+      throw e;
+    }
+  }
+
+  static async getMe() {
+    let data = null;
+    try {
+      data = await Api({
+        method: 'get',
+        url: '/user/me',
+      });
+      return data;
+    } catch (e) {
+      console.log('UserRepo -> getMe -> e', e.response);
+      throw e;
     }
   }
 }
