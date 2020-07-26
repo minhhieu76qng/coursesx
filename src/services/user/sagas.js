@@ -1,13 +1,15 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 import UserRepo from './repo';
 import { setCurrentUser, showFlashMessage } from '../inapp/actions';
-import { FETCH_USER_DATA, REGISTER_ACCOUNT } from './constants';
+import { FETCH_USER_DATA, REGISTER_ACCOUNT, LOGIN_ACCOUNT } from './constants';
+import MessageType from '../inapp/MessageType';
+import AsyncStorage from '../../utils/asyncStorage';
 
 function* fetchCurrentUserData({ meta: { callback } = {} }) {
   try {
     const userData = yield call(UserRepo.getMe);
-    if (userData) {
-      yield put(setCurrentUser(userData));
+    if (userData?.payload) {
+      yield put(setCurrentUser(userData?.payload));
     }
   } catch (e) {
     console.log('function*fetchCurrentUserData -> e', e);
@@ -15,6 +17,35 @@ function* fetchCurrentUserData({ meta: { callback } = {} }) {
     if (typeof callback === 'function') {
       yield call(callback);
     }
+  }
+}
+
+function* loginToAccount({ payload: { email, password } = {}, meta: { callback } = {} }) {
+  try {
+    const userData = yield call(UserRepo.loginAccount, { email, password });
+    // save token
+    // save data to redux
+    yield all([
+      call(AsyncStorage.setAccessToken, userData?.token),
+      put(setCurrentUser(userData?.userInfo ?? null)),
+    ]);
+
+    if (typeof callback === 'function') {
+      yield put(
+        showFlashMessage({
+          type: MessageType.Type.SUCCESS,
+          description: 'Đăng nhập thành công!',
+        }),
+      );
+      yield call(callback);
+    }
+  } catch (e) {
+    console.log('function*loginToAccount -> e', e);
+    yield put(
+      showFlashMessage({
+        description: e?.response?.data?.message ?? null,
+      }),
+    );
   }
 }
 
@@ -36,5 +67,6 @@ function* registerNewAccount({ payload = {}, meta: { callback } = {} }) {
 
 export default function* () {
   yield takeLatest(FETCH_USER_DATA, fetchCurrentUserData);
+  yield takeLatest(LOGIN_ACCOUNT, loginToAccount);
   yield takeLatest(REGISTER_ACCOUNT, registerNewAccount);
 }

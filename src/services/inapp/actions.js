@@ -6,7 +6,9 @@ const { SET_CURRENT_USER, SHOW_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE } = require('
 export function setCurrentUser(currentUser = {}) {
   return {
     type: SET_CURRENT_USER,
-    payload: currentUser,
+    payload: {
+      currentUser,
+    },
   };
 }
 
