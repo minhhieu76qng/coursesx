@@ -114,20 +114,6 @@ const DownloadsStackComp = () => {
           },
         }}
       />
-      {/* <Stack.Screen
-        name={screenName.courseDetail}
-        component={CourseDetail}
-        options={{
-          headerShown: false,
-        }}
-        initialParams={{
-          header: {
-            backBtnVisibility: true,
-            headerTitle: 'Search',
-            headerShown: true,
-          },
-        }}
-      /> */}
     </Stack.Navigator>
   );
 };

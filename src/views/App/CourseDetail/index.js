@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Dimensions, ScrollView } from 'react-native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Image } from 'react-native-elements';
 import AppLayout from 'layouts/AppLayout';
 import Text from 'components/Text';
@@ -9,6 +10,9 @@ import Avatar from 'components/Avatar';
 import IconButton from 'components/IconButton';
 
 import styles from './styles';
+import CourseDetailContent from '../../../components/CourseDetailContent';
+
+const CourseDetailTab = createMaterialTopTabNavigator();
 
 const CourseDetail = () => {
   const videoHeight = Dimensions.get('window').height * 0.3 || 100;
@@ -62,6 +66,10 @@ const CourseDetail = () => {
           five centuries, but also the leap into electronic typesetting, remaining essentially
           unchanged. It was popularised in the 1960s with the release of Letraset
         </Text>
+        <CourseDetailTab.Navigator style={{ marginTop: 15 }}>
+          <CourseDetailTab.Screen name="Contents" component={CourseDetailContent} />
+          <CourseDetailTab.Screen name="Transcript" component={View} />
+        </CourseDetailTab.Navigator>
       </ScrollView>
     </AppLayout>
   );
