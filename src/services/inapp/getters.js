@@ -8,3 +8,5 @@ export const getCurrentUser = (state) => {
 };
 
 export const getFlashMessage = (state) => state.inApp.flashMessage;
+
+export const getCategories = (state) => state.inApp?.categories || [];

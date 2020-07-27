@@ -7,6 +7,7 @@ import screenName from 'constants/screenName';
 import styles from './styles';
 import { FETCH_USER_DATA } from '../../services/user/constants';
 import { getCurrentUser } from '../../services/inapp/getters';
+import { FETCH_CATEGORIES } from '../../services/courses/constants';
 
 const Splash = ({ navigation }) => {
   const [loadedFont, setLoadedFont] = useState(false);
@@ -36,6 +37,9 @@ const Splash = ({ navigation }) => {
           setFetched(true);
         },
       },
+    });
+    dispatch({
+      type: FETCH_CATEGORIES,
     });
   }, []);
 

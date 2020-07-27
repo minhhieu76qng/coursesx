@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import Api from 'services/Api';
+import { Api } from 'services/Api';
 
 class UserRepo {
   static async registerAccount({ username, email, phone, password }) {

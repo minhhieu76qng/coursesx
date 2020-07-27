@@ -1,121 +1,45 @@
-import React, { useMemo } from 'react';
-import { ScrollView, FlatList, View, Dimensions } from 'react-native';
+import React, { useMemo, useState, useEffect } from 'react';
+import { ScrollView, FlatList, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import CategoryItem from 'components/CategoryItem';
 import AppLayout from 'layouts/AppLayout';
 import Section from 'components/Section';
-import Badge from 'components/Badge';
-import Card from 'components/Card';
 import Avatar from 'components/Avatar';
 import screenName from 'constants/screenName';
 import styles from './styles';
+import { getCategories } from '../../../services/inapp/getters';
+import CourseRepo from '../../../services/courses/repo';
 
-const cardWidth = ((Dimensions.get('window').width - 10 * 2 - 15) * 2) / 3;
+const NUM_OF_ROW = 2;
+const NUM_OF_DISPLAYED_AUTHOR = 8;
 
 const Browse = ({ navigation }) => {
-  const listPopulateSkills = useMemo(
-    () => [
-      { id: 1, name: 'Angular' },
-      { id: 2, name: 'JavaScript' },
-      { id: 3, name: 'C#' },
-      { id: 4, name: 'Java' },
-      { id: 5, name: 'ASP.Net' },
-    ],
-    [],
-  );
-  const listPaths = useMemo(() => {
-    return [
-      {
-        id: 1,
-        name: 'C# Unity Testing with xUnit',
-        descriptions: ['3 courses'],
-        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
-      },
-      {
-        id: 2,
-        name: 'Java Fundamental',
-        descriptions: ['3 courses'],
-        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
-      },
-      {
-        id: 3,
-        name: 'JavaScript Crash Course',
-        descriptions: ['3 courses'],
-        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
-      },
-      {
-        id: 4,
-        name: 'Deep dive to React Hooks',
-        descriptions: ['3 courses'],
-        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
-      },
-      {
-        id: 5,
-        name: 'NodeJS + React native + GraphQL - create a movie app',
-        descriptions: ['3 courses'],
-        image: 'https://miro.medium.com/max/1200/1*s-IsFnLLsH0hu782a4fBeA.jpeg',
-      },
-    ];
-  }, []);
+  const [authors, setAuthors] = useState([]);
+  const categories = useSelector(getCategories);
+  const transformedCategories = useMemo(() => {
+    const result = [];
+    let tmp = [];
+    for (let i = 0; i < categories.length; i += 1) {
+      if (tmp && tmp.length < NUM_OF_ROW) {
+        tmp.push(categories[i]);
+      }
 
-  const authors = useMemo(() => {
-    return [
-      {
-        id: 1,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-      {
-        id: 2,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-      {
-        id: 3,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-      {
-        id: 4,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-      {
-        id: 5,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-      {
-        id: 6,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-      {
-        id: 7,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-      {
-        id: 8,
-        authorName: 'Hieu Do',
-        authorAvatar:
-          'https://image.freepik.com/free-vector/businessman-character-' +
-          'avatar-icon-vector-illustration-design_24877-18271.jpg',
-      },
-    ];
+      if (tmp && (tmp.length === NUM_OF_ROW || i === categories.length - 1)) {
+        result.push(tmp);
+        tmp = [];
+      }
+    }
+    return result;
+  }, [categories]);
+
+  useEffect(() => {
+    CourseRepo.getAuthorsList()
+      .then((data) => {
+        const maxLength =
+          data?.length > NUM_OF_DISPLAYED_AUTHOR ? NUM_OF_DISPLAYED_AUTHOR : data?.length;
+        setAuthors((data || []).slice(0, maxLength));
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   return (
@@ -124,7 +48,7 @@ const Browse = ({ navigation }) => {
         <ScrollView>
           {/* new release */}
           <CategoryItem
-            title="NEW RELEASES"
+            title="Khoá học mới nhất"
             background={
               'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9Gc' +
               'RpTe7c65J8-ZEX5hrp7j6JG38tNnIEqJ_mvAeYe-Gu14JNy7pg&usqp=CAU'
@@ -134,103 +58,38 @@ const Browse = ({ navigation }) => {
           {/* recommend for you */}
           <CategoryItem
             style={{ marginTop: 10 }}
-            title="RECOMMEND FOR YOU"
+            title="Khoá học đề xuất"
             background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
             onPress={() => navigation.navigate(screenName.coursesInSection)}
           />
           {/* scrollview list of categories */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryList}>
-            <View style={styles.categoryItemContainer}>
-              <CategoryItem
-                title="Software Development"
-                background="https://miro.medium.com/max/2560/1*Rc3ff_4T_ZeAPGiU9ai9nw.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-              <CategoryItem
-                style={styles.category2ndItem}
-                title="IT Ops"
-                background="https://miro.medium.com/max/2700/0*Wz93rPzLLTq1VwVW"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-            </View>
-            <View style={styles.categoryItemContainer}>
-              <CategoryItem
-                title="Data Professional"
-                background="https://miro.medium.com/max/1200/1*0wCRD_rBsvtksdVc69NZog.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-              <CategoryItem
-                style={styles.category2ndItem}
-                title="Business Professional"
-                background="https://miro.medium.com/max/5760/1*CdmOkpEVHZ8TXA9tvtlvXA@2x.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-            </View>
-            <View style={styles.categoryItemContainer}>
-              <CategoryItem
-                title="Creative Professional"
-                background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-              <CategoryItem
-                style={styles.category2ndItem}
-                title="Certifications"
-                background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
-                onPress={() => navigation.navigate(screenName.coursesInSection)}
-              />
-            </View>
+            {transformedCategories &&
+              transformedCategories.map((group, grIdx) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <View style={styles.categoryItemContainer} key={grIdx}>
+                  {group.map((cate, idx) => (
+                    <CategoryItem
+                      key={cate.id}
+                      style={idx === 0 ? {} : styles.category2ndItem}
+                      title={cate.name}
+                      background={cate.image}
+                      onPress={() => navigation.navigate(screenName.coursesInSection)}
+                    />
+                  ))}
+                </View>
+              ))}
           </ScrollView>
 
-          {/* popular skills */}
-          <Section sectionTitle="Popular Skills">
-            <FlatList
-              keyExtractor={(skill) => `${skill.id}`}
-              data={listPopulateSkills}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <Badge
-                  id={item.id}
-                  text={item.name}
-                  wrapperStyle={{ marginRight: 10 }}
-                  onPress={() => navigation.navigate(screenName.coursesInSection)}
-                />
-              )}
-            />
-          </Section>
-
-          {/* path */}
-          <Section sectionTitle="Paths" onSeeAllPress={() => {}}>
-            <FlatList
-              contentContainerStyle={{ padding: 5 }}
-              data={listPaths}
-              keyExtractor={(path) => `${path.id}`}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <Card
-                  width={cardWidth}
-                  cardTitle={item.name}
-                  cardDescriptions={item.descriptions}
-                  cardImage={item.image}
-                  onPress={() => navigation.navigate(screenName.coursesInSection)}
-                />
-              )}
-            />
-          </Section>
           {/* top authors */}
-          <Section sectionTitle="Authors" onSeeAllPress={() => {}}>
+          <Section sectionTitle="Giảng viên" onSeeAllPress={() => {}}>
             <FlatList
               data={authors}
               keyExtractor={(path) => `${path.id}`}
               horizontal
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
-                <Avatar
-                  userName={item.authorName}
-                  userAvatar={item.authorAvatar}
-                  onAvatarPress={null}
-                />
+                <Avatar userName={item.name} userAvatar={item.avatar} onAvatarPress={null} />
               )}
             />
           </Section>

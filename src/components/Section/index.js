@@ -18,7 +18,7 @@ const Section = ({ sectionTitle, subtitle, onSeeAllPress, children }) => {
         </Text>
         {onSeeAllPress && (
           <TouchableOpacity onPress={onSeeAllPress}>
-            <Text style={styles.seeAll}>See all</Text>
+            <Text style={styles.seeAll}>Xem tất cả</Text>
           </TouchableOpacity>
         )}
       </View>
