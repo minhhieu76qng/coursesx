@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
+import moment from 'moment';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Image } from 'react-native-elements';
@@ -7,7 +8,7 @@ import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
 import styles from './styles';
 import ContextMenu from '../ContextMenu';
 
-const CourseListItem = ({ courseData, onPress }) => {
+const CourseListItem = ({ course, onPress }) => {
   const { colors } = useTheme();
 
   const onBookmarkPress = useCallback(() => {}, []);
@@ -17,26 +18,29 @@ const CourseListItem = ({ courseData, onPress }) => {
   const courseOptions = useMemo(() => {
     return [
       {
-        name: 'Bookmark',
+        name: 'Đánh dấu',
         onPress: onBookmarkPress,
       },
       {
-        name: 'Download',
+        name: 'Tải xuống',
         onPress: onDownloadPress,
       },
     ];
   }, []);
 
+  const courseData = course;
+
   const {
-    courseName = '',
-    author = '',
-    courseImage = '',
-    level = '',
-    publishDate = '',
-    duration = '',
+    title = '',
+    'instructor.user.name': author,
+    imageUrl = '',
+    updatedAt,
+    totalHours: duration = '',
     // ratingPercent = 0,
     // ratingCount = 0,
   } = courseData;
+
+  courseData.publishDate = moment(new Date(updatedAt)).format('DD/MM/YYYY');
   return (
     <TouchableOpacity
       style={[styles.container, { backgroundColor: colors.card }]}
@@ -45,26 +49,25 @@ const CourseListItem = ({ courseData, onPress }) => {
       <View style={styles.leftBox}>
         <Image
           style={styles.courseImage}
-          source={{ uri: courseImage }}
+          source={{ uri: imageUrl }}
           PlaceholderContent={<LogoLoadingIndicator logoWidth={150} indicatorSize="large" />}
         />
       </View>
       <View style={styles.rightBox}>
-        <Text type="h4">{courseName}</Text>
+        <Text type="h4" numberOfLines={2}>
+          {title}
+        </Text>
         <View style={styles.descriptionWrapper}>
-          <Text type="subbody-light">{author}</Text>
-          <Text type="subbody-light">{`${level} - ${publishDate} - ${duration}`}</Text>
+          <Text style={styles.description} type="subbody-light">
+            {author}
+          </Text>
+          <Text style={styles.description} type="subbody-light">
+            {`${courseData?.publishDate} - ${duration}`}
+          </Text>
         </View>
         {/* <View style={styles.rattingWrapper}>
-          <Rating
-            imageSize={20}
-            fractions={1}
-            startingValue={ratingPercent / 100}
-            // ratingBackgroundColor='red'
-            type='custom'
-            style={styles.rating}
-          />
-          <Text>({ratingCount})</Text>
+          
+          
         </View> */}
 
         <ContextMenu options={courseOptions} />

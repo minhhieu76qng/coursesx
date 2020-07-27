@@ -4,7 +4,7 @@ export const getThemeMode = (state) => {
 };
 
 export const getCurrentUser = (state) => {
-  return state.inApp.currentUser;
+  return state.inApp?.currentUser;
 };
 
 export const getFlashMessage = (state) => state.inApp.flashMessage;

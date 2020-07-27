@@ -21,6 +21,7 @@
     "formik": "^2.1.5",
     "libphonenumber-js": "^1.7.55",
     "lodash": "^4.17.15",
+    "moment": "^2.27.0",
     "prop-types": "^15.7.2",
     "react": "~16.9.0",
     "react-devtools": "^3.6.3",

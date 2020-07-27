@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useRoute, useTheme, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
-import _ from 'lodash';
+import _, { isString } from 'lodash';
 import Icon from 'themes/Icon';
 import Colors from 'themes/colors';
 import Text from 'components/Text';
@@ -43,7 +43,7 @@ const Header = ({ paddingTop }) => {
           />
         </TouchableOpacity>
       )}
-      {header && header?.headerTitle && <Text type="h3">{header?.headerTitle}</Text>}
+      {header && isString(header?.headerTitle) && <Text type="h3">{header?.headerTitle}</Text>}
       <View style={styles.rightWidgets}>
         <TouchableOpacity>
           <Avatar

@@ -82,6 +82,40 @@ class CourseRepo {
       return data;
     }
   }
+
+  static async getLatestCourse({ limit = 10, page = 1 } = {}) {
+    let data = [];
+    try {
+      ({ payload: data } = await Api({
+        method: 'post',
+        url: '/course/top-new',
+        body: {
+          limit,
+          page,
+        },
+      }));
+    } catch (e) {
+      console.log('getTopRatingCourses -> e', e);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
+
+  static async getRecommendCourses({ userId, limit = 10, page = 1 } = {}) {
+    let data = [];
+    try {
+      ({ payload: data } = await Api({
+        method: 'post',
+        url: `/user/recommend-course/${userId}/${limit}/${page - 1}`,
+      }));
+    } catch (e) {
+      console.log('getTopRatingCourses -> e', e);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
 }
 
 export default CourseRepo;

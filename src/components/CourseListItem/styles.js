@@ -28,6 +28,9 @@ export default StyleSheet.create({
   descriptionWrapper: {
     marginTop: 5,
   },
+  description: {
+    marginTop: 5,
+  },
   rattingWrapper: {
     flexDirection: 'row',
     justifyContent: 'flex-start',

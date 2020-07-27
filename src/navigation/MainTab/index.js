@@ -67,7 +67,7 @@ const CoursesInSectionScreen = (
     initialParams={{
       header: {
         backBtnVisibility: true,
-        headerTitle: 'Course list',
+        headerTitle: '',
         headerShown: true,
       },
     }}

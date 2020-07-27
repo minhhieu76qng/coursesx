@@ -22,7 +22,7 @@ const ContextMenu = ({ options }) => {
       </MenuTrigger>
       <MenuOptions optionsContainerStyle={{ backgroundColor: colors.contextMenuBg }}>
         {options.map((option) => (
-          <MenuOption style={styles.optionStyle} onSelect={option.onPress}>
+          <MenuOption key={option.name} style={styles.optionStyle} onSelect={option.onPress}>
             <Text color={colors.text} type="subbody">
               {option.name}
             </Text>

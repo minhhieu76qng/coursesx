@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { ScrollView, FlatList, View, Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import CategoryItem from 'components/CategoryItem';
@@ -10,10 +10,22 @@ import screenName from 'constants/screenName';
 import styles from './styles';
 import { getCategories } from '../../../services/inapp/getters';
 import CourseRepo from '../../../services/courses/repo';
-import { MAX_CARD_WIDTH } from '../../../constants';
+import { MAX_CARD_WIDTH, CATEGORY_TYPES } from '../../../constants';
 
 const NUM_OF_ROW = 2;
 const NUM_OF_DISPLAYED_AUTHOR = 8;
+
+const NEWEST_COURSE_CATEGORY = {
+  name: 'Khoá học mới nhất',
+  image:
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9Gc' +
+    'RpTe7c65J8-ZEX5hrp7j6JG38tNnIEqJ_mvAeYe-Gu14JNy7pg&usqp=CAU',
+};
+
+const RECOMMEND_COURSE_CATEGORY = {
+  name: 'Khoá học đề xuất',
+  image: 'https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png',
+};
 
 let cardWidth = ((Dimensions.get('window').width - 10 * 2 - 15) * 2) / 3;
 cardWidth = cardWidth > MAX_CARD_WIDTH ? MAX_CARD_WIDTH : cardWidth;
@@ -61,25 +73,41 @@ const Browse = ({ navigation }) => {
       .catch((error) => console.log(error));
   }, []);
 
+  const onCategoryPress = useCallback((type, categoryId = null) => {
+    let category = null;
+    switch (type) {
+      case CATEGORY_TYPES.NEWEST:
+        category = NEWEST_COURSE_CATEGORY;
+        break;
+      case CATEGORY_TYPES.RECOMMEND:
+        category = RECOMMEND_COURSE_CATEGORY;
+        break;
+      case CATEGORY_TYPES.ORIGIN:
+        category = (categories || [])?.find((cate) => cate?.id === categoryId);
+        break;
+      default:
+    }
+    if (category) {
+      navigation.navigate(screenName.coursesInSection, { type, category });
+    }
+  }, []);
+
   return (
     <AppLayout>
       <View style={styles.container}>
         <ScrollView>
           {/* new release */}
           <CategoryItem
-            title="Khoá học mới nhất"
-            background={
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9Gc' +
-              'RpTe7c65J8-ZEX5hrp7j6JG38tNnIEqJ_mvAeYe-Gu14JNy7pg&usqp=CAU'
-            }
-            onPress={() => navigation.navigate(screenName.coursesInSection)}
+            title={NEWEST_COURSE_CATEGORY.name}
+            background={NEWEST_COURSE_CATEGORY.image}
+            onPress={() => onCategoryPress(CATEGORY_TYPES.NEWEST)}
           />
           {/* recommend for you */}
           <CategoryItem
             style={{ marginTop: 10 }}
-            title="Khoá học đề xuất"
-            background="https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png"
-            onPress={() => navigation.navigate(screenName.coursesInSection)}
+            title={RECOMMEND_COURSE_CATEGORY.name}
+            background={RECOMMEND_COURSE_CATEGORY.image}
+            onPress={() => onCategoryPress(CATEGORY_TYPES.RECOMMEND)}
           />
           {/* scrollview list of categories */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryList}>
@@ -89,11 +117,11 @@ const Browse = ({ navigation }) => {
                 <View style={styles.categoryItemContainer} key={grIdx}>
                   {group.map((cate, idx) => (
                     <CategoryItem
-                      key={cate.id}
+                      key={cate?.id}
                       style={idx === 0 ? {} : styles.category2ndItem}
                       title={cate.name}
                       background={cate.image}
-                      onPress={() => navigation.navigate(screenName.coursesInSection)}
+                      onPress={() => onCategoryPress(CATEGORY_TYPES.ORIGIN, cate?.id)}
                     />
                   ))}
                 </View>
