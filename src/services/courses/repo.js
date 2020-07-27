@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-finally */
 import { Api } from '../Api';
 
 class CourseRepo {
@@ -36,12 +37,49 @@ class CourseRepo {
       const authorsDetail = await Promise.all(
         (authors || []).map((au) => CourseRepo.getAuthorDetail(au.id)),
       );
-      console.log('CourseRepo -> getAuthorsList -> authorsDetail', authorsDetail);
 
       return (authorsDetail || []).map(({ payload }) => payload);
     } catch (e) {
       console.log('CourseRepo -> getAuthors -> e', e);
       throw e;
+    }
+  }
+
+  static async getTopSellerCourses({ limit = 10, page = 1 } = {}) {
+    let data = [];
+    try {
+      ({ payload: data } = await Api({
+        method: 'post',
+        url: '/course/top-sell',
+        body: {
+          limit,
+          page,
+        },
+      }));
+    } catch (e) {
+      console.log('getTopSellerCourses -> e', e);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
+
+  static async getTopRatingCourses({ limit = 10, page = 1 } = {}) {
+    let data = [];
+    try {
+      ({ payload: data } = await Api({
+        method: 'post',
+        url: '/course/top-rate',
+        body: {
+          limit,
+          page,
+        },
+      }));
+    } catch (e) {
+      console.log('getTopRatingCourses -> e', e);
+      throw e;
+    } finally {
+      return data;
     }
   }
 }

@@ -37,6 +37,7 @@ const CustomCard = ({
               style={styles.cardDescription}
               type="description"
               colors="#fff"
+              numberOfLines={2}
             >
               {des}
             </Text>
