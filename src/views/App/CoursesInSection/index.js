@@ -1,8 +1,10 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { isArray } from 'lodash';
 import { FlatList, View, ActivityIndicator } from 'react-native';
 import { useTheme, useRoute } from '@react-navigation/native';
 import AppLayout from 'layouts/AppLayout';
+import Text from 'components/Text';
 import styles from './styles';
 import { CATEGORY_TYPES } from '../../../constants';
 import CourseRepo from '../../../services/courses/repo';
@@ -39,7 +41,7 @@ const CoursesInSection = () => {
           .finally(() => setLoading(false));
         break;
       case CATEGORY_TYPES.ORIGIN:
-        CourseRepo.getLatestCourse()
+        CourseRepo.getCoursesInCategory({ categoryId: categoryData?.id })
           .then((data) => setCourseList(data))
           .catch((error) => console.log(error))
           .finally(() => setLoading(false));
@@ -52,18 +54,24 @@ const CoursesInSection = () => {
       <View
         style={[
           styles.container,
-          isLoading && { flex: 1, justifyContent: 'center', alignItems: 'center' },
+          (isLoading || (!isLoading && !(courseList && courseList.length > 0))) && {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
         ]}
       >
-        {isLoading ? (
-          <ActivityIndicator size="large" color={colors.primary} />
-        ) : (
+        {isLoading && <ActivityIndicator size="large" color={colors.primary} />}
+        {!isLoading && isArray(courseList) && courseList.length > 0 && (
           <FlatList
             data={courseList}
             keyExtractor={(path) => `${path.id}`}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => <CourseListItem course={item} />}
           />
+        )}
+        {!isLoading && !(courseList && courseList.length > 0) && (
+          <Text>Không có khoá học trong danh mục này.</Text>
         )}
       </View>
     </AppLayout>

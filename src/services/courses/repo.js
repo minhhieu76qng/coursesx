@@ -95,7 +95,7 @@ class CourseRepo {
         },
       }));
     } catch (e) {
-      console.log('getTopRatingCourses -> e', e);
+      console.log('getLatestCourse -> e', e);
       throw e;
     } finally {
       return data;
@@ -106,11 +106,36 @@ class CourseRepo {
     let data = [];
     try {
       ({ payload: data } = await Api({
-        method: 'post',
+        method: 'get',
         url: `/user/recommend-course/${userId}/${limit}/${page - 1}`,
       }));
     } catch (e) {
-      console.log('getTopRatingCourses -> e', e);
+      console.log('getRecommendCourses -> e', e);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
+
+  static async getCoursesInCategory({ categoryId, limit = 10, page = 1 } = {}) {
+    let data = [];
+    try {
+      ({
+        payload: { rows: data },
+      } = await Api({
+        method: 'post',
+        url: '/course/search',
+        body: {
+          keyword: '',
+          opt: {
+            category: [categoryId],
+          },
+          limit,
+          offset: (page - 1) * limit,
+        },
+      }));
+    } catch (e) {
+      console.log('getCoursesInCategory -> e', e);
       throw e;
     } finally {
       return data;

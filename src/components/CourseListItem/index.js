@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import moment from 'moment';
+import { isString, isEmpty } from 'lodash';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Image } from 'react-native-elements';
@@ -33,7 +34,7 @@ const CourseListItem = ({ course, onPress }) => {
   const {
     title = '',
     'instructor.user.name': author,
-    imageUrl = '',
+    imageUrl,
     updatedAt,
     totalHours: duration = '',
     // ratingPercent = 0,
@@ -47,23 +48,29 @@ const CourseListItem = ({ course, onPress }) => {
       onPress={onPress}
     >
       <View style={styles.leftBox}>
-        <Image
-          style={styles.courseImage}
-          source={{ uri: imageUrl }}
-          PlaceholderContent={<LogoLoadingIndicator logoWidth={150} indicatorSize="large" />}
-        />
+        {isString(imageUrl) && !isEmpty(imageUrl) && (
+          <Image
+            style={styles.courseImage}
+            source={{ uri: imageUrl }}
+            PlaceholderContent={<LogoLoadingIndicator logoWidth={150} indicatorSize="large" />}
+          />
+        )}
       </View>
       <View style={styles.rightBox}>
         <Text type="h4" numberOfLines={2}>
           {title}
         </Text>
         <View style={styles.descriptionWrapper}>
-          <Text style={styles.description} type="subbody-light">
-            {author}
-          </Text>
-          <Text style={styles.description} type="subbody-light">
-            {`${courseData?.publishDate} - ${duration}`}
-          </Text>
+          {!isEmpty(author) && (
+            <Text style={styles.description} type="subbody-light">
+              {author}
+            </Text>
+          )}
+          {!isEmpty(courseData?.publishDate) && (
+            <Text style={styles.description} type="subbody-light">
+              {`${courseData?.publishDate} - ${duration}`}
+            </Text>
+          )}
         </View>
         {/* <View style={styles.rattingWrapper}>
           
