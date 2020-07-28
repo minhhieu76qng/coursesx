@@ -184,7 +184,22 @@ class CourseRepo {
         url: `/instructor/detail/${authorId}`,
       }));
     } catch (e) {
-      console.log('getSingleAuthor -> e', e);
+      console.log('getSingleAuthor -> e', e?.response?.data?.message);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
+
+  static async getCourseProcess(courseId) {
+    let data = null;
+    try {
+      ({ payload: data } = await Api({
+        method: 'get',
+        url: `/course/process-course/${courseId}`,
+      }));
+    } catch (e) {
+      console.log('getCourseProcess -> e', e?.response?.data?.message);
       throw e;
     } finally {
       return data;

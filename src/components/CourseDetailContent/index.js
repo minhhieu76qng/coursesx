@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo, useContext, useCallback } from 'react';
 import { View, SectionList, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import Text from 'components/Text';
@@ -42,12 +42,9 @@ const FooterItemSeparator = ({ show }) => {
 
 const SectionItem = ({ item: { name: lessonName, hours: sumHours } }) => {
   const { colors } = useTheme();
+  const onLessonPress = useCallback(() => {}, []);
   return (
-    <TouchableOpacity
-      style={styles.sectionItem}
-      activeOpacity={0.65}
-      onPress={() => console.log('a')}
-    >
+    <TouchableOpacity style={styles.sectionItem} activeOpacity={0.65} onPress={onLessonPress}>
       <View style={styles.sectionItemTitle}>
         <Icon name="circle" size={8} color={colors.card} />
         <Text style={{ paddingLeft: 20 }}>{lessonName}</Text>
