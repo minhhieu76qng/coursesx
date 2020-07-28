@@ -8,8 +8,16 @@ export default StyleSheet.create({
   courseTitle: {
     marginTop: 20,
   },
-  section: {
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  description: {
     marginTop: 5,
+  },
+  section: {
+    marginTop: 10,
   },
   authorBadge: {
     flexDirection: 'row',

@@ -51,6 +51,10 @@ const Browse = ({ navigation }) => {
     return result;
   }, [categories]);
 
+  const onCoursePress = useCallback((courseId) => {
+    navigation.navigate(screenName.courseDetail, { courseId });
+  }, []);
+
   useEffect(() => {
     CourseRepo.getAuthorsList()
       .then((data) => {
@@ -144,7 +148,7 @@ const Browse = ({ navigation }) => {
                     item.description,
                   ]}
                   cardImage={item.imageUrl}
-                  onPress={() => navigation.navigate(screenName.coursesInSection)}
+                  onPress={() => onCoursePress(item.id)}
                 />
               )}
             />
@@ -166,7 +170,7 @@ const Browse = ({ navigation }) => {
                     item.description,
                   ]}
                   cardImage={item.imageUrl}
-                  onPress={() => navigation.navigate(screenName.coursesInSection)}
+                  onPress={() => onCoursePress(item.id)}
                 />
               )}
             />

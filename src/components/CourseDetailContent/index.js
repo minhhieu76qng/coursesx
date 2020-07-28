@@ -1,62 +1,14 @@
-import React from 'react';
+import React, { useMemo, useContext } from 'react';
 import { View, SectionList, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import Text from 'components/Text';
 import Icon from 'themes/Icon';
+import CourseDetailContext from '../../views/App/CourseDetail/CourseDetailContext';
 import styles from './styles';
 
-const data = [
-  {
-    id: 1,
-    key: 1,
-    sectionTitle: 'Course Overview',
-    viewedTimes: 10,
-    data: [
-      {
-        title: 'Course Overview',
-        duration: 92,
-      },
-    ],
-  },
-  {
-    id: 2,
-    key: 2,
-    sectionTitle: 'Course Introduction',
-    viewedTimes: 0,
-    data: [
-      {
-        title: 'Getting Started',
-        duration: 384,
-      },
-    ],
-  },
-  {
-    id: 3,
-    key: 3,
-    sectionTitle: 'Keys Concept and Core Services',
-    viewedTimes: 0,
-    data: [
-      {
-        title: 'What we will cover?',
-        duration: 87,
-      },
-      {
-        title: 'Understand Identity and Access Management (IAM)',
-        duration: 235,
-      },
-      {
-        title: 'Configuring Additional IAM Best Practices',
-        duration: 402,
-      },
-      {
-        title: 'Configuring Additional IAM Best Practices',
-        duration: 231,
-      },
-    ],
-  },
-];
-
-const CourseDetailContentItemHeader = ({ headerItem: { sectionTitle, viewedTimes = 0, key } }) => {
+const CourseDetailContentItemHeader = ({
+  headerItem: { name: sectionTitle, sumHours = 0, key = 1 },
+}) => {
   const { colors } = useTheme();
   return (
     <View style={[styles.courseContentItemHeader]}>
@@ -68,7 +20,7 @@ const CourseDetailContentItemHeader = ({ headerItem: { sectionTitle, viewedTimes
           {sectionTitle}
         </Text>
         <Text type="subbody" color={colors.textSecondary} style={styles.viewedTimesHeader}>
-          {viewedTimes}
+          {sumHours}
         </Text>
       </View>
     </View>
@@ -88,7 +40,7 @@ const FooterItemSeparator = ({ show }) => {
   );
 };
 
-const SectionItem = ({ item }) => {
+const SectionItem = ({ item: { name: lessonName, hours: sumHours } }) => {
   const { colors } = useTheme();
   return (
     <TouchableOpacity
@@ -98,23 +50,33 @@ const SectionItem = ({ item }) => {
     >
       <View style={styles.sectionItemTitle}>
         <Icon name="circle" size={8} color={colors.card} />
-        <Text style={{ paddingLeft: 20 }}>{item.title}</Text>
+        <Text style={{ paddingLeft: 20 }}>{lessonName}</Text>
       </View>
       {/* <Text>{item.viewedTimes}</Text> */}
       <Text type="subbody" color={colors.textSecondary}>
-        10:10
+        {sumHours}
       </Text>
     </TouchableOpacity>
   );
 };
 
 export default function CourseDetailContent() {
+  const { courseData: { section: sections } = {} } = useContext(CourseDetailContext) || {};
+  const formattedSections = useMemo(() => {
+    return (sections || []).map((st) => {
+      const { lesson, ...tmpSection } = st;
+      return {
+        ...tmpSection,
+        data: lesson,
+      };
+    });
+  }, [sections]);
   return (
     <SectionList
       contentContainerStyle={{ paddingVertical: 15 }}
-      sections={data}
+      sections={formattedSections}
       renderSectionFooter={({ section }) => (
-        <FooterItemSeparator show={section.key !== data.length} />
+        <FooterItemSeparator show={section.key !== sections.length} />
       )}
       keyExtractor={(item, index) => index}
       renderSectionHeader={({ section }) => <CourseDetailContentItemHeader headerItem={section} />}

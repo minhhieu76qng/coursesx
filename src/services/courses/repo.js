@@ -10,7 +10,7 @@ class CourseRepo {
       });
       return data;
     } catch (e) {
-      console.log('CourseRepo -> getCategories -> e', e);
+      console.log('CourseRepo -> getCategories -> e', e?.response.data.message);
       throw e;
     }
   }
@@ -22,7 +22,7 @@ class CourseRepo {
       });
       return author;
     } catch (e) {
-      console.log('CourseRepo -> getAuthorDetail -> e', e);
+      console.log('CourseRepo -> getAuthorDetail -> e', e?.response.data.message);
       return null;
     }
   }
@@ -40,7 +40,7 @@ class CourseRepo {
 
       return (authorsDetail || []).map(({ payload }) => payload);
     } catch (e) {
-      console.log('CourseRepo -> getAuthors -> e', e);
+      console.log('CourseRepo -> getAuthors -> e', e?.response.data.message);
       throw e;
     }
   }
@@ -57,7 +57,7 @@ class CourseRepo {
         },
       }));
     } catch (e) {
-      console.log('getTopSellerCourses -> e', e);
+      console.log('getTopSellerCourses -> e', e?.response.data.message);
       throw e;
     } finally {
       return data;
@@ -76,7 +76,7 @@ class CourseRepo {
         },
       }));
     } catch (e) {
-      console.log('getTopRatingCourses -> e', e);
+      console.log('getTopRatingCourses -> e', e?.response.data.message);
       throw e;
     } finally {
       return data;
@@ -110,7 +110,7 @@ class CourseRepo {
         url: `/user/recommend-course/${userId}/${limit}/${page - 1}`,
       }));
     } catch (e) {
-      console.log('getRecommendCourses -> e', e);
+      console.log('getRecommendCourses -> e', e?.response.data.message);
       throw e;
     } finally {
       return data;
@@ -135,7 +135,56 @@ class CourseRepo {
         },
       }));
     } catch (e) {
-      console.log('getCoursesInCategory -> e', e);
+      console.log('getCoursesInCategory -> e', e?.response.data.message);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
+
+  static async getCourseDetail(courseId, userId) {
+    let data = null;
+    try {
+      ({ payload: data } = await Api({
+        method: 'get',
+        url: `/course/get-course-detail/${courseId}/${userId}`,
+      }));
+
+      return data;
+    } catch (e) {
+      console.log('getCourseInfo -> e', e);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
+
+  static async getCourseWithLessonsById(courseId) {
+    let data = null;
+    try {
+      ({ payload: data } = await Api({
+        method: 'get',
+        url: `/course/detail-with-lesson/${courseId}`,
+      }));
+
+      return data;
+    } catch (e) {
+      console.log('getCourseWithLessonsById -> e', e?.response.data.message);
+      throw e;
+    } finally {
+      return data;
+    }
+  }
+
+  static async getSingleAuthor(authorId) {
+    let data = null;
+    try {
+      ({ payload: data } = await Api({
+        method: 'get',
+        url: `/instructor/detail/${authorId}`,
+      }));
+    } catch (e) {
+      console.log('getSingleAuthor -> e', e);
       throw e;
     } finally {
       return data;
