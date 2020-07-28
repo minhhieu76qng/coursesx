@@ -7,13 +7,13 @@ import CourseDetailContext from '../../views/App/CourseDetail/CourseDetailContex
 import styles from './styles';
 
 const CourseDetailContentItemHeader = ({
-  headerItem: { name: sectionTitle, sumHours = 0, key = 1 },
+  headerItem: { name: sectionTitle, idx, sumHours = 0 },
 }) => {
   const { colors } = useTheme();
   return (
     <View style={[styles.courseContentItemHeader]}>
       <View style={[styles.headerItemIdx, { backgroundColor: colors.card }]}>
-        <Text>{key}</Text>
+        <Text>{idx}</Text>
       </View>
       <View style={styles.itemHeader}>
         <Text type="h4" size={18} numberOfLines={2}>
@@ -63,10 +63,13 @@ const SectionItem = ({ item: { name: lessonName, hours: sumHours } }) => {
 export default function CourseDetailContent() {
   const { courseData: { section: sections } = {} } = useContext(CourseDetailContext) || {};
   const formattedSections = useMemo(() => {
+    let idx = 0;
     return (sections || []).map((st) => {
       const { lesson, ...tmpSection } = st;
+      idx += 1;
       return {
         ...tmpSection,
+        idx,
         data: lesson,
       };
     });
@@ -75,11 +78,11 @@ export default function CourseDetailContent() {
     <SectionList
       contentContainerStyle={{ paddingVertical: 15 }}
       sections={formattedSections}
+      renderSectionHeader={({ section }) => <CourseDetailContentItemHeader headerItem={section} />}
       renderSectionFooter={({ section }) => (
-        <FooterItemSeparator show={section.key !== sections.length} />
+        <FooterItemSeparator show={section.idx !== sections.length} />
       )}
       keyExtractor={(item, index) => index}
-      renderSectionHeader={({ section }) => <CourseDetailContentItemHeader headerItem={section} />}
       renderItem={({ item }) => <SectionItem item={item} />}
     />
   );
