@@ -1,5 +1,6 @@
-import YouTubeVideoPlayer from 'react-native-youtube-iframe';
-import { Video } from 'expo-av';
+// import YouTubeVideoPlayer from 'react-native-youtube-iframe';
+import { Video as ExpoVideo } from 'expo-av';
+import YoutubePlayer from 'react-native-youtube-iframe';
 import screenName from './screenName';
 import themeMode from './themeMode';
 
@@ -19,9 +20,9 @@ export const VIDEO_TYPE = {
   getComponent(type) {
     switch (type) {
       case this.UPLOAD:
-        return Video;
+        return ExpoVideo;
       case this.YOUTUBE:
-        return YouTubeVideoPlayer;
+        return YoutubePlayer;
       default:
         return null;
     }

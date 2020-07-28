@@ -16,7 +16,7 @@ import CourseDetailContent from '../../../components/CourseDetailContent';
 import CourseRepo from '../../../services/courses/repo';
 import { getCurrentUser } from '../../../services/inapp/getters';
 import CourseDetailContext from './CourseDetailContext';
-import { VIDEO_TYPE } from '../../../constants';
+import VideoPlayer from '../../../components/VideoPlayer';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
 const videoHeight = Dimensions.get('window').height * 0.3 || 100;
@@ -27,7 +27,6 @@ class CourseDetail extends React.Component {
 
     this.state = {
       isLoading: true,
-      videoPlayer: null,
       courseData: null,
     };
   }
@@ -36,34 +35,7 @@ class CourseDetail extends React.Component {
     this.fetchCourse();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { courseData } = this.state;
-    if (courseData !== prevState.courseData) {
-      this.getVideoPlayer();
-    }
-  }
-
   onAuthorPress = () => {};
-
-  getVideoPlayer() {
-    const { courseData } = this.state;
-    const VideoComponent = VIDEO_TYPE.getComponent(courseData?.typeUploadVideoLesson);
-    let player = null;
-    switch (courseData?.typeUploadVideoLesson) {
-      case VIDEO_TYPE.UPLOAD:
-        player = <VideoComponent style={{ flex: 1 }} />;
-        break;
-      case VIDEO_TYPE.YOUTUBE:
-        player = <VideoComponent style={{ flex: 1 }} />;
-        break;
-      default:
-        player = null;
-    }
-
-    this.setState({
-      videoPlayer: player,
-    });
-  }
 
   async fetchCourse() {
     try {
@@ -79,6 +51,7 @@ class CourseDetail extends React.Component {
         course.author = author;
         this.setState({
           courseData: course,
+          playingLesson: course?.section?.[0].lesson?.[0],
         });
       }
     } catch (e) {
@@ -91,11 +64,11 @@ class CourseDetail extends React.Component {
   }
 
   render() {
-    const { isLoading, courseData, videoPlayer } = this.state;
+    const { isLoading, courseData, playingLesson } = this.state;
     const { onAuthorPress } = this;
     return (
       <AppLayout>
-        <CourseDetailContext.Provider value={{ courseData }}>
+        <CourseDetailContext.Provider value={{ courseData, playingLesson }}>
           <ThemeContext.Consumer>
             {(themeContext) => (
               <View style={[{ flex: 1 }, isLoading && styles.loadingContainer]}>
@@ -104,17 +77,12 @@ class CourseDetail extends React.Component {
                 )}
                 {!isLoading && courseData && (
                   <>
-                    <View style={{ width: '100%', height: videoHeight }}>
-                      {/* <Image
-                    style={{ width: '100%', height: videoHeight }}
-                    source={{
-                      uri: courseData.imageUrl,
-                    }}
-                    PlaceholderContent={
-                      <LogoLoadingIndicator logoWidth={130} indicatorSize="large" />
-                    }
-                  /> */}
-                      {videoPlayer}
+                    <View style={{ width: '100%' }}>
+                      <VideoPlayer
+                        courseData={courseData}
+                        playingLesson={playingLesson}
+                        height={videoHeight}
+                      />
                     </View>
                     <ScrollView contentContainerStyle={styles.courseBody}>
                       <Text type="h3" weight="medium" numberOfLines={2} style={styles.courseTitle}>
