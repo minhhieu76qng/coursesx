@@ -40,8 +40,24 @@ const LoadingSkeleton = () => {
 };
 
 const ExpoVideoPlayer = () => {
-  const { videoUrl } = useContext(VideoPlayerContext);
-  return <ExpoVideo source={{ uri: videoUrl }} />;
+  const { videoUrl, height } = useContext(VideoPlayerContext);
+
+  return (
+    <ExpoVideo
+      progressUpdateIntervalMillis={500}
+      shouldPlay
+      rate={1.0}
+      volume={1.0}
+      isMuted={false}
+      isLooping={false}
+      source={{ uri: videoUrl }}
+      useNativeControls
+      style={{
+        width: '100%',
+        height,
+      }}
+    />
+  );
 };
 
 const YoutubeVideoPlayer = () => {
