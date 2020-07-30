@@ -1,43 +1,82 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState, useContext } from 'react';
+import YoutubePlayer, { getYoutubeMeta } from 'react-native-youtube-iframe';
+// import { Video as ExpoVideo } from 'expo-av';
 import { View } from 'react-native';
-import Text from 'components/Text';
+import Icon from 'themes/Icon';
 import { VIDEO_TYPE } from '../../constants';
-import styles from './styles';
 
-const WrongVideoUI = () => {
+const VideoPlayerContext = React.createContext({
+  isLoading: false,
+  setLoading: () => {},
+  setHeight: () => {},
+  videoUrl: null,
+  playingLesson: null,
+  height: null,
+  isYoutubeVideo: true,
+});
+
+// const WrongVideoUI = () => {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Bài học bị lỗi.</Text>
+//     </View>
+//   );
+// };
+
+const LoadingSkeleton = () => {
+  const { isYoutubeVideo } = useContext(VideoPlayerContext);
+  const iconName = useMemo(() => (isYoutubeVideo ? 'youtube' : 'film'), [isYoutubeVideo]);
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Bài học bị lỗi.</Text>
+      <Icon name={iconName} size={50} />
     </View>
   );
 };
 
-const VideoPlayer = ({ courseData, playingLesson, height = 300 }) => {
-  const VideoComponent = useMemo(() => {
-    const Video = VIDEO_TYPE.getComponent(courseData?.typeUploadVideoLesson);
-    let player = <WrongVideoUI />;
-    const videoUrl = playingLesson?.videoUrl;
-    if (!videoUrl) {
-      return player;
-    }
-    let videoId = null;
-    let paths = [];
-    switch (courseData?.typeUploadVideoLesson) {
-      case VIDEO_TYPE.UPLOAD:
-        player = <Video style={styles.container} />;
-        break;
-      case VIDEO_TYPE.YOUTUBE:
-        // get videoId
-        paths = videoUrl?.split('/');
-        videoId = paths?.[paths.findIndex((p) => p === 'embed') + 1];
-        player = <Video videoId={videoId} height={height} />;
-        break;
-      default:
-    }
-    return player;
-  }, [courseData]);
+const YoutubeVideoPlayer = () => {
+  const { videoUrl, setHeight, height, setLoading, isLoading } = useContext(VideoPlayerContext);
+  const videoId = useMemo(() => {
+    const paths = videoUrl?.split('/');
+    return paths?.[paths.findIndex((p) => p === 'embed') + 1];
+  }, [videoUrl]);
 
-  return VideoComponent;
+  useEffect(() => {
+    setLoading(true);
+    getYoutubeMeta(videoId)
+      .then((meta = {}) => {
+        if (meta.height) {
+          setHeight(meta.height);
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
+  }, [videoId]);
+
+  return isLoading ? <LoadingSkeleton /> : <YoutubePlayer videoId={videoId} height={height} />;
+};
+
+const VideoPlayer = ({ courseData, playingLesson }) => {
+  const [isLoading, setLoading] = useState(true);
+  const [height, setHeight] = useState(250);
+
+  const isYoutubeVideo = useMemo(() => courseData?.typeUploadVideoLesson === VIDEO_TYPE.YOUTUBE, [
+    courseData,
+  ]);
+
+  return (
+    <VideoPlayerContext.Provider
+      value={{
+        isLoading,
+        setLoading,
+        videoUrl: playingLesson?.videoUrl,
+        height,
+        setHeight,
+        isYoutubeVideo,
+      }}
+    >
+      {isYoutubeVideo ? <YoutubeVideoPlayer /> : null}
+    </VideoPlayerContext.Provider>
+  );
 };
 
 export default VideoPlayer;

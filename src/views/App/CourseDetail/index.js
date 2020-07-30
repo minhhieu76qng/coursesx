@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Dimensions, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import moment from 'moment';
@@ -19,7 +19,6 @@ import CourseDetailContext from './CourseDetailContext';
 import VideoPlayer from '../../../components/VideoPlayer';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
-const videoHeight = Dimensions.get('window').height * 0.3 || 100;
 
 class CourseDetail extends React.Component {
   constructor(props) {
@@ -81,7 +80,7 @@ class CourseDetail extends React.Component {
                       <VideoPlayer
                         courseData={courseData}
                         playingLesson={playingLesson}
-                        height={videoHeight}
+                        // height={videoHeight}
                       />
                     </View>
                     <ScrollView contentContainerStyle={styles.courseBody}>

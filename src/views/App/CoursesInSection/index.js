@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { isArray } from 'lodash';
 import { FlatList, View, ActivityIndicator } from 'react-native';
@@ -6,12 +6,12 @@ import { useTheme, useRoute } from '@react-navigation/native';
 import AppLayout from 'layouts/AppLayout';
 import Text from 'components/Text';
 import styles from './styles';
-import { CATEGORY_TYPES } from '../../../constants';
+import { CATEGORY_TYPES, screenName } from '../../../constants';
 import CourseRepo from '../../../services/courses/repo';
 import { getCurrentUser } from '../../../services/inapp/getters';
 import CourseListItem from '../../../components/CourseListItem';
 
-const CoursesInSection = () => {
+const CoursesInSection = ({ navigation }) => {
   const route = useRoute();
   const currentUser = useSelector(getCurrentUser);
   const [courseList, setCourseList] = useState([]);
@@ -25,6 +25,11 @@ const CoursesInSection = () => {
     };
   }, [route]);
   const [isLoading, setLoading] = useState(true);
+
+  const onCoursePress = useCallback((courseId) => {
+    navigation.navigate(screenName.courseDetail, { courseId });
+  }, []);
+
   useEffect(() => {
     setLoading(true);
     switch (categoryData.type) {
@@ -67,7 +72,9 @@ const CoursesInSection = () => {
             data={courseList}
             keyExtractor={(path) => `${path.id}`}
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <CourseListItem course={item} />}
+            renderItem={({ item }) => (
+              <CourseListItem course={item} onPress={() => onCoursePress(item.id)} />
+            )}
           />
         )}
         {!isLoading && !(courseList && courseList.length > 0) && (
