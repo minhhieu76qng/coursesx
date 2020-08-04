@@ -1,7 +1,7 @@
-import { call, put, takeLatest, all } from 'redux-saga/effects';
+import { call, put, takeLatest, all, takeEvery } from 'redux-saga/effects';
 import UserRepo from './repo';
 import { setCurrentUser, showFlashMessage } from '../inapp/actions';
-import { FETCH_USER_DATA, REGISTER_ACCOUNT, LOGIN_ACCOUNT } from './constants';
+import { FETCH_USER_DATA, REGISTER_ACCOUNT, LOGIN_ACCOUNT, LOGOUT } from './constants';
 import MessageType from '../inapp/MessageType';
 import AsyncStorage from '../../utils/asyncStorage';
 
@@ -65,8 +65,14 @@ function* registerNewAccount({ payload = {}, meta: { callback } = {} }) {
   }
 }
 
+function* logout() {
+  yield put(setCurrentUser(null));
+  yield call(AsyncStorage.removeAccessToken);
+}
+
 export default function* () {
   yield takeLatest(FETCH_USER_DATA, fetchCurrentUserData);
   yield takeLatest(LOGIN_ACCOUNT, loginToAccount);
   yield takeLatest(REGISTER_ACCOUNT, registerNewAccount);
+  yield takeEvery(LOGOUT, logout);
 }

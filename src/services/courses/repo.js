@@ -205,6 +205,51 @@ class CourseRepo {
       return data;
     }
   }
+
+  static async updateLearningTime({ lessonId, learnedTimes = 0 } = {}) {
+    try {
+      await Api({
+        method: 'put',
+        url: '/lesson/update-current-time-learn-video',
+        body: {
+          lessonId,
+          currentTime: learnedTimes,
+        },
+      });
+    } catch (e) {
+      console.log('updateLearningTime -> e', e);
+      throw e;
+    }
+  }
+
+  static async updateFinishLesson(lessonId) {
+    try {
+      await Api({
+        method: 'post',
+        url: '/lesson/update-status',
+        body: {
+          lessonId,
+        },
+      });
+    } catch (e) {
+      console.log('updateFinishLesson -> e', e);
+      throw e;
+    }
+  }
+
+  static async getLesson(courseId, lessonId) {
+    try {
+      const data = await Api({
+        method: 'get',
+        url: `/lesson/detail/${courseId}/${lessonId}`,
+      });
+
+      return data;
+    } catch (e) {
+      console.log('getLesson -> e', e);
+      throw e;
+    }
+  }
 }
 
 export default CourseRepo;

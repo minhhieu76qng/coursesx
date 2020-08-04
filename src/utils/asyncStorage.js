@@ -24,6 +24,16 @@ class AsyncStorage {
       return false;
     }
   }
+
+  static async removeAccessToken() {
+    try {
+      await AsyncStorageComp.removeItem(AsyncStorage.Keys.ACCESS_TOKEN);
+      return true;
+    } catch (e) {
+      console.log('AsyncStorage -> removeAccessToken -> e', e);
+      return false;
+    }
+  }
 }
 
 export default AsyncStorage;

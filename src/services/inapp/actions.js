@@ -9,7 +9,7 @@ const {
 } = require('./constants');
 
 // eslint-disable-next-line import/prefer-default-export
-export function setCurrentUser(currentUser = {}) {
+export function setCurrentUser(currentUser = null) {
   return {
     type: SET_CURRENT_USER,
     payload: {

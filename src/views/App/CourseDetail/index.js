@@ -36,6 +36,22 @@ class CourseDetail extends React.Component {
 
   onAuthorPress = () => {};
 
+  // async getLesson(lessonId) {
+  //   // try {
+  //   //   const courseId = courseData?.id
+  //   //   if (!courseId) {
+  //   //     return;
+  //   //   }
+  //   //   const lesson = await
+  //   // }
+  //   // catch (e) {
+  //   //   console.log("CourseDetail -> getLesson -> e", e)
+  //   // }
+  //   // finally {
+
+  //   // }
+  // }
+
   async fetchCourse() {
     try {
       const { courseId } = this.props?.route?.params;
