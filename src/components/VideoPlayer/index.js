@@ -93,6 +93,7 @@ const YoutubeVideoPlayer = ({ onStopVideo }) => {
   ) : (
     <YoutubePlayer
       ref={videoRef}
+      play
       onChangeState={onVideoPlayerStageChanged}
       videoId={videoId}
       height={height}

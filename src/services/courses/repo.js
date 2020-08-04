@@ -239,12 +239,21 @@ class CourseRepo {
 
   static async getLesson(courseId, lessonId) {
     try {
-      const data = await Api({
-        method: 'get',
-        url: `/lesson/detail/${courseId}/${lessonId}`,
-      });
+      const [{ payload: lessonData = {} }, { payload: lessonVideo = {} }] = await Promise.all([
+        Api({
+          method: 'get',
+          url: `/lesson/detail/${courseId}/${lessonId}`,
+        }),
+        Api({
+          method: 'get',
+          url: `/lesson/video/${courseId}/${lessonId}`,
+        }),
+      ]);
 
-      return data;
+      return {
+        ...lessonData,
+        ...lessonVideo,
+      };
     } catch (e) {
       console.log('getLesson -> e', e);
       throw e;

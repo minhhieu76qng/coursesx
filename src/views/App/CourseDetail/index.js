@@ -46,21 +46,21 @@ class CourseDetail extends React.Component {
     }
   };
 
-  // async getLesson(lessonId) {
-  //   // try {
-  //   //   const courseId = courseData?.id
-  //   //   if (!courseId) {
-  //   //     return;
-  //   //   }
-  //   //   const lesson = await
-  //   // }
-  //   // catch (e) {
-  //   //   console.log("CourseDetail -> getLesson -> e", e)
-  //   // }
-  //   // finally {
-
-  //   // }
-  // }
+  selectLesson = async (lessonId) => {
+    try {
+      const { courseData } = this.state;
+      const courseId = courseData?.id;
+      if (!courseId) {
+        return;
+      }
+      const lesson = await CourseRepo.getLesson(courseId, lessonId);
+      this.setState({
+        playingLesson: lesson,
+      });
+    } catch (e) {
+      console.log('CourseDetail -> getLesson -> e', e);
+    }
+  };
 
   async fetchCourse() {
     try {
@@ -96,10 +96,10 @@ class CourseDetail extends React.Component {
 
   render() {
     const { isLoading, courseData, playingLesson } = this.state;
-    const { onAuthorPress, onStopVideo } = this;
+    const { onAuthorPress, onStopVideo, selectLesson } = this;
     return (
       <AppLayout>
-        <CourseDetailContext.Provider value={{ courseData, playingLesson }}>
+        <CourseDetailContext.Provider value={{ courseData, playingLesson, selectLesson }}>
           <ThemeContext.Consumer>
             {(themeContext) => (
               <View style={[{ flex: 1 }, isLoading && styles.loadingContainer]}>
@@ -144,9 +144,9 @@ class CourseDetail extends React.Component {
                       </View>
                       <View style={[styles.section, styles.iconsWrapper]}>
                         <View style={styles.iconContainer}>
-                          <IconButton size={25} roundWidth={25} name="bookmark-o" />
+                          <IconButton size={25} roundWidth={25} name="heart-o" />
                           <Text style={styles.iconText} type="subbody" weight="medium">
-                            Đánh dấu
+                            Yêu thích
                           </Text>
                         </View>
 

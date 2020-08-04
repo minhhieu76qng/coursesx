@@ -1,10 +1,18 @@
 import React, { useMemo, useContext, useCallback } from 'react';
 import { View, SectionList, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 import { useTheme } from '@react-navigation/native';
 import Text from 'components/Text';
 import Icon from 'themes/Icon';
 import CourseDetailContext from '../../views/App/CourseDetail/CourseDetailContext';
 import styles from './styles';
+
+function convertToTime(hours) {
+  const minutes = moment.duration(hours, 'hours').asMinutes();
+  const m = Math.floor(minutes);
+  const s = Math.floor((minutes - m) * 60);
+  return `${m < 10 ? `0${m}` : m}:${s < 10 ? `0${s}` : s}`;
+}
 
 const CourseDetailContentItemHeader = ({
   headerItem: { name: sectionTitle, idx, sumHours = 0 },
@@ -20,7 +28,7 @@ const CourseDetailContentItemHeader = ({
           {sectionTitle}
         </Text>
         <Text type="subbody" color={colors.textSecondary} style={styles.viewedTimesHeader}>
-          {sumHours}
+          {convertToTime(sumHours)}
         </Text>
       </View>
     </View>
@@ -40,9 +48,11 @@ const FooterItemSeparator = ({ show }) => {
   );
 };
 
-const SectionItem = ({ item: { name: lessonName, hours: sumHours } }) => {
+const SectionItem = ({ item: { id, name: lessonName, hours: sumHours }, lessonPress }) => {
   const { colors } = useTheme();
-  const onLessonPress = useCallback(() => {}, []);
+  const onLessonPress = useCallback(() => {
+    lessonPress(id);
+  }, []);
   return (
     <TouchableOpacity style={styles.sectionItem} activeOpacity={0.65} onPress={onLessonPress}>
       <View style={styles.sectionItemTitle}>
@@ -51,14 +61,15 @@ const SectionItem = ({ item: { name: lessonName, hours: sumHours } }) => {
       </View>
       {/* <Text>{item.viewedTimes}</Text> */}
       <Text type="subbody" color={colors.textSecondary}>
-        {sumHours}
+        {convertToTime(sumHours)}
       </Text>
     </TouchableOpacity>
   );
 };
 
 export default function CourseDetailContent() {
-  const { courseData: { section: sections } = {} } = useContext(CourseDetailContext) || {};
+  const { courseData: { section: sections } = {}, selectLesson } =
+    useContext(CourseDetailContext) || {};
   const formattedSections = useMemo(() => {
     let idx = 0;
     return (sections || []).map((st) => {
@@ -80,7 +91,7 @@ export default function CourseDetailContent() {
         <FooterItemSeparator show={section.idx !== sections.length} />
       )}
       keyExtractor={(item, index) => index}
-      renderItem={({ item }) => <SectionItem item={item} />}
+      renderItem={({ item }) => <SectionItem item={item} lessonPress={selectLesson} />}
     />
   );
 }
