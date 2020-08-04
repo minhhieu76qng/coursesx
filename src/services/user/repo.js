@@ -51,6 +51,21 @@ class UserRepo {
       throw e;
     }
   }
+
+  static async isBoughtCourse(courseId) {
+    try {
+      const {
+        payload: { isUserOwnCourse },
+      } = await Api({
+        method: 'get',
+        url: `/user/check-own-course/${courseId}`,
+      });
+      return isUserOwnCourse;
+    } catch (e) {
+      console.log('isBoughtCourse -> e', e);
+      throw e;
+    }
+  }
 }
 
 export default UserRepo;

@@ -206,14 +206,14 @@ class CourseRepo {
     }
   }
 
-  static async updateLearningTime({ lessonId, learnedTimes = 0 } = {}) {
+  static async updateLearningTime({ lessonId, currentTime = 0 } = {}) {
     try {
       await Api({
         method: 'put',
         url: '/lesson/update-current-time-learn-video',
         body: {
           lessonId,
-          currentTime: learnedTimes,
+          currentTime,
         },
       });
     } catch (e) {
@@ -232,7 +232,7 @@ class CourseRepo {
         },
       });
     } catch (e) {
-      console.log('updateFinishLesson -> e', e);
+      console.log('updateFinishLesson -> e', e?.response?.data?.message);
       throw e;
     }
   }

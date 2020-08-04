@@ -15,3 +15,9 @@ export const VIDEO_TYPE = {
   UPLOAD: 1,
   YOUTUBE: 2,
 };
+
+export const YOUTUBE_VIDEO_STAGE = {
+  PLAYING: 'playing',
+  PAUSED: 'paused',
+  ENDED: 'ended',
+};

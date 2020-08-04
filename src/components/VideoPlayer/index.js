@@ -1,11 +1,11 @@
-import React, { useMemo, useEffect, useState, useContext } from 'react';
+import React, { useMemo, useEffect, useState, useContext, useCallback, useRef } from 'react';
 import YoutubePlayer, { getYoutubeMeta } from 'react-native-youtube-iframe';
 import { useTheme } from '@react-navigation/native';
 import { Video as ExpoVideo } from 'expo-av';
 import { View } from 'react-native';
 import Icon from 'themes/Icon';
 import Text from 'components/Text';
-import { VIDEO_TYPE } from '../../constants';
+import { VIDEO_TYPE, YOUTUBE_VIDEO_STAGE } from '../../constants';
 import styles from './styles';
 
 const VideoPlayerContext = React.createContext({
@@ -18,13 +18,13 @@ const VideoPlayerContext = React.createContext({
   isYoutubeVideo: true,
 });
 
-const WrongVideoUI = () => {
+const VideoMessage = ({ text = '' }) => {
   const { isYoutubeVideo } = useContext(VideoPlayerContext);
   const iconName = useMemo(() => (isYoutubeVideo ? 'youtube' : 'film'), [isYoutubeVideo]);
   return (
     <View style={styles.otherComps}>
       <Icon name={iconName} size={50} />
-      <Text style={{ marginTop: 20 }}>Video link is wrong. Please contact admin to resolve!</Text>
+      <Text style={{ marginTop: 20, textAlign: 'center', lineHeight: 22 }}>{text}</Text>
     </View>
   );
 };
@@ -60,12 +60,21 @@ const ExpoVideoPlayer = () => {
   );
 };
 
-const YoutubeVideoPlayer = () => {
+const YoutubeVideoPlayer = ({ onStopVideo }) => {
   const { videoUrl, setHeight, height, setLoading, isLoading } = useContext(VideoPlayerContext);
+  const videoRef = useRef(null);
   const videoId = useMemo(() => {
     const paths = videoUrl?.split('/');
     return paths?.[paths.findIndex((p) => p === 'embed') + 1];
   }, [videoUrl]);
+
+  const onVideoPlayerStageChanged = useCallback(async (event) => {
+    console.log('onVideoPlayerStageChanged -> event', event);
+    if (event === YOUTUBE_VIDEO_STAGE.PAUSED || event === YOUTUBE_VIDEO_STAGE.ENDED) {
+      const time = await videoRef.current?.getCurrentTime();
+      onStopVideo(time);
+    }
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -79,10 +88,19 @@ const YoutubeVideoPlayer = () => {
       .finally(() => setLoading(false));
   }, [videoId]);
 
-  return isLoading ? <LoadingSkeleton /> : <YoutubePlayer videoId={videoId} height={height} />;
+  return isLoading ? (
+    <LoadingSkeleton />
+  ) : (
+    <YoutubePlayer
+      ref={videoRef}
+      onChangeState={onVideoPlayerStageChanged}
+      videoId={videoId}
+      height={height}
+    />
+  );
 };
 
-const VideoPlayer = ({ courseData, playingLesson }) => {
+const VideoPlayer = ({ courseData, playingLesson, onStopVideo = () => {} }) => {
   const [isLoading, setLoading] = useState(true);
   const [height, setHeight] = useState(250);
   const { colors } = useTheme();
@@ -103,8 +121,22 @@ const VideoPlayer = ({ courseData, playingLesson }) => {
       }}
     >
       <View style={[styles.container, { height, backgroundColor: colors.card }]}>
-        {!playingLesson?.videoUrl && <WrongVideoUI />}
-        {playingLesson?.videoUrl && (isYoutubeVideo ? <YoutubeVideoPlayer /> : <ExpoVideoPlayer />)}
+        {!courseData.isBought && (
+          <VideoMessage text="Bạn chưa mua khoá học này! Vui lòng mua để có thể học." />
+        )}
+        {courseData.isBought && (
+          <>
+            {!playingLesson?.videoUrl && (
+              <VideoMessage text="Đường dẫn video bị hỏng. Liên hệ admin để khắc phục." />
+            )}
+            {playingLesson?.videoUrl &&
+              (isYoutubeVideo ? (
+                <YoutubeVideoPlayer onStopVideo={onStopVideo} />
+              ) : (
+                <ExpoVideoPlayer />
+              ))}
+          </>
+        )}
       </View>
     </VideoPlayerContext.Provider>
   );
