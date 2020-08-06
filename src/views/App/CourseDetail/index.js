@@ -46,14 +46,26 @@ class CourseDetail extends React.Component {
     }
   };
 
+  onVideoEnded = async () => {
+    const { playingLesson } = this.state;
+    if (playingLesson?.nextLessonId) {
+      await this.selectLesson(playingLesson?.nextLessonId);
+    }
+
+    if (playingLesson?.id && playingLesson?.isFinished) {
+      await CourseRepo.updateFinishLesson(playingLesson.id);
+    }
+  };
+
   selectLesson = async (lessonId) => {
     try {
       const { courseData } = this.state;
-      const courseId = courseData?.id;
+      const courseId = courseData?.id || this.props?.route?.params?.courseId;
       if (!courseId) {
         return;
       }
       const lesson = await CourseRepo.getLesson(courseId, lessonId);
+      console.log('CourseDetail -> selectLesson -> lesson', lesson);
       this.setState({
         playingLesson: lesson,
       });
@@ -74,15 +86,15 @@ class CourseDetail extends React.Component {
       if (course) {
         course.isBought = isBought;
         course.publishDate = moment(new Date(course.createdAt)).format('DD/MM/YYYY');
-        const author = await CourseRepo.getSingleAuthor(course.instructorId);
-        // const [author] = await Promise.all([
-        //   CourseRepo.getSingleAuthor(course.instructorId),
-        //   CourseRepo.getCourseProcess(course.id),
-        // ]);
+        const lessonId = course?.section?.[0].lesson?.[0]?.id;
+        const [author] = await Promise.all([
+          CourseRepo.getSingleAuthor(course.instructorId),
+          // CourseRepo.getCourseProcess(course.id),
+          lessonId && this.selectLesson(lessonId),
+        ]);
         course.author = author;
         this.setState({
           courseData: course,
-          playingLesson: course?.section?.[0].lesson?.[0],
         });
       }
     } catch (e) {
@@ -96,7 +108,7 @@ class CourseDetail extends React.Component {
 
   render() {
     const { isLoading, courseData, playingLesson } = this.state;
-    const { onAuthorPress, onStopVideo, selectLesson } = this;
+    const { onAuthorPress, onStopVideo, onVideoEnded, selectLesson } = this;
     return (
       <AppLayout>
         <CourseDetailContext.Provider value={{ courseData, playingLesson, selectLesson }}>
@@ -113,6 +125,7 @@ class CourseDetail extends React.Component {
                         courseData={courseData}
                         playingLesson={playingLesson}
                         onStopVideo={onStopVideo}
+                        onVideoEnded={onVideoEnded}
                         // height={videoHeight}
                       />
                     </View>

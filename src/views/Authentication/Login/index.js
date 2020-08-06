@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { Formik } from 'formik';
 import { useTheme } from '@react-navigation/native';
@@ -42,7 +42,7 @@ const Login = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.logoContainer}>
         <AppLogo />
       </View>
@@ -101,7 +101,7 @@ const Login = ({ navigation }) => {
           onPress={onSignUpPress}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

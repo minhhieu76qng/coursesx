@@ -60,7 +60,7 @@ const ExpoVideoPlayer = () => {
   );
 };
 
-const YoutubeVideoPlayer = ({ onStopVideo }) => {
+const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
   const { videoUrl, setHeight, height, setLoading, isLoading } = useContext(VideoPlayerContext);
   const videoRef = useRef(null);
   const videoId = useMemo(() => {
@@ -69,10 +69,14 @@ const YoutubeVideoPlayer = ({ onStopVideo }) => {
   }, [videoUrl]);
 
   const onVideoPlayerStageChanged = useCallback(async (event) => {
+    if (event === YOUTUBE_VIDEO_STAGE.ENDED) {
+      console.log('video end');
+      await onVideoEnded();
+    }
     console.log('onVideoPlayerStageChanged -> event', event);
-    if (event === YOUTUBE_VIDEO_STAGE.PAUSED || event === YOUTUBE_VIDEO_STAGE.ENDED) {
+    if (event === YOUTUBE_VIDEO_STAGE.PAUSED) {
       const time = await videoRef.current?.getCurrentTime();
-      onStopVideo(time);
+      await onStopVideo(time);
     }
   }, []);
 
@@ -101,7 +105,12 @@ const YoutubeVideoPlayer = ({ onStopVideo }) => {
   );
 };
 
-const VideoPlayer = ({ courseData, playingLesson, onStopVideo = () => {} }) => {
+const VideoPlayer = ({
+  courseData,
+  playingLesson,
+  onStopVideo = () => {},
+  onVideoEnded = () => {},
+}) => {
   const [isLoading, setLoading] = useState(true);
   const [height, setHeight] = useState(250);
   const { colors } = useTheme();
@@ -132,7 +141,7 @@ const VideoPlayer = ({ courseData, playingLesson, onStopVideo = () => {} }) => {
             )}
             {playingLesson?.videoUrl &&
               (isYoutubeVideo ? (
-                <YoutubeVideoPlayer onStopVideo={onStopVideo} />
+                <YoutubeVideoPlayer onStopVideo={onStopVideo} onVideoEnded={onVideoEnded} />
               ) : (
                 <ExpoVideoPlayer />
               ))}
