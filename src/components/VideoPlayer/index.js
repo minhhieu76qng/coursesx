@@ -61,7 +61,9 @@ const ExpoVideoPlayer = () => {
 };
 
 const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
-  const { videoUrl, setHeight, height, setLoading, isLoading } = useContext(VideoPlayerContext);
+  const { videoUrl, setHeight, height, setLoading, isLoading, currentVideoTime } = useContext(
+    VideoPlayerContext,
+  );
   const videoRef = useRef(null);
   const videoId = useMemo(() => {
     const paths = videoUrl?.split('/');
@@ -79,6 +81,12 @@ const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
       await onStopVideo(time);
     }
   }, []);
+
+  const onVideoReady = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.seekTo(currentVideoTime);
+    }
+  }, [currentVideoTime]);
 
   useEffect(() => {
     setLoading(true);
@@ -99,6 +107,7 @@ const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
       ref={videoRef}
       play
       onChangeState={onVideoPlayerStageChanged}
+      onReady={onVideoReady}
       videoId={videoId}
       height={height}
     />
@@ -128,6 +137,7 @@ const VideoPlayer = ({
         height,
         setHeight,
         isYoutubeVideo,
+        currentVideoTime: playingLesson?.currentTime || 0,
       }}
     >
       <View style={[styles.container, { height, backgroundColor: colors.card }]}>
