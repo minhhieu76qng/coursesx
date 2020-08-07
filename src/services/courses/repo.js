@@ -259,6 +259,20 @@ class CourseRepo {
       throw e;
     }
   }
+
+  static async getLastWatchedLesson(courseId) {
+    try {
+      const { payload } = await Api({
+        method: 'get',
+        url: `/course/last-watched-lesson/${courseId}`,
+      });
+
+      return payload;
+    } catch (e) {
+      console.log('getLastWatchedLesson -> e', e);
+      throw e;
+    }
+  }
 }
 
 export default CourseRepo;

@@ -86,13 +86,14 @@ class CourseDetail extends React.Component {
       if (course) {
         course.isBought = isBought;
         course.publishDate = moment(new Date(course.createdAt)).format('DD/MM/YYYY');
-        const lessonId = course?.section?.[0].lesson?.[0]?.id;
-        const [author] = await Promise.all([
+        const [author, lastWatchedLesson] = await Promise.all([
           CourseRepo.getSingleAuthor(course.instructorId),
-          // CourseRepo.getCourseProcess(course.id),
-          lessonId && this.selectLesson(lessonId),
+          CourseRepo.getLastWatchedLesson(courseId),
         ]);
         course.author = author;
+        if (lastWatchedLesson?.lessonId) {
+          await this.selectLesson(lastWatchedLesson.lessonId);
+        }
         this.setState({
           courseData: course,
         });
@@ -156,6 +157,13 @@ class CourseDetail extends React.Component {
                         </Text>
                       </View>
                       <View style={[styles.section, styles.iconsWrapper]}>
+                        <View style={styles.iconContainer}>
+                          <IconButton size={25} roundWidth={25} name="heart-o" />
+                          <Text style={styles.iconText} type="subbody" weight="medium">
+                            Mua khoá học
+                          </Text>
+                        </View>
+
                         <View style={styles.iconContainer}>
                           <IconButton size={25} roundWidth={25} name="heart-o" />
                           <Text style={styles.iconText} type="subbody" weight="medium">
