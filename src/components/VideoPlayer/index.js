@@ -105,7 +105,7 @@ const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
   ) : (
     <YoutubePlayer
       ref={videoRef}
-      play
+      // play
       onChangeState={onVideoPlayerStageChanged}
       onReady={onVideoReady}
       videoId={videoId}

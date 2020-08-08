@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView, ActivityIndicator } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { ThemeContext } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -110,6 +111,8 @@ class CourseDetail extends React.Component {
   render() {
     const { isLoading, courseData, playingLesson } = this.state;
     const { onAuthorPress, onStopVideo, onVideoEnded, selectLesson } = this;
+    const { t } = this.props;
+    console.log('CourseDetail -> render -> t', t('course_detail'));
     return (
       <AppLayout>
         <CourseDetailContext.Provider value={{ courseData, playingLesson, selectLesson }}>
@@ -158,33 +161,36 @@ class CourseDetail extends React.Component {
                       </View>
                       <View style={[styles.section, styles.iconsWrapper]}>
                         <View style={styles.iconContainer}>
-                          <IconButton size={25} roundWidth={25} name="heart-o" />
+                          <IconButton size={25} roundWidth={25} name="shopping-cart" />
                           <Text style={styles.iconText} type="subbody" weight="medium">
-                            Mua khoá học
+                            {t('buy_course')}
                           </Text>
                         </View>
 
                         <View style={styles.iconContainer}>
                           <IconButton size={25} roundWidth={25} name="heart-o" />
                           <Text style={styles.iconText} type="subbody" weight="medium">
-                            Yêu thích
+                            {t('like_course')}
                           </Text>
                         </View>
 
                         <View style={styles.iconContainer}>
                           <IconButton size={25} roundWidth={25} name="arrow-circle-o-down" />
                           <Text style={styles.iconText} type="subbody" weight="medium">
-                            Tải về
+                            {t('download_course')}
                           </Text>
                         </View>
                       </View>
-                      <Text>Mô tả:</Text>
+                      <Text>{t('describe_course')}:</Text>
                       <Text style={styles.description} type="subbody">
                         {courseData?.description}
                       </Text>
                       <CourseDetailTab.Navigator style={{ marginTop: 15 }}>
-                        <CourseDetailTab.Screen name="Contents" component={CourseDetailContent} />
-                        <CourseDetailTab.Screen name="Transcript" component={View} />
+                        <CourseDetailTab.Screen
+                          name={t('lesson_list')}
+                          component={CourseDetailContent}
+                        />
+                        <CourseDetailTab.Screen name={t('course_comments')} component={View} />
                       </CourseDetailTab.Navigator>
                     </ScrollView>
                   </>
@@ -206,4 +212,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CourseDetail);
+export default connect(mapStateToProps)(withTranslation(['course_detail'])(CourseDetail));

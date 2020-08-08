@@ -19,6 +19,12 @@
     "react/prop-types": ["off"],
     "react/jsx-filename-extension": ["off"],
     "no-return-assign": ["off"],
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "react/jsx-props-no-spreading": [
       "error",
       {

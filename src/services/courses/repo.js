@@ -273,6 +273,25 @@ class CourseRepo {
       throw e;
     }
   }
+
+  static async getExercisesInLesson(lessonId) {
+    try {
+      const {
+        payload: { exercises },
+      } = await Api({
+        method: 'get',
+        url: '/exercise/student/list-exercise-lesson',
+        params: {
+          lessonId,
+        },
+      });
+
+      return exercises;
+    } catch (e) {
+      console.log('getExercisesInLesson -> e', e);
+      throw e;
+    }
+  }
 }
 
 export default CourseRepo;

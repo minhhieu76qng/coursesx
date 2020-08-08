@@ -31,7 +31,6 @@ instance.interceptors.response.use(
     return config;
   },
   (error) => {
-    console.log('response error', JSON.stringify(error));
     return Promise.reject(error);
   },
 );
