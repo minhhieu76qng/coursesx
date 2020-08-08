@@ -16,6 +16,7 @@ const VideoPlayerContext = React.createContext({
   playingLesson: null,
   height: null,
   isYoutubeVideo: true,
+  autoPlay: true,
 });
 
 const VideoMessage = ({ text = '' }) => {
@@ -61,9 +62,15 @@ const ExpoVideoPlayer = () => {
 };
 
 const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
-  const { videoUrl, setHeight, height, setLoading, isLoading, currentVideoTime } = useContext(
-    VideoPlayerContext,
-  );
+  const {
+    videoUrl,
+    setHeight,
+    height,
+    setLoading,
+    isLoading,
+    currentVideoTime,
+    autoPlay,
+  } = useContext(VideoPlayerContext);
   const videoRef = useRef(null);
   const videoId = useMemo(() => {
     const paths = videoUrl?.split('/');
@@ -105,7 +112,7 @@ const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
   ) : (
     <YoutubePlayer
       ref={videoRef}
-      // play
+      play={autoPlay}
       onChangeState={onVideoPlayerStageChanged}
       onReady={onVideoReady}
       videoId={videoId}
@@ -117,6 +124,7 @@ const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
 const VideoPlayer = ({
   courseData,
   playingLesson,
+  autoPlay = true,
   onStopVideo = () => {},
   onVideoEnded = () => {},
 }) => {
@@ -138,6 +146,7 @@ const VideoPlayer = ({
         setHeight,
         isYoutubeVideo,
         currentVideoTime: playingLesson?.currentTime || 0,
+        autoPlay,
       }}
     >
       <View style={[styles.container, { height, backgroundColor: colors.card }]}>

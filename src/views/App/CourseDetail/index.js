@@ -19,6 +19,7 @@ import { getCurrentUser } from '../../../services/inapp/getters';
 import CourseDetailContext from './CourseDetailContext';
 import VideoPlayer from '../../../components/VideoPlayer';
 import UserRepo from '../../../services/user/repo';
+import Rating from '../../../components/Rating';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
 
@@ -154,6 +155,11 @@ class CourseDetail extends React.Component {
                           </Badge>
                         </View>
                       )}
+                      <Rating
+                        ratedStars={courseData?.formalityPoint}
+                        showRating
+                        style={styles.section}
+                      />
                       <View style={styles.section}>
                         <Text style={{ marginTop: 5 }} type="body">
                           {`${courseData.publishDate} - ${courseData.totalHours} h`}
