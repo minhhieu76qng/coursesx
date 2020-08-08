@@ -88,13 +88,16 @@ class CourseDetail extends React.Component {
       if (course) {
         course.isBought = isBought;
         course.publishDate = moment(new Date(course.createdAt)).format('DD/MM/YYYY');
-        const [author, lastWatchedLesson] = await Promise.all([
-          CourseRepo.getSingleAuthor(course.instructorId),
-          CourseRepo.getLastWatchedLesson(courseId),
-        ]);
+        const author = await CourseRepo.getSingleAuthor(course.instructorId);
         course.author = author;
-        if (lastWatchedLesson?.lessonId) {
-          await this.selectLesson(lastWatchedLesson.lessonId);
+        try {
+          // mean you have not bought this course
+          const lastWatchedLesson = await CourseRepo.getLastWatchedLesson(courseId);
+          if (lastWatchedLesson?.lessonId) {
+            await this.selectLesson(lastWatchedLesson.lessonId);
+          }
+        } catch (error) {
+          // await this.selectLesson(course)
         }
         this.setState({
           courseData: course,
@@ -113,7 +116,6 @@ class CourseDetail extends React.Component {
     const { isLoading, courseData, playingLesson } = this.state;
     const { onAuthorPress, onStopVideo, onVideoEnded, selectLesson } = this;
     const { t } = this.props;
-    console.log('CourseDetail -> render -> t', t('course_detail'));
     return (
       <AppLayout>
         <CourseDetailContext.Provider value={{ courseData, playingLesson, selectLesson }}>
@@ -187,7 +189,7 @@ class CourseDetail extends React.Component {
                           </Text>
                         </View>
                       </View>
-                      <Text>{t('describe_course')}:</Text>
+                      <Text>{`${t('describe_course')} :`}</Text>
                       <Text style={styles.description} type="subbody">
                         {courseData?.description}
                       </Text>

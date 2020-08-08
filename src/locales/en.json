@@ -1,10 +1,14 @@
 {
   "course_detail": {
-    "buy_course": "Buy",
+    "buy_course": "Mua",
     "like_course": "Yêu thích",
     "download_course": "Tải về",
     "describe_course": "Mô tả",
     "lesson_list": "Bài học",
     "course_comments": "Bình luận"
+  },
+  "error": {
+    "not_buy_course": "Bạn chưa mua khoá học này! Vui lòng mua để có thể học.",
+    "wrong_video_url": "Đường dẫn video bị hỏng. Liên hệ admin để khắc phục."
   }
 }

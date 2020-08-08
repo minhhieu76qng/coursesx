@@ -2,6 +2,7 @@ import React, { useMemo, useEffect, useState, useContext, useCallback, useRef } 
 import YoutubePlayer, { getYoutubeMeta } from 'react-native-youtube-iframe';
 import { useTheme } from '@react-navigation/native';
 import { Video as ExpoVideo } from 'expo-av';
+import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import Icon from 'themes/Icon';
 import Text from 'components/Text';
@@ -79,10 +80,8 @@ const YoutubeVideoPlayer = ({ onStopVideo, onVideoEnded }) => {
 
   const onVideoPlayerStageChanged = useCallback(async (event) => {
     if (event === YOUTUBE_VIDEO_STAGE.ENDED) {
-      console.log('video end');
       await onVideoEnded();
     }
-    console.log('onVideoPlayerStageChanged -> event', event);
     if (event === YOUTUBE_VIDEO_STAGE.PAUSED) {
       const time = await videoRef.current?.getCurrentTime();
       await onStopVideo(time);
@@ -131,6 +130,7 @@ const VideoPlayer = ({
   const [isLoading, setLoading] = useState(true);
   const [height, setHeight] = useState(250);
   const { colors } = useTheme();
+  const { t } = useTranslation('error');
 
   const isYoutubeVideo = useMemo(() => courseData?.typeUploadVideoLesson === VIDEO_TYPE.YOUTUBE, [
     courseData,
@@ -150,14 +150,10 @@ const VideoPlayer = ({
       }}
     >
       <View style={[styles.container, { height, backgroundColor: colors.card }]}>
-        {!courseData.isBought && (
-          <VideoMessage text="Bạn chưa mua khoá học này! Vui lòng mua để có thể học." />
-        )}
+        {!courseData.isBought && <VideoMessage text={t('not_buy_course')} />}
         {courseData.isBought && (
           <>
-            {!playingLesson?.videoUrl && (
-              <VideoMessage text="Đường dẫn video bị hỏng. Liên hệ admin để khắc phục." />
-            )}
+            {!playingLesson?.videoUrl && <VideoMessage text={t('wrong_video_url')} />}
             {playingLesson?.videoUrl &&
               (isYoutubeVideo ? (
                 <YoutubeVideoPlayer onStopVideo={onStopVideo} onVideoEnded={onVideoEnded} />

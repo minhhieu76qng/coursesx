@@ -22,10 +22,10 @@ function Rating({
   style,
   showRating,
 }) {
-  const renderStar = useCallback((number) => {
+  const renderStar = useCallback((number, idx) => {
     const name = number === 0.5 ? 'star-half-o' : 'star';
     const color = number >= 0.5 ? activeColor : inactiveColor;
-    return <Icon name={name} size={size} color={color} />;
+    return <Icon key={idx} name={name} size={size} color={color} />;
   }, []);
 
   const arrayStars = useMemo(() => {
@@ -65,7 +65,7 @@ function Rating({
       {arrayStars && isArray(arrayStars) && arrayStars.map(renderStar)}
       {showRating && (
         <Text type="subbody" color={activeColor} style={[styles.ratingText, { lineHeight: size }]}>
-          ( {Number(ratedStars).toFixed(1)} )
+          {`( ${Number(ratedStars).toFixed(1)} )`}
         </Text>
       )}
     </View>

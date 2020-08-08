@@ -26,7 +26,7 @@ i18n
       en,
     },
 
-    ns: ['course_detail'],
+    ns: ['course_detail', 'error'],
     defaultNS: 'common',
 
     debug: true,
