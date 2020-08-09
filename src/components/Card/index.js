@@ -12,6 +12,7 @@ const CustomCard = ({
   cardImage = '',
   cardDescriptions = [],
   onPress = null,
+  children,
 }) => {
   const { colors } = useTheme();
   return (
@@ -42,6 +43,7 @@ const CustomCard = ({
               {des}
             </Text>
           ))}
+        {children}
       </View>
     </TouchableOpacity>
   );

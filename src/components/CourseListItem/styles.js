@@ -31,11 +31,4 @@ export default StyleSheet.create({
   description: {
     marginTop: 5,
   },
-  rattingWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  rating: {
-    backgroundColor: 'red',
-  },
 });

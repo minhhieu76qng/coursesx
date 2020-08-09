@@ -4,7 +4,9 @@ import { isString, isEmpty } from 'lodash';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Image } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
 import Text from 'components/Text';
+import Rating from 'components/Rating';
 import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
 import styles from './styles';
 import ContextMenu from '../ContextMenu';
@@ -15,15 +17,16 @@ const CourseListItem = ({ course, onPress }) => {
   const onBookmarkPress = useCallback(() => {}, []);
 
   const onDownloadPress = useCallback(() => {}, []);
+  const { t } = useTranslation('course_detail');
 
   const courseOptions = useMemo(() => {
     return [
       {
-        name: 'Đánh dấu',
+        name: t('like_course'),
         onPress: onBookmarkPress,
       },
       {
-        name: 'Tải xuống',
+        name: t('download_course'),
         onPress: onDownloadPress,
       },
     ];
@@ -33,12 +36,11 @@ const CourseListItem = ({ course, onPress }) => {
 
   const {
     title = '',
-    'instructor.user.name': author,
+    'instructor.user.name': authorName,
     imageUrl,
     updatedAt,
     totalHours: duration = '',
-    // ratingPercent = 0,
-    // ratingCount = 0,
+    formalityPoint,
   } = courseData;
 
   courseData.publishDate = moment(new Date(updatedAt)).format('DD/MM/YYYY');
@@ -61,9 +63,9 @@ const CourseListItem = ({ course, onPress }) => {
           {title}
         </Text>
         <View style={styles.descriptionWrapper}>
-          {!isEmpty(author) && (
+          {!isEmpty(authorName) && (
             <Text style={styles.description} type="subbody-light">
-              {author}
+              {authorName}
             </Text>
           )}
           {!isEmpty(courseData?.publishDate) && (
@@ -72,10 +74,7 @@ const CourseListItem = ({ course, onPress }) => {
             </Text>
           )}
         </View>
-        {/* <View style={styles.rattingWrapper}>
-          
-          
-        </View> */}
+        <Rating style={{ marginTop: 10 }} ratedStars={formalityPoint} />
 
         <ContextMenu options={courseOptions} />
       </View>

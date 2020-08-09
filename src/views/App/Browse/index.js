@@ -6,6 +6,7 @@ import AppLayout from 'layouts/AppLayout';
 import Section from 'components/Section';
 import Avatar from 'components/Avatar';
 import Card from 'components/Card';
+import Rating from 'components/Rating';
 import screenName from 'constants/screenName';
 import styles from './styles';
 import { getCategories } from '../../../services/inapp/getters';
@@ -144,12 +145,21 @@ const Browse = ({ navigation }) => {
                   width={cardWidth}
                   cardTitle={item.title}
                   cardDescriptions={[
-                    `Giảng viên: ${item['instructor.user.name']}`,
-                    item.description,
+                    `${item['instructor.user.name']} - ${
+                      !item.price
+                        ? `Miễn phí`
+                        : `${new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(item.price)}`
+                    }`,
+                    // item.description,
                   ]}
                   cardImage={item.imageUrl}
                   onPress={() => onCoursePress(item.id)}
-                />
+                >
+                  <Rating style={{ marginTop: 10 }} ratedStars={item.formalityPoint} />
+                </Card>
               )}
             />
           </Section>
