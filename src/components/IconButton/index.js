@@ -30,7 +30,7 @@ const IconButton = ({
         containerStyle,
       ]}
       onPress={onPress}
-      disabled
+      disabled={disabled}
     >
       <Icon name={name} color={disabled ? disabledColor : color} size={size} />
     </TouchableOpacity>

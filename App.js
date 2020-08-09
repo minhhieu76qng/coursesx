@@ -21,8 +21,8 @@ const App = () => {
           request.headers['Content-Type'] = 'application/json';
           const token = await AsyncStorage.getAccessToken();
           request.headers.Authorization = `Bearer ${token}`;
+          // eslint-disable-next-line no-empty
         } catch (e) {
-          console.log('request interceptor', e);
         } finally {
           // eslint-disable-next-line no-unsafe-finally
           return request;
