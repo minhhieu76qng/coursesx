@@ -66,6 +66,37 @@ class UserRepo {
       throw e;
     }
   }
+
+  static async likeCourse(courseId) {
+    try {
+      const { likeStatus: isLiked } = await Api({
+        method: 'post',
+        url: '/user/like-course',
+        body: {
+          courseId,
+        },
+      });
+
+      return isLiked;
+    } catch (e) {
+      console.log('likeCourse -> e', e);
+      throw e;
+    }
+  }
+
+  static async isLikedCourse(courseId) {
+    try {
+      const { likeStatus: isLiked } = await Api({
+        method: 'get',
+        url: `/user/get-course-like-status/${courseId}`,
+      });
+
+      return isLiked;
+    } catch (e) {
+      console.log('isLikedCourse -> e', e);
+      throw e;
+    }
+  }
 }
 
 export default UserRepo;

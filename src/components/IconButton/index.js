@@ -7,6 +7,8 @@ import styles from './styles';
 const IconButton = ({
   color,
   onPress,
+  disabledColor = null,
+  disabled = false,
   containerStyle = {},
   name = '',
   size = 20,
@@ -28,8 +30,9 @@ const IconButton = ({
         containerStyle,
       ]}
       onPress={onPress}
+      disabled
     >
-      <Icon name={name} color={color} size={size} />
+      <Icon name={name} color={disabled ? disabledColor : color} size={size} />
     </TouchableOpacity>
   );
 };

@@ -1,4 +1,4 @@
-import Api from './api';
+import Api, { AxiosInstance } from './api';
 import useQuery from './useQuery';
 
-export { Api, useQuery };
+export { Api, useQuery, AxiosInstance };

@@ -255,7 +255,7 @@ class CourseRepo {
         ...lessonVideo,
       };
     } catch (e) {
-      console.log('getLesson -> e', e);
+      console.log('getLesson -> e', e?.response?.data?.message);
       throw e;
     }
   }
@@ -269,7 +269,7 @@ class CourseRepo {
 
       return payload;
     } catch (e) {
-      console.log('getLastWatchedLesson -> e', e);
+      console.log('getLastWatchedLesson -> e', e?.response?.data?.message);
       throw e;
     }
   }
@@ -288,7 +288,24 @@ class CourseRepo {
 
       return exercises;
     } catch (e) {
-      console.log('getExercisesInLesson -> e', e);
+      console.log('getExercisesInLesson -> e', e?.response?.data?.message);
+      throw e;
+    }
+  }
+
+  static async getFreeCourse(courseId) {
+    try {
+      const { freeCourseLink } = await Api({
+        method: 'post',
+        url: '/payment/get-free-courses',
+        body: {
+          courseId,
+        },
+      });
+
+      return freeCourseLink;
+    } catch (e) {
+      console.log('getFreeCourse -> e', e?.response?.data?.message);
       throw e;
     }
   }

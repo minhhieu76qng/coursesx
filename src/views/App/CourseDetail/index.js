@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, ActivityIndicator } from 'react-native';
-import { NavigationContext } from '@react-navigation/native';
+import { NavigationContext, useTheme } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { withTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -20,6 +20,8 @@ import CourseDetailContext from './CourseDetailContext';
 import VideoPlayer from '../../../components/VideoPlayer';
 import UserRepo from '../../../services/user/repo';
 import Rating from '../../../components/Rating';
+import { showFlashMessage } from '../../../services/inapp/actions';
+import MessageType from '../../../services/inapp/MessageType';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
 
@@ -31,6 +33,8 @@ class CourseDetail extends React.Component {
       isLoading: true,
       courseData: null,
       playingLesson: null,
+      isLiked: false,
+      isBought: false,
     };
   }
 
@@ -39,6 +43,51 @@ class CourseDetail extends React.Component {
   }
 
   onAuthorPress = () => {};
+
+  onBuyCoursePress = async () => {
+    const { courseData } = this.state;
+    const { t, showFlashMsg } = this.props;
+
+    try {
+      const courseLink = await CourseRepo.getFreeCourse(courseData.id);
+
+      if (courseLink) {
+        showFlashMsg({
+          type: MessageType.Type.SUCCESS,
+          description: t('buy_course_success'),
+        });
+        this.fetchCourse();
+      }
+    } catch (e) {
+      showFlashMsg({
+        type: MessageType.Type.DANGER,
+        description: t('buy_course_fail'),
+      });
+    }
+  };
+
+  onLikeCoursePress = async () => {
+    const { courseData } = this.state;
+    const { t, showFlashMsg } = this.props;
+    try {
+      const isLiked = await UserRepo.likeCourse(courseData.id);
+
+      if (isLiked) {
+        showFlashMsg({
+          type: MessageType.Type.SUCCESS,
+          description: t('like_course_success'),
+        });
+        this.fetchCourse();
+      }
+    } catch (e) {
+      showFlashMsg({
+        type: MessageType.Type.DANGER,
+        description: t('like_course_fail'),
+      });
+    }
+  };
+
+  onDownloadCoursePress = () => {};
 
   onStopVideo = async (currentTime) => {
     // call api to update current time
@@ -80,9 +129,10 @@ class CourseDetail extends React.Component {
     try {
       const { courseId } = this.props?.route?.params;
       const { currentUser } = this.props;
-      const [course, isBought] = await Promise.all([
+      const [course, isBought, isLiked] = await Promise.all([
         CourseRepo.getCourseDetail(courseId, currentUser?.id),
         UserRepo.isBoughtCourse(courseId),
+        UserRepo.isLikedCourse(courseId),
       ]);
 
       if (course) {
@@ -101,6 +151,8 @@ class CourseDetail extends React.Component {
         }
         this.setState({
           courseData: course,
+          isLiked,
+          isBought,
         });
       }
     } catch (e) {
@@ -113,9 +165,16 @@ class CourseDetail extends React.Component {
   }
 
   render() {
-    const { isLoading, courseData, playingLesson } = this.state;
-    const { onAuthorPress, onStopVideo, onVideoEnded, selectLesson } = this;
-    const { t } = this.props;
+    const { isLoading, courseData, playingLesson, isBought, isLiked } = this.state;
+    const {
+      onAuthorPress,
+      onStopVideo,
+      onVideoEnded,
+      selectLesson,
+      onLikeCoursePress,
+      onBuyCoursePress,
+    } = this;
+    const { t, colors } = this.props;
     return (
       <AppLayout>
         <CourseDetailContext.Provider value={{ courseData, playingLesson, selectLesson }}>
@@ -169,21 +228,35 @@ class CourseDetail extends React.Component {
                       </View>
                       <View style={[styles.section, styles.iconsWrapper]}>
                         <View style={styles.iconContainer}>
-                          <IconButton size={25} roundWidth={25} name="shopping-cart" />
+                          <IconButton
+                            size={25}
+                            roundWidth={25}
+                            name="shopping-cart"
+                            onPress={onBuyCoursePress}
+                            disabled={isBought}
+                            disabledColor={colors.primary}
+                          />
                           <Text style={styles.iconText} type="subbody" weight="medium">
                             {t('buy_course')}
                           </Text>
                         </View>
 
                         <View style={styles.iconContainer}>
-                          <IconButton size={25} roundWidth={25} name="heart-o" />
+                          <IconButton
+                            size={25}
+                            roundWidth={25}
+                            name="heart"
+                            onPress={onLikeCoursePress}
+                            disabled={isLiked}
+                            disabledColor="#e74c3c"
+                          />
                           <Text style={styles.iconText} type="subbody" weight="medium">
                             {t('like_course')}
                           </Text>
                         </View>
 
                         <View style={styles.iconContainer}>
-                          <IconButton size={25} roundWidth={25} name="arrow-circle-o-down" />
+                          <IconButton size={25} roundWidth={25} name="cloud-download" />
                           <Text style={styles.iconText} type="subbody" weight="medium">
                             {t('download_course')}
                           </Text>
@@ -214,10 +287,34 @@ class CourseDetail extends React.Component {
 
 CourseDetail.contextType = NavigationContext;
 
+const WrappedCourseDetail = (props) => {
+  const { colors } = useTheme();
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <CourseDetail {...props} colors={colors} />
+  );
+};
+
 const mapStateToProps = (state) => {
   return {
     currentUser: getCurrentUser(state),
   };
 };
 
-export default connect(mapStateToProps)(withTranslation(['course_detail'])(CourseDetail));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showFlashMsg: ({ type, description }) => {
+      dispatch(
+        showFlashMessage({
+          type,
+          description,
+        }),
+      );
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTranslation(['course_detail'])(WrappedCourseDetail));

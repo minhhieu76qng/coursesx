@@ -21,3 +21,5 @@ export const YOUTUBE_VIDEO_STAGE = {
   PAUSED: 'paused',
   ENDED: 'ended',
 };
+
+export const UNAUTHORIZED = 401;
