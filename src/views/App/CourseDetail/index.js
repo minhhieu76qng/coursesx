@@ -104,6 +104,17 @@ class CourseDetail extends React.Component {
 
   onDownloadCoursePress = () => {};
 
+  onByModalConfirm = () => {
+    this.setState(
+      {
+        feeModalVisible: false,
+      },
+      () => {
+        this.fetchCourse();
+      },
+    );
+  };
+
   onStopVideo = async (currentTime) => {
     // call api to update current time
     const { playingLesson } = this.state;
@@ -142,6 +153,9 @@ class CourseDetail extends React.Component {
 
   async fetchCourse() {
     try {
+      this.setState({
+        isLoading: true,
+      });
       const { courseId } = this.props?.route?.params;
       const { currentUser } = this.props;
       const [course, isBought, isLiked] = await Promise.all([
@@ -157,9 +171,11 @@ class CourseDetail extends React.Component {
         course.author = author;
         try {
           // mean you have not bought this course
-          const lastWatchedLesson = await CourseRepo.getLastWatchedLesson(courseId);
-          if (lastWatchedLesson?.lessonId) {
-            await this.selectLesson(lastWatchedLesson.lessonId);
+          if (course.isBought) {
+            const lastWatchedLesson = await CourseRepo.getLastWatchedLesson(courseId);
+            if (lastWatchedLesson?.lessonId) {
+              await this.selectLesson(lastWatchedLesson.lessonId);
+            }
           }
         } catch (error) {
           // await this.selectLesson(course)
@@ -188,6 +204,7 @@ class CourseDetail extends React.Component {
       selectLesson,
       onLikeCoursePress,
       onBuyCoursePress,
+      onByModalConfirm,
     } = this;
     const { t, colors } = this.props;
     return (
@@ -295,7 +312,7 @@ class CourseDetail extends React.Component {
                   title={t('buy_modal_title')}
                   isVisible={feeModalVisible}
                   confirmLabel={t('buy_button_ok')}
-                  onConfirm={() => {}}
+                  onConfirm={onByModalConfirm}
                   canBackdropPress={false}
                 >
                   <Text style={{ textAlign: 'center' }}>{t('buy_modal_content')}</Text>
