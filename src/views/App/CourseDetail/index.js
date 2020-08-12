@@ -27,6 +27,7 @@ import Rating from '../../../components/Rating';
 import { showFlashMessage } from '../../../services/inapp/actions';
 import MessageType from '../../../services/inapp/MessageType';
 import AppModal from '../../../components/AppModal';
+import { screenName } from '../../../constants/index';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
 
@@ -176,8 +177,8 @@ class CourseDetail extends React.Component {
   // }
 
   onRelatedCoursePress = (courseId) => {
-    console.log('CourseDetail -> onRelatedCoursePress -> courseId', courseId);
-    // this.props.navigation.replace()
+    const { navigation } = this.props;
+    navigation.replace(screenName.courseDetail, { courseId });
   };
 
   async fetchCourse() {
@@ -356,7 +357,7 @@ class CourseDetail extends React.Component {
                                 <Card
                                   cardTitle={item.title}
                                   cardDescriptions={[
-                                    `${item['instructor.user.name']} - ${
+                                    `${item.instructorName} - ${
                                       !item.price
                                         ? `Miễn phí`
                                         : `${new Intl.NumberFormat('vi-VN', {
