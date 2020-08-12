@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
-import { ScrollView, FlatList, View, Dimensions } from 'react-native';
+import { ScrollView, FlatList, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import CategoryItem from 'components/CategoryItem';
 import AppLayout from 'layouts/AppLayout';
@@ -11,7 +11,7 @@ import screenName from 'constants/screenName';
 import styles from './styles';
 import { getCategories } from '../../../services/inapp/getters';
 import CourseRepo from '../../../services/courses/repo';
-import { MAX_CARD_WIDTH, CATEGORY_TYPES } from '../../../constants';
+import { CATEGORY_TYPES } from '../../../constants';
 
 const NUM_OF_ROW = 2;
 const NUM_OF_DISPLAYED_AUTHOR = 8;
@@ -27,9 +27,6 @@ const RECOMMEND_COURSE_CATEGORY = {
   name: 'Khoá học đề xuất',
   image: 'https://miro.medium.com/max/1024/1*PfumnOVjrV3BFXsEIg2LTg.png',
 };
-
-let cardWidth = ((Dimensions.get('window').width - 10 * 2 - 15) * 2) / 3;
-cardWidth = cardWidth > MAX_CARD_WIDTH ? MAX_CARD_WIDTH : cardWidth;
 
 const Browse = ({ navigation }) => {
   const [authors, setAuthors] = useState([]);
@@ -142,7 +139,6 @@ const Browse = ({ navigation }) => {
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
                 <Card
-                  width={cardWidth}
                   cardTitle={item.title}
                   cardDescriptions={[
                     `${item['instructor.user.name']} - ${
@@ -173,7 +169,6 @@ const Browse = ({ navigation }) => {
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
                 <Card
-                  width={cardWidth}
                   cardTitle={item.title}
                   cardDescriptions={[
                     `Giảng viên: ${item['instructor.user.name']}`,

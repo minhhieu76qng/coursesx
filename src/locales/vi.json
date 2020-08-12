@@ -12,7 +12,8 @@
     "buy_course_fail": "Có lỗi xảy ra khi mua khoá học",
     "buy_modal_title": "Tải lại nội dụng",
     "buy_modal_content": "Khoá học thay đổi, vui lòng tải lại.",
-    "buy_button_ok": "Tải lại"
+    "buy_button_ok": "Tải lại",
+    "course_in_category_title": "Các khoá học cùng chủ đề"
   },
   "error": {
     "not_buy_course": "Bạn chưa mua khoá học này! Vui lòng mua để có thể học.",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ScrollView, ActivityIndicator, FlatList } from 'react-native';
 import { NavigationContext, useTheme } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { withTranslation } from 'react-i18next';
@@ -10,7 +10,10 @@ import AppLayout from 'layouts/AppLayout';
 import Text from 'components/Text';
 import Badge from 'components/Badge';
 import Avatar from 'components/Avatar';
+import Section from 'components/Section';
+import Card from 'components/Card';
 import IconButton from 'components/IconButton';
+import { isArray } from 'lodash';
 import * as Linking from 'expo-linking';
 
 import styles from './styles';
@@ -151,6 +154,32 @@ class CourseDetail extends React.Component {
     }
   };
 
+  // async getExercises(course) {
+  //   const courseData = course || this.state?.courseData;
+  //   const lessonIds = (courseData?.section || []).reduce((acc, s) => {
+  //     let result = acc;
+  //     result = [...acc, ...(s?.lesson || []).map((l) => l.id)];
+  //     return result;
+  //   }, []);
+
+  //   const listExercises = await Promise.all(
+  //     lessonIds.map((lessonId) => CourseRepo.getExercisesInLesson(lessonId)),
+  //   ).then((data) =>
+  //     (data || []).reduce((acc, o) => {
+  //       let result = acc;
+  //       result = [...result, ...o];
+  //       return result;
+  //     }, []),
+  //   );
+
+  //   console.log('CourseDetail -> getExercises -> listExercises', JSON.stringify(listExercises));
+  // }
+
+  onRelatedCoursePress = (courseId) => {
+    console.log('CourseDetail -> onRelatedCoursePress -> courseId', courseId);
+    // this.props.navigation.replace()
+  };
+
   async fetchCourse() {
     try {
       this.setState({
@@ -165,6 +194,7 @@ class CourseDetail extends React.Component {
       ]);
 
       if (course) {
+        // this.getExercises(course);
         course.isBought = isBought;
         course.publishDate = moment(new Date(course.createdAt)).format('DD/MM/YYYY');
         const author = await CourseRepo.getSingleAuthor(course.instructorId);
@@ -205,6 +235,7 @@ class CourseDetail extends React.Component {
       onLikeCoursePress,
       onBuyCoursePress,
       onByModalConfirm,
+      onRelatedCoursePress,
     } = this;
     const { t, colors } = this.props;
     return (
@@ -305,6 +336,48 @@ class CourseDetail extends React.Component {
                         />
                         <CourseDetailTab.Screen name={t('course_comments')} component={View} />
                       </CourseDetailTab.Navigator>
+
+                      {/* ratings */}
+
+                      {/* related courses */}
+                      {isArray(courseData?.coursesLikeCategory) &&
+                        courseData?.coursesLikeCategory.length > 0 && (
+                          <Section
+                            sectionTitle={t('course_in_category_title')}
+                            onSeeAllPress={() => {}}
+                          >
+                            <FlatList
+                              contentContainerStyle={{ padding: 5 }}
+                              data={courseData?.coursesLikeCategory}
+                              keyExtractor={(path) => `${path.id}`}
+                              horizontal
+                              showsHorizontalScrollIndicator={false}
+                              renderItem={({ item }) => (
+                                <Card
+                                  cardTitle={item.title}
+                                  cardDescriptions={[
+                                    `${item['instructor.user.name']} - ${
+                                      !item.price
+                                        ? `Miễn phí`
+                                        : `${new Intl.NumberFormat('vi-VN', {
+                                            style: 'currency',
+                                            currency: 'VND',
+                                          }).format(item.price)}`
+                                    }`,
+                                    // item.description,
+                                  ]}
+                                  cardImage={item.imageUrl}
+                                  onPress={() => onRelatedCoursePress(item.id)}
+                                >
+                                  <Rating
+                                    style={{ marginTop: 10 }}
+                                    ratedStars={item.formalityPoint}
+                                  />
+                                </Card>
+                              )}
+                            />
+                          </Section>
+                        )}
                     </ScrollView>
                   </>
                 )}

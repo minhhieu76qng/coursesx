@@ -279,9 +279,9 @@ class CourseRepo {
       const {
         payload: { exercises },
       } = await Api({
-        method: 'get',
+        method: 'post',
         url: '/exercise/student/list-exercise-lesson',
-        params: {
+        body: {
           lessonId,
         },
       });

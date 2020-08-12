@@ -20,6 +20,7 @@ const App = () => {
         try {
           request.headers['Content-Type'] = 'application/json';
           const token = await AsyncStorage.getAccessToken();
+          console.log('App -> token', token);
           request.headers.Authorization = `Bearer ${token}`;
           // eslint-disable-next-line no-empty
         } catch (e) {
