@@ -4,7 +4,7 @@ import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Dark, Light } from 'themes/MyTheme';
-import { getThemeMode } from 'services/inapp/getters';
+import { getThemeMode, getCurrentUser } from 'services/inapp/getters';
 import { themeMode } from 'constants';
 import screenName from 'constants/screenName';
 import Splash from 'views/Splash';
@@ -39,38 +39,45 @@ const AppNavigator = () => {
 
     return scheme === 'dark' ? customDark : customLight;
   }, [currentTheme, customDark, customLight]);
+
+  const currentUser = useSelector(getCurrentUser);
+
   return (
     <AppearanceProvider>
       <NavigationContainer theme={theme}>
         <RootStack.Navigator initialRouteName={screenName.splash}>
-          <RootStack.Screen
-            name={screenName.splash}
-            component={Splash}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <RootStack.Screen
-            name={screenName.login}
-            component={Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <RootStack.Screen
-            name={screenName.register}
-            component={Register}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <RootStack.Screen
-            name={screenName.forgotPassword}
-            component={ForgotPassword}
-            options={{
-              headerShown: false,
-            }}
-          />
+          {!currentUser && (
+            <>
+              <RootStack.Screen
+                name={screenName.splash}
+                component={Splash}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <RootStack.Screen
+                name={screenName.login}
+                component={Login}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <RootStack.Screen
+                name={screenName.register}
+                component={Register}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <RootStack.Screen
+                name={screenName.forgotPassword}
+                component={ForgotPassword}
+                options={{
+                  headerShown: false,
+                }}
+              />
+            </>
+          )}
           {/* <RootStack.Screen
             name={screenName.verifyAccount}
             component={VerifyAccount}
@@ -79,13 +86,15 @@ const AppNavigator = () => {
             }}
           /> */}
 
-          <RootStack.Screen
-            name={screenName.mainTab}
-            component={MainTab}
-            options={{
-              headerShown: false,
-            }}
-          />
+          {currentUser && (
+            <RootStack.Screen
+              name={screenName.mainTab}
+              component={MainTab}
+              options={{
+                headerShown: false,
+              }}
+            />
+          )}
         </RootStack.Navigator>
       </NavigationContainer>
     </AppearanceProvider>

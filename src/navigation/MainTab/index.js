@@ -3,12 +3,14 @@ import Icon from 'themes/Icon';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import screenName from 'constants/screenName';
 import Home from 'views/App/Home';
 import Downloads from 'views/App/Downloads';
 import Browse from 'views/App/Browse';
 import CourseDetail from 'views/App/CourseDetail';
-import CoursesInSection from '../../views/App/CoursesInSection';
+import CoursesInSection from 'views/App/CoursesInSection';
+import Text from 'components/Text';
 // import Search from 'views/App/Search';
 
 const AppTab = createBottomTabNavigator();
@@ -35,6 +37,31 @@ const screenOptions = ({ route }) => ({
     }
 
     return <Icon name={iconName} size={size} color={color} />;
+  },
+  tabBarLabel: ({ color }) => {
+    const { t } = useTranslation('tab_navigator');
+    let tabName;
+    switch (route.name) {
+      case screenName.home:
+        tabName = t('home');
+        break;
+      case screenName.downloads:
+        tabName = t('download');
+        break;
+      case screenName.browse:
+        tabName = t('browse');
+        break;
+      case screenName.search:
+        tabName = t('search');
+        break;
+      default:
+        tabName = '';
+    }
+    return (
+      <Text type="description" color={color}>
+        {tabName}
+      </Text>
+    );
   },
 });
 
