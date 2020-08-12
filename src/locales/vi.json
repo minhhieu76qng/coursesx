@@ -5,7 +5,7 @@
     "download_course": "Tải về",
     "describe_course": "Mô tả",
     "lesson_list": "Bài học",
-    "course_comments": "Bình luận",
+    "course_comments": "Bài tập",
     "like_course_success": "Bạn đã thích khoá học.",
     "like_course_fail": "Có lỗi xảy ra khi thích khoá học",
     "buy_course_success": "Bạn đã mua khoá học thành công.",
@@ -13,7 +13,8 @@
     "buy_modal_title": "Tải lại nội dụng",
     "buy_modal_content": "Khoá học thay đổi, vui lòng tải lại.",
     "buy_button_ok": "Tải lại",
-    "course_in_category_title": "Các khoá học cùng chủ đề"
+    "course_in_category_title": "Các khoá học cùng chủ đề",
+    "rating_course": "Các đánh giá"
   },
   "error": {
     "not_buy_course": "Bạn chưa mua khoá học này! Vui lòng mua để có thể học.",

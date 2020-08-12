@@ -339,6 +339,36 @@ class CourseDetail extends React.Component {
                       </CourseDetailTab.Navigator>
 
                       {/* ratings */}
+                      {isArray(courseData?.ratings?.ratingList) &&
+                        courseData?.ratings?.ratingList.length > 0 && (
+                          <Section sectionTitle={t('rating_course')}>
+                            {courseData?.ratings?.ratingList.map((rating) => (
+                              <View style={styles.ratingSection}>
+                                <View>
+                                  <Avatar
+                                    avatarSize={50}
+                                    userAvatar={rating?.user.avatar}
+                                    containerStyle={styles.authorAvatar}
+                                  />
+                                </View>
+                                <View style={styles.ratingContent}>
+                                  <View style={styles.ratingUsername}>
+                                    <Text weight="bold">{rating?.user?.name}</Text>
+                                    <Text type="description">
+                                      {moment(rating?.createdAt).format('DD/MM/YYYY')}
+                                    </Text>
+                                  </View>
+                                  <Rating
+                                    style={styles.ratingText}
+                                    ratedStars={rating?.formalityPoint}
+                                    showRating
+                                  />
+                                  <Text style={styles.ratingText}>{rating.content}</Text>
+                                </View>
+                              </View>
+                            ))}
+                          </Section>
+                        )}
 
                       {/* related courses */}
                       {isArray(courseData?.coursesLikeCategory) &&

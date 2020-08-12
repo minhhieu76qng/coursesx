@@ -44,16 +44,13 @@ function Rating({
     }
 
     for (let i = 0; i < stars.length; i += 1) {
-      if (actualStars - (i + 1) > 0.5) {
+      if (actualStars - i > 0.5) {
         stars[i] = 1;
       }
-      if (actualStars - (i + 1) === 0.5) {
+      if (actualStars - i === 0.5) {
         stars[i] = 0.5;
       }
-      if (actualStars === i + 1) {
-        stars[i] = 1;
-      }
-      if (actualStars < i + 1) {
+      if (actualStars < i) {
         stars[i] = 0;
       }
     }

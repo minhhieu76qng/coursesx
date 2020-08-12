@@ -44,4 +44,22 @@ export default StyleSheet.create({
   iconText: {
     marginTop: 10,
   },
+  ratingSection: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingVertical: 15,
+  },
+  ratingContent: {
+    flex: 1,
+    marginLeft: 15,
+  },
+  ratingUsername: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  ratingText: {
+    marginTop: 10,
+  },
 });
