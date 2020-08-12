@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Dimensions } from 'react-native';
 import { Image } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
 import Text from 'components/Text';
 import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
 import styles from './styles';
+import { MAX_CARD_WIDTH } from '../../constants';
+
+let cardWidth = ((Dimensions.get('window').width - 10 * 2 - 15) * 2) / 3;
+cardWidth = cardWidth > MAX_CARD_WIDTH ? MAX_CARD_WIDTH : cardWidth;
 
 const CustomCard = ({
-  width = 250,
+  width = cardWidth,
   cardTitle = '',
   cardImage = '',
   cardDescriptions = [],
