@@ -9,7 +9,10 @@
     "like_course_success": "Bạn đã thích khoá học.",
     "like_course_fail": "Có lỗi xảy ra khi thích khoá học",
     "buy_course_success": "Bạn đã mua khoá học thành công.",
-    "buy_course_fail": "Có lỗi xảy ra khi mua khoá học"
+    "buy_course_fail": "Có lỗi xảy ra khi mua khoá học",
+    "buy_modal_title": "Tải lại nội dụng",
+    "buy_modal_content": "Khoá học thay đổi, vui lòng tải lại.",
+    "buy_button_ok": "Tải lại"
   },
   "error": {
     "not_buy_course": "Bạn chưa mua khoá học này! Vui lòng mua để có thể học.",

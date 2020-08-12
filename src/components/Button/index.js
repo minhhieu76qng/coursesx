@@ -13,7 +13,7 @@ const StyledButton = ({ style, titleStyle, type = 'solid', ...props }) => {
     <CustomButton
       type={type}
       titleStyle={[styles.buttonStyle, titleStyle]}
-      style={styles.buttonStyle}
+      containerStyle={[styles.buttonStyle, style]}
       {...props}
     />
   );

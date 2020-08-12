@@ -11,6 +11,7 @@ import Text from 'components/Text';
 import Badge from 'components/Badge';
 import Avatar from 'components/Avatar';
 import IconButton from 'components/IconButton';
+import * as Linking from 'expo-linking';
 
 import styles from './styles';
 import CourseDetailContent from '../../../components/CourseDetailContent';
@@ -22,6 +23,7 @@ import UserRepo from '../../../services/user/repo';
 import Rating from '../../../components/Rating';
 import { showFlashMessage } from '../../../services/inapp/actions';
 import MessageType from '../../../services/inapp/MessageType';
+import AppModal from '../../../components/AppModal';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
 
@@ -35,6 +37,7 @@ class CourseDetail extends React.Component {
       playingLesson: null,
       isLiked: false,
       isBought: false,
+      feeModalVisible: false,
     };
   }
 
@@ -48,7 +51,19 @@ class CourseDetail extends React.Component {
     const { courseData } = this.state;
     const { t, showFlashMsg } = this.props;
 
+    if (!courseData) {
+      return;
+    }
+
     try {
+      if (!courseData.price) {
+        Linking.openURL(`https://itedu.me/payment/${courseData.id}`);
+        this.setState({
+          feeModalVisible: true,
+        });
+        return;
+      }
+
       const courseLink = await CourseRepo.getFreeCourse(courseData.id);
 
       if (courseLink) {
@@ -165,7 +180,7 @@ class CourseDetail extends React.Component {
   }
 
   render() {
-    const { isLoading, courseData, playingLesson, isBought, isLiked } = this.state;
+    const { isLoading, courseData, playingLesson, isBought, isLiked, feeModalVisible } = this.state;
     const {
       onAuthorPress,
       onStopVideo,
@@ -276,6 +291,15 @@ class CourseDetail extends React.Component {
                     </ScrollView>
                   </>
                 )}
+                <AppModal
+                  title={t('buy_modal_title')}
+                  isVisible={feeModalVisible}
+                  confirmLabel={t('buy_button_ok')}
+                  onConfirm={() => {}}
+                  canBackdropPress={false}
+                >
+                  <Text style={{ textAlign: 'center' }}>{t('buy_modal_content')}</Text>
+                </AppModal>
               </View>
             )}
           </ThemeContext.Consumer>
