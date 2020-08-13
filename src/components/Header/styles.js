@@ -8,6 +8,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 5,
     paddingHorizontal: 15,
+    shadowColor: 'rgba(0, 0, 0, 0.05)',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1,
+    elevation: 5,
   },
   backButton: {
     width: 40,

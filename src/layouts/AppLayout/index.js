@@ -13,7 +13,13 @@ const AppLayout = ({ children, headerShown = true }) => {
     return _.get(route, 'params.header');
   }, [route]);
   return (
-    <SafeAreaView style={{ paddingTop: 0, flex: 1, paddingBottom: 0 }}>
+    <SafeAreaView
+      style={{
+        paddingTop: !(header.headerShown !== false && headerShown) ? inset.top : 0,
+        flex: 1,
+        paddingBottom: 0,
+      }}
+    >
       {header.headerShown !== false && headerShown && <Header paddingTop={inset.top} />}
       <View style={{ flex: 1 }}>{children}</View>
     </SafeAreaView>
