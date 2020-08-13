@@ -30,7 +30,6 @@ const App = () => {
         }
       },
       (error) => {
-        console.log('request error', error);
         return Promise.reject(error);
       },
     );
@@ -41,7 +40,7 @@ const App = () => {
       },
       (error) => {
         if (error?.response?.status === UNAUTHORIZED) {
-          store.dispatch(LOGOUT);
+          store.dispatch({ type: LOGOUT });
         }
         return Promise.reject(error);
       },

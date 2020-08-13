@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useRoute, useTheme, useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import _, { isString } from 'lodash';
+import { LOGOUT } from 'services/user/constants';
 import Icon from 'themes/Icon';
 import Colors from 'themes/colors';
 import Text from 'components/Text';
@@ -10,7 +12,7 @@ import styles from './styles';
 
 const Header = ({ paddingTop }) => {
   const route = useRoute();
-
+  const dispatch = useDispatch();
   const header = useMemo(() => {
     return _.get(route, 'params.header');
   }, [route]);
@@ -18,6 +20,13 @@ const Header = ({ paddingTop }) => {
   const navigation = useNavigation();
 
   const { colors } = useTheme();
+
+  const onUserAvatarPress = useCallback(() => {
+    dispatch({
+      type: LOGOUT,
+    });
+  }, []);
+
   return (
     <View
       style={{
@@ -45,7 +54,7 @@ const Header = ({ paddingTop }) => {
       )}
       {header && isString(header?.headerTitle) && <Text type="h3">{header?.headerTitle}</Text>}
       <View style={styles.rightWidgets}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onUserAvatarPress}>
           <Avatar
             containerStyle={{ backgroundColor: 'red' }}
             rounded
