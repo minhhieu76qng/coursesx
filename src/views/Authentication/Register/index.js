@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Divider } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '@react-navigation/native';
@@ -54,8 +54,11 @@ const Register = ({ navigation }) => {
   });
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <ScrollView>
+    <KeyboardAvoidingView
+      style={styles.keyboardAvoidingView}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView style={styles.container}>
         <View style={styles.logoContainer}>
           <AppLogo width={100} />
         </View>
