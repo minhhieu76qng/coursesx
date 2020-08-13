@@ -26,6 +26,10 @@
     "browse": "Khám phá",
     "search": "Tìm kiếm"
   },
+  "download_tab": {
+    "empty_title": "Không có khoá hoc đã tải",
+    "empty": "Các khoá học tải về sẽ hiển thị tại đây."
+  },
   "common": {
     "best_seller_courses_title": "Khoá học bán chạy",
     "quality_courses_title": "Khoá học chất lượng",
