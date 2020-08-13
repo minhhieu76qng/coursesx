@@ -25,5 +25,14 @@
     "download": "Tải về",
     "browse": "Khám phá",
     "search": "Tìm kiếm"
+  },
+  "common": {
+    "best_seller_courses_title": "Khoá học bán chạy",
+    "quality_courses_title": "Khoá học chất lượng",
+    "author_list_title": "Giảng viên",
+    "see_all": "Xem tất cả",
+    "paid_courses_title": "Khoá học đã mua",
+    "liked_courses_title": "Khoá học đã thích",
+    "course_in_liked_categories": "Khoá học theo chủ đề yêu thích"
   }
 }

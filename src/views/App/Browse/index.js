@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { ScrollView, FlatList, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import CategoryItem from 'components/CategoryItem';
 import AppLayout from 'layouts/AppLayout';
 import Section from 'components/Section';
@@ -33,6 +34,7 @@ const Browse = ({ navigation }) => {
   const [topSellCourses, setTopSellCourses] = useState([]);
   const [topRatingCourses, setTopRatingCourses] = useState([]);
   const categories = useSelector(getCategories);
+  const { t } = useTranslation();
   const transformedCategories = useMemo(() => {
     const result = [];
     let tmp = [];
@@ -130,7 +132,7 @@ const Browse = ({ navigation }) => {
               ))}
           </ScrollView>
 
-          <Section sectionTitle="Khoá học bán chạy" onSeeAllPress={() => {}}>
+          <Section sectionTitle={t('best_seller_courses_title')} onSeeAllPress={() => {}}>
             <FlatList
               contentContainerStyle={{ padding: 5 }}
               data={topSellCourses}
@@ -160,7 +162,7 @@ const Browse = ({ navigation }) => {
             />
           </Section>
 
-          <Section sectionTitle="Khoá học chất lượng" onSeeAllPress={() => {}}>
+          <Section sectionTitle={t('quality_courses_title')} onSeeAllPress={() => {}}>
             <FlatList
               contentContainerStyle={{ padding: 5 }}
               data={topRatingCourses}
@@ -171,18 +173,27 @@ const Browse = ({ navigation }) => {
                 <Card
                   cardTitle={item.title}
                   cardDescriptions={[
-                    `Giảng viên: ${item['instructor.user.name']}`,
-                    item.description,
+                    `${item['instructor.user.name']} - ${
+                      !item.price
+                        ? `Miễn phí`
+                        : `${new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(item.price)}`
+                    }`,
+                    // item.description,
                   ]}
                   cardImage={item.imageUrl}
                   onPress={() => onCoursePress(item.id)}
-                />
+                >
+                  <Rating style={{ marginTop: 10 }} ratedStars={item.formalityPoint} />
+                </Card>
               )}
             />
           </Section>
 
           {/* top authors */}
-          <Section sectionTitle="Giảng viên" onSeeAllPress={() => {}}>
+          <Section sectionTitle={t('author_list_title')} onSeeAllPress={() => {}}>
             <FlatList
               data={authors}
               keyExtractor={(path) => `${path.id}`}

@@ -97,6 +97,34 @@ class UserRepo {
       throw e;
     }
   }
+
+  static async getFavoriteCourses() {
+    try {
+      const { payload: courses } = await Api({
+        method: 'get',
+        url: '/user/get-favorite-courses',
+      });
+
+      return courses;
+    } catch (e) {
+      console.log('getFavoriteCourses -> e', e);
+      throw e;
+    }
+  }
+
+  static async getProcessingCourses() {
+    try {
+      const { payload: courses } = await Api({
+        method: 'get',
+        url: '/user/get-process-courses',
+      });
+
+      return courses;
+    } catch (e) {
+      console.log('getProcessingCourses -> e', e);
+      throw e;
+    }
+  }
 }
 
 export default UserRepo;
