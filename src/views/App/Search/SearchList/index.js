@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { ScrollView, FlatList, View, ActivityIndicator } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { useTheme, useNavigation } from '@react-navigation/native';
 import { isArray } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { SEARCH_TAB } from 'constants';
@@ -9,13 +9,15 @@ import EmptyState from 'components/EmptyState';
 import InstructorListItem from 'components/InstructorListItem';
 
 import styles from './styles';
+import { screenName } from '../../../../constants';
 
 const SearchList = ({ data, loading, type }) => {
   const { colors } = useTheme();
+  const navigation = useNavigation();
   const { t } = useTranslation('search_tab');
 
   const onCourseItemPress = useCallback((courseId) => {
-    console.log('onCoursePress -> courseId', courseId);
+    navigation.navigate(screenName.courseDetail, { courseId });
   });
 
   const onInstructorPress = useCallback((courseId) => {
@@ -28,7 +30,6 @@ const SearchList = ({ data, loading, type }) => {
     }
 
     if (item.itemType === SEARCH_TAB.INSTRUCTORS) {
-      console.log('renderListItem -> item', item);
       return <InstructorListItem instructor={item} onPress={() => onInstructorPress(item.id)} />;
     }
     return null;
