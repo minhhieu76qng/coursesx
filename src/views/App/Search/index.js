@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { isArray } from 'lodash';
 import { connect } from 'react-redux';
-import { View, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { SearchBar } from 'react-native-elements';
 import { useTheme } from '@react-navigation/native';
@@ -28,6 +28,7 @@ class Search extends React.Component {
       deletingHistory: null,
       deleteModalVisible: false,
     };
+    this.searchRef = null;
   }
 
   componentDidMount() {
@@ -138,6 +139,26 @@ class Search extends React.Component {
     });
   };
 
+  onHistoryPress = (history) => {
+    this.setState(
+      {
+        searchText: history?.content ?? '',
+      },
+      () => {
+        // call submit
+        this.onSearchSubmit();
+        this.searchRef.blur();
+      },
+    );
+  };
+
+  blurSearchBox = () => {
+    const { isSearchFocus } = this.state;
+    if (isSearchFocus) {
+      this.searchRef.blur();
+    }
+  };
+
   render() {
     const { dark, t } = this.props;
     const {
@@ -159,6 +180,8 @@ class Search extends React.Component {
       onSearchFocus,
       onSearchSubmit,
       onSearchTextChange,
+      onHistoryPress,
+      blurSearchBox,
     } = this;
     return (
       <AppLayout>
@@ -167,6 +190,7 @@ class Search extends React.Component {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
           <SearchBar
+            ref={(ref) => (this.searchRef = ref)}
             placeholder="Search courses, instructors,..."
             containerStyle={styles.searchContainer}
             inputStyle={styles.searchInput}
@@ -180,13 +204,13 @@ class Search extends React.Component {
             onBlur={onSearchBlur}
             onSubmitEditing={onSearchSubmit}
           />
-          <View style={styles.container}>
-            {isSearchFocus && (
-              <Animatable.View
-                animation="slideInUp"
-                duration={300}
-                style={styles.searchContentWrapper}
-              >
+          {isSearchFocus && (
+            <Animatable.View
+              animation="slideInUp"
+              duration={600}
+              style={styles.searchContentWrapper}
+            >
+              <TouchableOpacity activeOpacity={1} style={styles.container} onPress={blurSearchBox}>
                 <Text>{`${t('search_history_title')}:`}</Text>
                 <View style={styles.searchHistories}>
                   {isArray(searchHistories) &&
@@ -196,22 +220,23 @@ class Search extends React.Component {
                         id={history.id}
                         text={history.content}
                         onLongPress={() => onLongPressHistory(history)}
+                        onPress={() => onHistoryPress(history)}
                       />
                     ))}
                 </View>
-              </Animatable.View>
-            )}
-            {!isSearchFocus && (
-              <Animatable.View
-                animation="slideInUp"
-                duration={300}
-                style={styles.searchContentWrapper}
-              >
-                <Text>{JSON.stringify(courses)}</Text>
-                <Text>{JSON.stringify(instructors)}</Text>
-              </Animatable.View>
-            )}
-          </View>
+              </TouchableOpacity>
+            </Animatable.View>
+          )}
+          {!isSearchFocus && (
+            <Animatable.View
+              animation="slideInUp"
+              duration={600}
+              style={styles.searchContentWrapper}
+            >
+              <Text>{JSON.stringify(courses)}</Text>
+              <Text>{JSON.stringify(instructors)}</Text>
+            </Animatable.View>
+          )}
         </KeyboardAvoidingView>
         <AppModal
           isVisible={deleteModalVisible}
