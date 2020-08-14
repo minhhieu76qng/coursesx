@@ -27,4 +27,7 @@ export default StyleSheet.create({
   deleteHistoryTextModal: {
     textAlign: 'center',
   },
+  historyBadge: {
+    marginRight: 10,
+  },
 });

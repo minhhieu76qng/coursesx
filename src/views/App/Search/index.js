@@ -204,39 +204,42 @@ class Search extends React.Component {
             onBlur={onSearchBlur}
             onSubmitEditing={onSearchSubmit}
           />
-          {isSearchFocus && (
-            <Animatable.View
-              animation="slideInUp"
-              duration={600}
-              style={styles.searchContentWrapper}
-            >
-              <TouchableOpacity activeOpacity={1} style={styles.container} onPress={blurSearchBox}>
-                <Text>{`${t('search_history_title')}:`}</Text>
-                <View style={styles.searchHistories}>
-                  {isArray(searchHistories) &&
-                    searchHistories.map((history) => (
-                      <Badge
-                        key={history.id}
-                        id={history.id}
-                        text={history.content}
-                        onLongPress={() => onLongPressHistory(history)}
-                        onPress={() => onHistoryPress(history)}
-                      />
-                    ))}
-                </View>
-              </TouchableOpacity>
-            </Animatable.View>
-          )}
-          {!isSearchFocus && (
-            <Animatable.View
-              animation="slideInUp"
-              duration={600}
-              style={styles.searchContentWrapper}
-            >
-              <Text>{JSON.stringify(courses)}</Text>
-              <Text>{JSON.stringify(instructors)}</Text>
-            </Animatable.View>
-          )}
+          <View style={styles.container}>
+            {isSearchFocus && (
+              <Animatable.View
+                animation="slideInUp"
+                duration={600}
+                style={styles.searchContentWrapper}
+              >
+                <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={blurSearchBox}>
+                  <Text>{`${t('search_history_title')}:`}</Text>
+                  <View style={styles.searchHistories}>
+                    {isArray(searchHistories) &&
+                      searchHistories.map((history) => (
+                        <Badge
+                          key={history.id}
+                          id={history.id}
+                          text={history.content}
+                          onLongPress={() => onLongPressHistory(history)}
+                          onPress={() => onHistoryPress(history)}
+                          wrapperStyle={styles.historyBadge}
+                        />
+                      ))}
+                  </View>
+                </TouchableOpacity>
+              </Animatable.View>
+            )}
+            {!isSearchFocus && (
+              <Animatable.View
+                animation="slideInUp"
+                duration={600}
+                style={styles.searchContentWrapper}
+              >
+                <Text>{JSON.stringify(courses)}</Text>
+                <Text>{JSON.stringify(instructors)}</Text>
+              </Animatable.View>
+            )}
+          </View>
         </KeyboardAvoidingView>
         <AppModal
           isVisible={deleteModalVisible}
