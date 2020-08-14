@@ -1,5 +1,6 @@
 /* eslint-disable no-unsafe-finally */
 import { Api } from '../Api';
+import AsyncStorage from '../../utils/asyncStorage';
 
 class CourseRepo {
   static async getCategories() {
@@ -306,6 +307,53 @@ class CourseRepo {
       return freeCourseLink;
     } catch (e) {
       console.log('getFreeCourse -> e', e?.response?.data?.message);
+      throw e;
+    }
+  }
+
+  static async getSearchHistories() {
+    try {
+      const { payload: histories } = await Api({
+        method: 'get',
+        url: '/course/search-history',
+      });
+
+      return histories?.data || [];
+    } catch (e) {
+      console.log('getSearchHistories -> e', e);
+      throw e;
+    }
+  }
+
+  static async searchCourses({ keyword, limit = 10, offset = 1 }) {
+    try {
+      const token = await AsyncStorage.getAccessToken();
+      const { payload: { courses, instructors } = {} } = await Api({
+        method: 'post',
+        url: '/course/searchV2',
+        body: {
+          token,
+          keyword,
+          limit,
+          offset,
+        },
+      });
+
+      return { courses, instructors };
+    } catch (e) {
+      console.log('searchCourses -> e', e);
+      throw e;
+    }
+  }
+
+  static async removeSearchHistory(historyId) {
+    try {
+      await Api({
+        method: 'delete',
+        url: `/course/delete-search-history/${historyId}`,
+      });
+    } catch (e) {
+      console.log('removeSearchHistory -> e', e);
       throw e;
     }
   }

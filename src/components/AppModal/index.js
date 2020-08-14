@@ -16,6 +16,7 @@ const AppModal = ({
   children,
   isVisible,
   onBackdropPress,
+  onModalHide,
   canBackdropPress,
 }) => {
   const { colors } = useTheme();
@@ -25,6 +26,7 @@ const AppModal = ({
       backdropColor="rgba(0,0,0,0.5)"
       backdropOpacity={1}
       onBackdropPress={canBackdropPress ? onBackdropPress : () => {}}
+      onModalHide={onModalHide}
       style={styles.modalStyle}
       animationIn="slideInUp"
       animationOut="slideOutDown"
@@ -60,6 +62,7 @@ AppModal.defaultProps = {
   onConfirm: null,
   isVisible: false,
   onBackdropPress: () => {},
+  onModalHide: () => {},
   canBackdropPress: true,
 };
 

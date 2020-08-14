@@ -10,8 +10,8 @@ import Downloads from 'views/App/Downloads';
 import Browse from 'views/App/Browse';
 import CourseDetail from 'views/App/CourseDetail';
 import CoursesInSection from 'views/App/CoursesInSection';
+import Search from 'views/App/Search';
 import Text from 'components/Text';
-// import Search from 'views/App/Search';
 
 const AppTab = createBottomTabNavigator();
 
@@ -178,7 +178,7 @@ const SearchStackComp = () => {
       {CoursesInSectionScreen}
       <Stack.Screen
         name={screenName.search}
-        component={Downloads}
+        component={Search}
         options={{
           headerShown: false,
         }}

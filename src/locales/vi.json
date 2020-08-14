@@ -30,6 +30,13 @@
     "empty_title": "Không có khoá hoc đã tải",
     "empty": "Các khoá học tải về sẽ hiển thị tại đây."
   },
+  "search_tab": {
+    "search_history_title": "Tìm kiếm gần đây",
+    "delete_history_title": "Xoá lịch sử",
+    "delete_history_confirm": "Xoá",
+    "delete_history_cancel": "Huỷ",
+    "delete_history_text": "Bạn có muốn xoá lịch sử tìm kiếm"
+  },
   "common": {
     "best_seller_courses_title": "Khoá học bán chạy",
     "quality_courses_title": "Khoá học chất lượng",

@@ -10,7 +10,7 @@ import {
 const initialMessageState = { type: null, message: null, description: null };
 
 const initialState = {
-  themeMode: themeMode.dark,
+  themeMode: themeMode.light,
   currentUser: null,
   flashMessage: initialMessageState,
   categories: [],

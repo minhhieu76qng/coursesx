@@ -3,12 +3,20 @@ import { TouchableOpacity, View } from 'react-native';
 import Text from 'components/Text';
 import styles from './styles';
 
-const Badge = ({ id, text, children, wrapperStyle = {}, onPress = null, activeOpacity = 0.8 }) => {
+const Badge = ({
+  id,
+  text,
+  children,
+  wrapperStyle = {},
+  onPress = null,
+  onLongPress = null,
+  activeOpacity = 0.8,
+}) => {
   const WrappedComponent = useMemo(() => {
-    return onPress ? TouchableOpacity : View;
+    return onPress || onLongPress ? TouchableOpacity : View;
   }, [onPress]);
   const touchableProps = useMemo(() => {
-    return onPress ? { onPress, activeOpacity } : {};
+    return onPress || onLongPress ? { onPress, onLongPress, activeOpacity } : {};
   }, [onPress, id]);
   return (
     <WrappedComponent style={[styles.badgeWrapper, wrapperStyle]} {...touchableProps}>
