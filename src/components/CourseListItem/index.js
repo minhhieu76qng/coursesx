@@ -8,22 +8,33 @@ import { useTranslation } from 'react-i18next';
 import Text from 'components/Text';
 import Rating from 'components/Rating';
 import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
-import styles from './styles';
+import { useDispatch } from 'react-redux';
+import UserRepo from 'services/user/repo';
 import ContextMenu from '../ContextMenu';
+
+import styles from './styles';
+import { showFlashMessage } from '../../services/inapp/actions';
 
 const CourseListItem = ({ course, onPress }) => {
   const { colors } = useTheme();
+  const dispatch = useDispatch();
+  const { t } = useTranslation('course_detail');
 
-  const onBookmarkPress = useCallback(() => {}, []);
+  const onLikePress = useCallback(async () => {
+    try {
+      await UserRepo.likeCourse(course?.id);
+    } catch (e) {
+      dispatch(showFlashMessage({ description: t('like_course_fail') }));
+    }
+  }, []);
 
   const onDownloadPress = useCallback(() => {}, []);
-  const { t } = useTranslation('course_detail');
 
   const courseOptions = useMemo(() => {
     return [
       {
         name: t('like_course'),
-        onPress: onBookmarkPress,
+        onPress: onLikePress,
       },
       {
         name: t('download_course'),

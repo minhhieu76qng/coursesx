@@ -97,6 +97,11 @@ class CourseDetail extends React.Component {
           description: t('like_course_success'),
         });
         this.fetchCourse();
+      } else {
+        showFlashMsg({
+          type: MessageType.Type.SUCCESS,
+          description: t('unlike_course_success'),
+        });
       }
     } catch (e) {
       showFlashMsg({

@@ -76,7 +76,6 @@ class UserRepo {
           courseId,
         },
       });
-
       return isLiked;
     } catch (e) {
       console.log('likeCourse -> e', e);
