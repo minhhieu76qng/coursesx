@@ -5,15 +5,21 @@ import { connect } from 'react-redux';
 import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { SearchBar } from 'react-native-elements';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useTheme } from '@react-navigation/native';
 import Badge from 'components/Badge';
 import AppLayout from 'layouts/AppLayout';
 import Text from 'components/Text';
 import CourseRepo from 'services/courses/repo';
-import AppModal from '../../../components/AppModal';
+import AppModal from 'components/AppModal';
+import { showFlashMessage } from 'services/inapp/actions';
 
 import styles from './styles';
-import { showFlashMessage } from '../../../services/inapp/actions';
+import SearchList from './SearchList';
+import SearchContext from './SearchContext';
+import { SEARCH_TAB } from '../../../constants';
+
+const SearchTopTab = createMaterialTopTabNavigator();
 
 class Search extends React.Component {
   constructor(props) {
@@ -23,6 +29,7 @@ class Search extends React.Component {
       instructors: [],
       searchText: '',
       searchLoading: false,
+      historyLoading: false,
       isSearchFocus: false,
       searchHistories: [],
       deletingHistory: null,
@@ -33,6 +40,7 @@ class Search extends React.Component {
 
   componentDidMount() {
     this.getSearchHistories();
+    this.onSearchSubmit();
   }
 
   async getSearchHistories() {
@@ -79,6 +87,16 @@ class Search extends React.Component {
           keyword: searchText,
         },
       );
+      listCourses.data = (listCourses?.data || []).map((val) => {
+        const data = val;
+        data.itemType = SEARCH_TAB.COURSES;
+        return data;
+      });
+      listInstructors.data = (listInstructors?.data || []).map((val) => {
+        const data = val;
+        data.itemType = SEARCH_TAB.INSTRUCTORS;
+        return data;
+      });
       this.setState({
         courses: listCourses?.data || [],
         instructors: listInstructors?.data || [],
@@ -164,6 +182,7 @@ class Search extends React.Component {
     const {
       searchText,
       searchLoading,
+      historyLoading,
       isSearchFocus,
       searchHistories,
       courses,
@@ -185,77 +204,116 @@ class Search extends React.Component {
     } = this;
     return (
       <AppLayout>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        <SearchContext.Provider
+          value={{
+            instructors,
+            courses,
+            searchLoading,
+            historyLoading,
+          }}
         >
-          <SearchBar
-            ref={(ref) => (this.searchRef = ref)}
-            placeholder="Search courses, instructors,..."
-            containerStyle={styles.searchContainer}
-            inputStyle={styles.searchInput}
-            showCancel
-            lightTheme={!dark}
-            value={searchText}
-            onChangeText={onSearchTextChange}
-            showLoading={searchLoading}
-            round
-            onFocus={onSearchFocus}
-            onBlur={onSearchBlur}
-            onSubmitEditing={onSearchSubmit}
-          />
-          <View style={styles.container}>
-            {isSearchFocus && (
-              <Animatable.View
-                animation="slideInUp"
-                duration={600}
-                style={styles.searchContentWrapper}
-              >
-                <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={blurSearchBox}>
-                  <Text>{`${t('search_history_title')}:`}</Text>
-                  <View style={styles.searchHistories}>
-                    {isArray(searchHistories) &&
-                      searchHistories.map((history) => (
-                        <Badge
-                          key={history.id}
-                          id={history.id}
-                          text={history.content}
-                          onLongPress={() => onLongPressHistory(history)}
-                          onPress={() => onHistoryPress(history)}
-                          wrapperStyle={styles.historyBadge}
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            <SearchBar
+              ref={(ref) => (this.searchRef = ref)}
+              placeholder="Search courses, instructors,..."
+              containerStyle={styles.searchContainer}
+              inputStyle={styles.searchInput}
+              showCancel
+              lightTheme={!dark}
+              value={searchText}
+              onChangeText={onSearchTextChange}
+              showLoading={searchLoading}
+              round
+              onFocus={onSearchFocus}
+              onBlur={onSearchBlur}
+              onSubmitEditing={onSearchSubmit}
+            />
+            <View style={styles.container}>
+              {isSearchFocus && (
+                <Animatable.View
+                  animation="fadeInUp"
+                  duration={600}
+                  style={styles.searchContentWrapper}
+                >
+                  <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPress={blurSearchBox}>
+                    <Text>{`${t('search_history_title')}:`}</Text>
+                    <View style={styles.searchHistories}>
+                      {isArray(searchHistories) &&
+                        searchHistories.map((history) => (
+                          <Badge
+                            key={history.id}
+                            id={history.id}
+                            text={history.content}
+                            onLongPress={() => onLongPressHistory(history)}
+                            onPress={() => onHistoryPress(history)}
+                            wrapperStyle={styles.historyBadge}
+                          />
+                        ))}
+                    </View>
+                  </TouchableOpacity>
+                </Animatable.View>
+              )}
+              {!isSearchFocus && (
+                <Animatable.View
+                  animation="fadeInUp"
+                  duration={600}
+                  style={styles.searchContentWrapper}
+                >
+                  <SearchTopTab.Navigator
+                    sceneContainerStyle={styles.container}
+                    style={styles.searchTopTab}
+                  >
+                    <SearchTopTab.Screen name={t('all_tab')}>
+                      {() => (
+                        <SearchList
+                          data={[...courses, ...instructors]}
+                          loading={searchLoading}
+                          type={SEARCH_TAB.ALL}
                         />
-                      ))}
-                  </View>
-                </TouchableOpacity>
-              </Animatable.View>
-            )}
-            {!isSearchFocus && (
-              <Animatable.View
-                animation="slideInUp"
-                duration={600}
-                style={styles.searchContentWrapper}
-              >
-                <Text>{JSON.stringify(courses)}</Text>
-                <Text>{JSON.stringify(instructors)}</Text>
-              </Animatable.View>
-            )}
-          </View>
-        </KeyboardAvoidingView>
-        <AppModal
-          isVisible={deleteModalVisible}
-          title={t('delete_history_title')}
-          cancelLabel={t('delete_history_cancel')}
-          confirmLabel={t('delete_history_confirm')}
-          onCancel={onCancelDeleteHistory}
-          onConfirm={onConfirmDeleteHistory}
-          onModalHide={onDeleteModalHide}
-          canBackdropPress
-          onBackdropPress={onCancelDeleteHistory}
-        >
-          <Text style={styles.deleteHistoryTextModal}>
-            {`${t('delete_history_text')} ${deletingHistory?.content} ?`}
-          </Text>
-        </AppModal>
+                      )}
+                    </SearchTopTab.Screen>
+                    <SearchTopTab.Screen name={t('course_tab')}>
+                      {() => (
+                        <SearchList
+                          data={courses}
+                          loading={searchLoading}
+                          type={SEARCH_TAB.COURSES}
+                        />
+                      )}
+                    </SearchTopTab.Screen>
+                    <SearchTopTab.Screen name={t('instructor_tab')}>
+                      {() => (
+                        <SearchList
+                          data={instructors}
+                          loading={searchLoading}
+                          type={SEARCH_TAB.INSTRUCTORS}
+                        />
+                      )}
+                    </SearchTopTab.Screen>
+                  </SearchTopTab.Navigator>
+                </Animatable.View>
+              )}
+            </View>
+          </KeyboardAvoidingView>
+          <AppModal
+            isVisible={deleteModalVisible}
+            title={t('delete_history_title')}
+            cancelLabel={t('delete_history_cancel')}
+            confirmLabel={t('delete_history_confirm')}
+            onCancel={onCancelDeleteHistory}
+            onConfirm={onConfirmDeleteHistory}
+            onModalHide={onDeleteModalHide}
+            canBackdropPress
+            onBackdropPress={onCancelDeleteHistory}
+          >
+            <Text style={styles.deleteHistoryTextModal}>
+              {`${t('delete_history_text')} ${deletingHistory?.content} ?`}
+            </Text>
+          </AppModal>
+        </SearchContext.Provider>
       </AppLayout>
     );
   }

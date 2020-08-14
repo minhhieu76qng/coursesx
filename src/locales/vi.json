@@ -38,9 +38,16 @@
     "delete_history_text": "Bạn có muốn xoá lịch sử tìm kiếm",
     "cant_get_search_histories": "Không thể lấy được lịch sử tìm kiếm.",
     "cant_delete_history": "Không thể xoá lịch sử tìm kiếm.",
-    "cant_search": "Không thể tìm kiếm."
+    "cant_search": "Không thể tìm kiếm.",
+    "all_tab": "Tất cả",
+    "course_tab": "Khoá học",
+    "instructor_tab": "Giảng viên",
+    "no_instructors": "Không tồn tại giảng viên",
+    "no_course": "Không tồn tại khoá học",
+    "no_all": "Không tồn tại dữ liệu"
   },
   "common": {
+    "total_instructor_courses": "Tổng số khoá học",
     "best_seller_courses_title": "Khoá học bán chạy",
     "quality_courses_title": "Khoá học chất lượng",
     "author_list_title": "Giảng viên",

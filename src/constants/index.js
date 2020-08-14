@@ -22,4 +22,10 @@ export const YOUTUBE_VIDEO_STAGE = {
   ENDED: 'ended',
 };
 
+export const SEARCH_TAB = {
+  ALL: 'all',
+  COURSES: 'courses',
+  INSTRUCTORS: 'instructors',
+};
+
 export const UNAUTHORIZED = 401;
