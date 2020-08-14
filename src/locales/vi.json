@@ -35,7 +35,10 @@
     "delete_history_title": "Xoá lịch sử",
     "delete_history_confirm": "Xoá",
     "delete_history_cancel": "Huỷ",
-    "delete_history_text": "Bạn có muốn xoá lịch sử tìm kiếm"
+    "delete_history_text": "Bạn có muốn xoá lịch sử tìm kiếm",
+    "cant_get_search_histories": "Không thể lấy được lịch sử tìm kiếm.",
+    "cant_delete_history": "Không thể xoá lịch sử tìm kiếm.",
+    "cant_search": "Không thể tìm kiếm."
   },
   "common": {
     "best_seller_courses_title": "Khoá học bán chạy",

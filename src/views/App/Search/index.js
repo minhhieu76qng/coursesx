@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { isArray } from 'lodash';
+import { connect } from 'react-redux';
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { SearchBar } from 'react-native-elements';
@@ -12,6 +13,7 @@ import CourseRepo from 'services/courses/repo';
 import AppModal from '../../../components/AppModal';
 
 import styles from './styles';
+import { showFlashMessage } from '../../../services/inapp/actions';
 
 class Search extends React.Component {
   constructor(props) {
@@ -21,7 +23,7 @@ class Search extends React.Component {
       instructors: [],
       searchText: '',
       searchLoading: false,
-      isSearchFocus: true,
+      isSearchFocus: false,
       searchHistories: [],
       deletingHistory: null,
       deleteModalVisible: false,
@@ -29,13 +31,21 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    CourseRepo.getSearchHistories()
-      .then((data) => {
-        this.setState({
-          searchHistories: data,
-        });
-      })
-      .catch((e) => console.log(e));
+    this.getSearchHistories();
+  }
+
+  async getSearchHistories() {
+    try {
+      const histories = await CourseRepo.getSearchHistories();
+      this.setState({
+        searchHistories: histories,
+      });
+    } catch (e) {
+      const { t, showNotification } = this.props;
+      showNotification({
+        description: t('cant_get_search_histories'),
+      });
+    }
   }
 
   onSearchTextChange = (text) => {
@@ -60,7 +70,7 @@ class Search extends React.Component {
     const { searchText } = this.state;
     console.log('onSearchSubmit -> searchText', searchText);
     try {
-      this.state({
+      this.setState({
         searchLoading: true,
       });
       const { courses: listCourses, instructors: listInstructors } = await CourseRepo.searchCourses(
@@ -68,14 +78,19 @@ class Search extends React.Component {
           keyword: searchText,
         },
       );
-      this.state({
+      this.setState({
         courses: listCourses?.data || [],
         instructors: listInstructors?.data || [],
       });
+
+      await this.getSearchHistories();
     } catch (e) {
-      console.log('onSearchSubmit -> e', e);
+      const { showNotification, t } = this.props;
+      showNotification({
+        description: t('cant_search'),
+      });
     } finally {
-      this.state({
+      this.setState({
         searchLoading: false,
       });
     }
@@ -95,7 +110,6 @@ class Search extends React.Component {
 
   onConfirmDeleteHistory = async () => {
     const { deletingHistory, searchHistories } = this.state;
-    console.log('onConfirmDeleteHistory -> deletingHistory', deletingHistory);
 
     try {
       if (deletingHistory) {
@@ -106,7 +120,10 @@ class Search extends React.Component {
         });
       }
     } catch (e) {
-      console.log('Search -> onConfirmDeleteHistory -> e', e);
+      const { showNotification, t } = this.props;
+      showNotification({
+        description: t('cant_delete_history'),
+      });
     } finally {
       this.setState({
         deleteModalVisible: false,
@@ -129,6 +146,7 @@ class Search extends React.Component {
       isSearchFocus,
       searchHistories,
       courses,
+      instructors,
       deleteModalVisible,
       deletingHistory,
     } = this.state;
@@ -190,6 +208,7 @@ class Search extends React.Component {
                 style={styles.searchContentWrapper}
               >
                 <Text>{JSON.stringify(courses)}</Text>
+                <Text>{JSON.stringify(instructors)}</Text>
               </Animatable.View>
             )}
           </View>
@@ -220,4 +239,17 @@ const WrappedWithTheme = (props) => {
   return <Search {...props} dark={dark} />;
 };
 
-export default withTranslation('search_tab')(WrappedWithTheme);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showNotification: ({ type = null, description }) =>
+      dispatch(
+        showFlashMessage({
+          type,
+          description,
+        }),
+      ),
+  };
+};
+const WrappedWithRedux = connect(null, mapDispatchToProps)(WrappedWithTheme);
+
+export default withTranslation('search_tab')(WrappedWithRedux);
