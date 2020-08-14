@@ -25,7 +25,7 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   searchHistories: {
-    marginTop: 10,
+    // marginTop: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -34,5 +34,6 @@ export default StyleSheet.create({
   },
   historyBadge: {
     marginRight: 10,
+    marginTop: 10,
   },
 });

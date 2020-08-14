@@ -115,6 +115,17 @@ class Search extends React.Component {
     }
   };
 
+  onClearSearchText = () => {
+    this.setState(
+      {
+        isSearchFocus: true,
+      },
+      () => {
+        this.searchRef.focus();
+      },
+    );
+  };
+
   onCancelDeleteHistory = () => {
     this.setState({
       deleteModalVisible: false,
@@ -200,6 +211,7 @@ class Search extends React.Component {
       onSearchSubmit,
       onSearchTextChange,
       onHistoryPress,
+      onClearSearchText,
       blurSearchBox,
     } = this;
     return (
@@ -230,6 +242,7 @@ class Search extends React.Component {
               onFocus={onSearchFocus}
               onBlur={onSearchBlur}
               onSubmitEditing={onSearchSubmit}
+              onClear={onClearSearchText}
             />
             <View style={styles.container}>
               {isSearchFocus && (
