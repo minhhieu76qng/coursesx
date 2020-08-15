@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { ScrollView, FlatList, View, ActivityIndicator } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import { useTheme, useNavigation } from '@react-navigation/native';
 import { isArray } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -89,15 +88,13 @@ const SearchList = ({ data, loading, type }) => {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       <ScrollView>
         {data && (
           <FlatList keyExtractor={(item) => item.id} data={data} renderItem={renderListItem} />
         )}
       </ScrollView>
-      <Animatable.View
-        animation="fadeInUp"
-        duration={300}
+      <View
         style={[
           styles.loadingContainer,
           styles.absoluteLoading,
@@ -106,8 +103,8 @@ const SearchList = ({ data, loading, type }) => {
         ]}
       >
         <ActivityIndicator size="large" color={colors.primary} />
-      </Animatable.View>
-    </>
+      </View>
+    </View>
   );
 };
 

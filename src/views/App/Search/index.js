@@ -275,10 +275,7 @@ class Search extends React.Component {
                   duration={600}
                   style={styles.searchContentWrapper}
                 >
-                  <SearchTopTab.Navigator
-                    sceneContainerStyle={styles.container}
-                    style={styles.searchTopTab}
-                  >
+                  <SearchTopTab.Navigator>
                     <SearchTopTab.Screen name={t('all_tab')}>
                       {() => (
                         <SearchList

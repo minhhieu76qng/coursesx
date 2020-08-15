@@ -1,6 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+    height: '100%',
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

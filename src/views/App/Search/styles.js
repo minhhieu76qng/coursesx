@@ -17,9 +17,6 @@ export default StyleSheet.create({
     paddingHorizontal: 10,
     flex: 1,
   },
-  searchTopTab: {
-    marginHorizontal: -10,
-  },
   searchContentWrapper: {
     flex: 1,
     marginTop: 10,
