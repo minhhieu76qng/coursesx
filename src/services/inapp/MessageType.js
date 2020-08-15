@@ -1,3 +1,5 @@
+import i18n from '../../i18n';
+
 class MessageType {
   static Type = {
     SUCCESS: 'success',
@@ -10,10 +12,10 @@ class MessageType {
   static titleFromType(type) {
     switch (type) {
       case MessageType.Type.SUCCESS:
-        return 'Thành công!';
+        return `${i18n.t('notification:success')}!`;
 
       case MessageType.Type.DANGER:
-        return 'Có lỗi';
+        return `${i18n.t('notification:fail')}!`;
       default:
         return null;
     }

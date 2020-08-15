@@ -57,10 +57,10 @@ const Header = ({ paddingTop }) => {
           <Avatar
             containerStyle={{ borderColor: colors.border, borderWidth: 1 }}
             source={{
-              uri: currentUser.avatar,
+              uri: currentUser?.avatar,
             }}
             rounded
-            title={currentUser.name}
+            title={currentUser?.name}
             size="small"
             titleStyle={styles.avatarTitle}
           />

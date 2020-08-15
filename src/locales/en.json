@@ -22,8 +22,10 @@
     "wrong_video_url": "Video link has been wrong\nContact administrator to resolve it.",
     "request_password_fail": "Can't send mail to request password.",
     "request_password_success": "Request password successfully\nPlease check email and follow steps!",
-    "update_profile_fail": "Update account information successfully.",
-    "update_profile_success": "Failed to update account information."
+    "update_profile_fail": "Failed to update account information.",
+    "update_profile_success": "Update account information successfully.",
+    "success": "Success",
+    "fail": "Error"
   },
   "tab_navigator": {
     "home": "Home",

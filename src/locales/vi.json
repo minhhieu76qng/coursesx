@@ -23,7 +23,9 @@
     "request_password_fail": "Không thể gửi mail quên mật khẩu.",
     "request_password_success": "Gửi mail quên mật khẩu thành công.\nVui lòng kiểm tra email.",
     "update_profile_fail": "Cập nhật thông tin người dùng không thành công.",
-    "update_profile_success": "Cập nhật thông tin người dùng thành công."
+    "update_profile_success": "Cập nhật thông tin người dùng thành công.",
+    "success": "Thành công",
+    "fail": "Có lỗi"
   },
   "tab_navigator": {
     "home": "Trang chủ",
