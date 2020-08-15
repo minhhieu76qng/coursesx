@@ -124,6 +124,16 @@ class UserRepo {
       throw e;
     }
   }
+
+  static async requestForgotPasswordToEmail(email) {
+    await Api({
+      method: 'post',
+      url: '/user/forget-pass/send-email',
+      body: {
+        email,
+      },
+    });
+  }
 }
 
 export default UserRepo;

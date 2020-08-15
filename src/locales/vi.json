@@ -17,9 +17,11 @@
     "course_in_category_title": "Các khoá học cùng chủ đề",
     "rating_course": "Các đánh giá"
   },
-  "error": {
+  "notification": {
     "not_buy_course": "Bạn chưa mua khoá học này!\n Vui lòng mua để có thể học.",
-    "wrong_video_url": "Đường dẫn video bị hỏng.\n Liên hệ admin để khắc phục."
+    "wrong_video_url": "Đường dẫn video bị hỏng.\n Liên hệ admin để khắc phục.",
+    "request_password_fail": "Không thể gửi mail quên mật khẩu.",
+    "request_password_success": "Gửi mail quên mật khẩu thành công.\nVui lòng kiểm tra email."
   },
   "tab_navigator": {
     "home": "Trang chủ",

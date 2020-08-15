@@ -130,7 +130,7 @@ const VideoPlayer = ({
   const [isLoading, setLoading] = useState(true);
   const [height, setHeight] = useState(250);
   const { colors } = useTheme();
-  const { t } = useTranslation('error');
+  const { t } = useTranslation('notification');
 
   const isYoutubeVideo = useMemo(() => courseData?.typeUploadVideoLesson === VIDEO_TYPE.YOUTUBE, [
     courseData,
