@@ -120,6 +120,7 @@ const Settings = () => {
             {SETTINGS_MENU.map((item) => (
               <ListItem
                 key={item.id}
+                containerStyle={{ backgroundColor: colors.card }}
                 title={<Text>{item.title}</Text>}
                 leftIcon={<Icon size={25} style={styles.listItemIcon} name={item.icon} />}
                 chevron
