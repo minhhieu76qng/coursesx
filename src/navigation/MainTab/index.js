@@ -77,7 +77,7 @@ const CourseDetailScreen = (
     initialParams={{
       header: {
         backBtnVisibility: true,
-        headerTitle: 'Course detail',
+        headerTitle: '',
         headerShown: true,
       },
     }}

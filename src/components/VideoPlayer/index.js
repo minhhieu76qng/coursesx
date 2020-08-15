@@ -24,9 +24,11 @@ const VideoMessage = ({ text = '' }) => {
   const { isYoutubeVideo } = useContext(VideoPlayerContext);
   const iconName = useMemo(() => (isYoutubeVideo ? 'youtube' : 'film'), [isYoutubeVideo]);
   return (
-    <View style={styles.otherComps}>
-      <Icon name={iconName} size={50} />
-      <Text style={{ marginTop: 20, textAlign: 'center', lineHeight: 22 }}>{text}</Text>
+    <View style={[styles.otherComps, { backgroundColor: '#1e272e' }]}>
+      <Icon color="#fff" name={iconName} size={50} />
+      <Text color="#fff" style={{ marginTop: 20, textAlign: 'center', lineHeight: 22 }}>
+        {text}
+      </Text>
     </View>
   );
 };
