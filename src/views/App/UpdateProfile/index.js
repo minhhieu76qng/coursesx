@@ -83,7 +83,7 @@ const UpdateProfile = () => {
             validationSchema={updateProfileSchema}
             onSubmit={onUpdateProfileSubmit}
           >
-            {({ values, errors, handleChange, handleSubmit }) => (
+            {({ dirty, values, errors, handleChange, handleSubmit }) => (
               <>
                 {Object.values(errors).length > 0 && (
                   <Text style={styles.errorTextMessage}>{Object.values(errors)?.[0]}</Text>
@@ -110,6 +110,7 @@ const UpdateProfile = () => {
                   style={[!isUpdateAvatar ? styles.hideInput : {}]}
                 />
                 <Button
+                  disabled={!dirty}
                   title={t('submit')}
                   titleStyle={styles.btnSubmitTitle}
                   onPress={handleSubmit}
