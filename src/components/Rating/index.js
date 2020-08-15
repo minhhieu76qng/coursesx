@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Text from 'components/Text';
 import Icon from 'themes/Icon';
@@ -22,9 +23,14 @@ function Rating({
   style,
   showRating,
 }) {
+  const { dark } = useTheme();
+
   const renderStar = useCallback((number, idx) => {
     const name = number === 0.5 ? 'star-half-o' : 'star';
-    const color = number >= 0.5 ? activeColor : inactiveColor;
+    let color = activeColor;
+    if (number < 0.5) {
+      color = dark ? inactiveColor : '#95a5a6';
+    }
     return <Icon key={idx} name={name} size={size} color={color} />;
   }, []);
 
