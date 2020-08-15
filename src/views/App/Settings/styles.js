@@ -17,10 +17,10 @@ export default StyleSheet.create({
   },
   card: {
     width: '100%',
-    borderRadius: 20,
-    borderBottomLeftRadius: 5,
-    marginBottom: 20,
+    borderRadius: 25,
+    borderBottomLeftRadius: 8,
     overflow: 'hidden',
+    paddingVertical: 20,
   },
   cardProfile: {
     flexDirection: 'row',
@@ -35,6 +35,11 @@ export default StyleSheet.create({
   },
   profileText: {
     marginBottom: 5,
+  },
+  settingsDivider: {
+    marginVertical: 20,
+    width: '100%',
+    height: 1,
   },
   listItemIcon: {
     width: 25,

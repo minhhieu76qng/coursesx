@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
-import { View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, ScrollView } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@react-navigation/native';
 import AppLayout from 'layouts/AppLayout';
@@ -12,6 +12,7 @@ import Icon from 'themes/Icon';
 import { getCurrentUser } from 'services/inapp/getters';
 
 import styles from './styles';
+import { LOGOUT } from '../../../services/user/constants';
 
 const SETTINGS_ID = {
   PROFILE: 'PROFILE',
@@ -24,6 +25,7 @@ const SETTINGS_ID = {
 const Settings = () => {
   const { colors } = useTheme();
   const { t } = useTranslation('settings');
+  const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
 
   const SETTINGS_MENU = useMemo(() => {
@@ -56,52 +58,74 @@ const Settings = () => {
     ];
   }, [t]);
 
+  const onLogout = useCallback(() => {
+    dispatch({
+      type: LOGOUT,
+    });
+  }, [dispatch]);
+
   const onListItemPress = useCallback((settingId) => {
-    console.log('onListItemPress -> settingId', settingId);
+    switch (settingId) {
+      case SETTINGS_ID.PROFILE:
+        break;
+      case SETTINGS_ID.THEME:
+        break;
+      case SETTINGS_ID.LANGUAGE:
+        break;
+      case SETTINGS_ID.ABOUT:
+        break;
+      case SETTINGS_ID.LOGOUT:
+        onLogout();
+        break;
+      default:
+        break;
+    }
   }, []);
 
   return (
     <AppLayout>
-      <View style={styles.container}>
-        <View style={styles.cardShadow}>
-          <View style={[styles.card, styles.cardProfile, { backgroundColor: colors.card }]}>
-            <View>
-              <Avatar userAvatar={currentUser.avatar} avatarSize="large" showName={false} />
-              <Button
-                type="clear"
-                title="Change avatar"
-                titleStyle={styles.changeAvatarButtonText}
-              />
-            </View>
-            <View style={styles.profileBox}>
-              <Text style={styles.profileText} type="h3">
-                {currentUser.name || 'User'}
-              </Text>
-              <Text type="subbody-light" style={styles.profileText}>
-                {currentUser.email}
-              </Text>
-              <Text type="subbody-light" style={styles.profileText}>
-                {currentUser.phone}
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.cardShadow}>
-          <View style={[styles.card, { backgroundColor: colors.card }]}>
-            {/* settings */}
+      <ScrollView style={[styles.container, styles.cardShadow]}>
+        <View style={[styles.card, { backgroundColor: colors.card }]}>
+          {currentUser && (
+            <>
+              <View style={styles.cardProfile}>
+                <View>
+                  <Avatar userAvatar={currentUser.avatar} avatarSize="large" showName={false} />
+                  <Button
+                    type="clear"
+                    title="Change avatar"
+                    titleStyle={styles.changeAvatarButtonText}
+                  />
+                </View>
+                <View style={styles.profileBox}>
+                  <Text style={styles.profileText} type="h3">
+                    {currentUser.name || 'User'}
+                  </Text>
+                  <Text type="subbody-light" style={styles.profileText}>
+                    {currentUser.email}
+                  </Text>
+                  <Text type="subbody-light" style={styles.profileText}>
+                    {currentUser.phone}
+                  </Text>
+                </View>
+              </View>
+
+              <View style={[styles.settingsDivider, { backgroundColor: colors.border }]} />
+            </>
+          )}
+          <View>
             {SETTINGS_MENU.map((item) => (
               <ListItem
                 key={item.id}
                 title={<Text>{item.title}</Text>}
                 leftIcon={<Icon size={25} style={styles.listItemIcon} name={item.icon} />}
-                // bottomDivider
                 chevron
                 onPress={() => onListItemPress(item.id)}
               />
             ))}
           </View>
         </View>
-      </View>
+      </ScrollView>
     </AppLayout>
   );
 };
