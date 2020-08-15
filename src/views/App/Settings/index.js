@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '@react-navigation/native';
+import { useTheme, useNavigation } from '@react-navigation/native';
 import AppLayout from 'layouts/AppLayout';
 import { ListItem } from 'react-native-elements';
 import Text from 'components/Text';
@@ -10,15 +10,16 @@ import Button from 'components/Button';
 import Avatar from 'components/Avatar';
 import Icon from 'themes/Icon';
 import { getCurrentUser } from 'services/inapp/getters';
+import { LOGOUT } from 'services/user/constants';
+import { SETTINGS_ID, screenName } from 'constants';
 
 import styles from './styles';
-import { LOGOUT } from '../../../services/user/constants';
-import { SETTINGS_ID } from '../../../constants';
 import SettingModal from './SettingModal';
 
 const Settings = () => {
   const [modalType, setModalType] = useState(null);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const { colors } = useTheme();
   const { t } = useTranslation('settings');
@@ -64,6 +65,7 @@ const Settings = () => {
   const onListItemPress = useCallback((settingId) => {
     switch (settingId) {
       case SETTINGS_ID.PROFILE:
+        navigation.navigate(screenName.updateProfile, { isUpdateAvatar: false });
         break;
       case SETTINGS_ID.THEME:
         setModalType(settingId);
