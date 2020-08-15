@@ -76,7 +76,8 @@
     "vietnamese": "Vietnamese",
     "english": "Englist",
     "cancel_modal": "Cancel",
-    "confirm_modal": "Change"
+    "confirm_modal": "Change",
+    "change_avatar": "Change avatar"
   },
   "common": {
     "total_instructor_courses": "Total courses",

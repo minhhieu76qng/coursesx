@@ -96,7 +96,7 @@ const Settings = () => {
                   <Avatar userAvatar={currentUser.avatar} avatarSize="large" showName={false} />
                   <Button
                     type="clear"
-                    title="Change avatar"
+                    title={t('change_avatar')}
                     titleStyle={styles.changeAvatarButtonText}
                   />
                 </View>
