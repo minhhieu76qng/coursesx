@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -13,19 +13,16 @@ import { getCurrentUser } from 'services/inapp/getters';
 
 import styles from './styles';
 import { LOGOUT } from '../../../services/user/constants';
-
-const SETTINGS_ID = {
-  PROFILE: 'PROFILE',
-  THEME: 'THEME',
-  LANGUAGE: 'LANGUAGE',
-  ABOUT: 'ABOUT',
-  LOGOUT: 'LOGOUT',
-};
+import { SETTINGS_ID } from '../../../constants';
+import SettingModal from './SettingModal';
 
 const Settings = () => {
+  const [modalType, setModalType] = useState(null);
+  const dispatch = useDispatch();
+
   const { colors } = useTheme();
   const { t } = useTranslation('settings');
-  const dispatch = useDispatch();
+
   const currentUser = useSelector(getCurrentUser);
 
   const SETTINGS_MENU = useMemo(() => {
@@ -69,8 +66,10 @@ const Settings = () => {
       case SETTINGS_ID.PROFILE:
         break;
       case SETTINGS_ID.THEME:
+        setModalType(settingId);
         break;
       case SETTINGS_ID.LANGUAGE:
+        setModalType(settingId);
         break;
       case SETTINGS_ID.ABOUT:
         break;
@@ -80,6 +79,10 @@ const Settings = () => {
       default:
         break;
     }
+  }, []);
+
+  const clearModalType = useCallback(() => {
+    setModalType(null);
   }, []);
 
   return (
@@ -126,6 +129,7 @@ const Settings = () => {
           </View>
         </View>
       </ScrollView>
+      {modalType && <SettingModal modalType={modalType} clearModalType={clearModalType} />}
     </AppLayout>
   );
 };

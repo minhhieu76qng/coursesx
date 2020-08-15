@@ -6,9 +6,9 @@ const {
   SHOW_FLASH_MESSAGE,
   REMOVE_FLASH_MESSAGE,
   UPDATE_CATEGORIES,
+  SET_THEME,
 } = require('./constants');
 
-// eslint-disable-next-line import/prefer-default-export
 export function setCurrentUser(currentUser = null) {
   return {
     type: SET_CURRENT_USER,
@@ -40,6 +40,15 @@ export function updateCategories(categories) {
     type: UPDATE_CATEGORIES,
     payload: {
       categories: transformCategoriesWithImage(categories),
+    },
+  };
+}
+
+export function changeTheme(themeMode) {
+  return {
+    type: SET_THEME,
+    payload: {
+      themeMode,
     },
   };
 }
