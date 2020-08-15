@@ -28,4 +28,17 @@ export const SEARCH_TAB = {
   INSTRUCTORS: 'instructors',
 };
 
+export const SETTINGS_ID = {
+  PROFILE: 'PROFILE',
+  THEME: 'THEME',
+  LANGUAGE: 'LANGUAGE',
+  ABOUT: 'ABOUT',
+  LOGOUT: 'LOGOUT',
+};
+
+export const LANGUAGE_ID = {
+  VI: 'vi',
+  EN: 'en',
+};
+
 export const UNAUTHORIZED = 401;

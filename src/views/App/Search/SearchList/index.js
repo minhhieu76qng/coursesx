@@ -90,7 +90,7 @@ const SearchList = ({ data, loading, type }) => {
 
   return (
     <>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView>
         {data && (
           <FlatList keyExtractor={(item) => item.id} data={data} renderItem={renderListItem} />
         )}

@@ -3,6 +3,7 @@ import AsyncStorageComp from '@react-native-community/async-storage';
 class AsyncStorage {
   static Keys = {
     ACCESS_TOKEN: 'ACCESS_TOKEN',
+    CURRENT_LANGUAGE: 'CURRENT_LANGUAGE',
   };
 
   static async getAccessToken() {
@@ -31,6 +32,26 @@ class AsyncStorage {
       return true;
     } catch (e) {
       console.log('AsyncStorage -> removeAccessToken -> e', e);
+      return false;
+    }
+  }
+
+  static async getLanguage() {
+    try {
+      const language = await AsyncStorageComp.getItem(AsyncStorage.Keys.CURRENT_LANGUAGE);
+      return language;
+    } catch (e) {
+      console.log('AsyncStorage -> getLanguage -> e', e);
+      return null;
+    }
+  }
+
+  static async setLanguage(language) {
+    try {
+      await AsyncStorageComp.setItem(AsyncStorage.Keys.CURRENT_LANGUAGE, language);
+      return true;
+    } catch (e) {
+      console.log('AsyncStorage -> setLanguage -> e', e);
       return false;
     }
   }
