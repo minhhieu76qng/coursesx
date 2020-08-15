@@ -64,6 +64,13 @@
     "confirm_password": "Nhập lại mật khẩu",
     "sign_in_now": "Đăng nhập ngay"
   },
+  "settings": {
+    "change_theme": "Thay đổi giao diện",
+    "change_language": "Thay đổi ngôn ngữ",
+    "update_profile": "Cập nhật thông tin cá nhân",
+    "about_us": "Về chúng tôi",
+    "logout": "Đăng xuất"
+  },
   "common": {
     "total_instructor_courses": "Tổng số khoá học",
     "best_seller_courses_title": "Khoá học bán chạy",

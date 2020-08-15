@@ -7,6 +7,7 @@ import styles from './styles';
 const CustomAvatar = ({
   userName = null,
   userAvatar,
+  showName = true,
   avatarSize = 'medium',
   onAvatarPress = null,
   containerStyle = {},
@@ -18,7 +19,7 @@ const CustomAvatar = ({
   return (
     <WrappedComponent style={[styles.container, containerStyle]} onPress={onAvatarPress}>
       <Avatar size={avatarSize} rounded source={{ uri: userAvatar }} title={userName} />
-      {userName && (
+      {userName && showName && (
         <Text weight="bold" style={styles.avatarName}>
           {userName}
         </Text>
