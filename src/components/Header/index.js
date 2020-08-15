@@ -3,11 +3,13 @@ import { TouchableOpacity, View } from 'react-native';
 import { useRoute, useTheme, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
 import _, { isString } from 'lodash';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Icon from 'themes/Icon';
 import Colors from 'themes/colors';
 import Text from 'components/Text';
 import screenName from 'constants/screenName';
+import { getCurrentUser } from 'services/inapp/getters';
 import styles from './styles';
 
 const Header = ({ paddingTop }) => {
@@ -15,6 +17,8 @@ const Header = ({ paddingTop }) => {
   const navigation = useNavigation();
   const { colors } = useTheme();
   const { t } = useTranslation('tab_navigator');
+  const currentUser = useSelector(getCurrentUser);
+
   const header = useMemo(() => {
     return _.get(route, 'params.header');
   }, [route]);
@@ -51,9 +55,12 @@ const Header = ({ paddingTop }) => {
       <View style={styles.rightWidgets}>
         <TouchableOpacity onPress={onUserAvatarPress}>
           <Avatar
-            containerStyle={{ backgroundColor: 'red' }}
+            containerStyle={{ borderColor: colors.border, borderWidth: 1 }}
+            source={{
+              uri: currentUser.avatar,
+            }}
             rounded
-            title="MD"
+            title={currentUser.name}
             size="small"
             titleStyle={styles.avatarTitle}
           />

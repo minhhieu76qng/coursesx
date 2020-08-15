@@ -102,7 +102,12 @@ const Settings = () => {
             <>
               <View style={styles.cardProfile}>
                 <View>
-                  <Avatar userAvatar={currentUser.avatar} avatarSize="large" showName={false} />
+                  <Avatar
+                    userAvatar={currentUser.avatar}
+                    avatarSize="large"
+                    showName={false}
+                    avatarStyle={{ borderColor: colors.border, borderWidth: 1 }}
+                  />
                   <Button
                     type="clear"
                     title={t('change_avatar')}

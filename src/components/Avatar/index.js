@@ -8,9 +8,11 @@ const CustomAvatar = ({
   userName = null,
   userAvatar,
   showName = true,
+  rounded = true,
   avatarSize = 'medium',
   onAvatarPress = null,
   containerStyle = {},
+  avatarStyle = {},
 }) => {
   const WrappedComponent = useMemo(() => (onAvatarPress ? TouchableOpacity : View), [
     onAvatarPress,
@@ -18,7 +20,13 @@ const CustomAvatar = ({
 
   return (
     <WrappedComponent style={[styles.container, containerStyle]} onPress={onAvatarPress}>
-      <Avatar size={avatarSize} rounded source={{ uri: userAvatar }} title={userName} />
+      <Avatar
+        size={avatarSize}
+        containerStyle={avatarStyle}
+        rounded={rounded}
+        source={{ uri: userAvatar }}
+        title={userName}
+      />
       {userName && showName && (
         <Text weight="bold" style={styles.avatarName}>
           {userName}
