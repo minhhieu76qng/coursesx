@@ -1,7 +1,7 @@
 import { call, put, takeLatest, all, takeEvery } from 'redux-saga/effects';
 import * as Font from 'expo-font';
 import UserRepo from './repo';
-import { setCurrentUser, showFlashMessage } from '../inapp/actions';
+import { setCurrentUser, showFlashMessage, changeTheme } from '../inapp/actions';
 import {
   FETCH_USER_DATA,
   REGISTER_ACCOUNT,
@@ -9,10 +9,13 @@ import {
   LOGOUT,
   UPDATE_USER_INFORMATION,
   BOOT,
+  UPDATE_LANGUAGE,
+  UPDATE_THEME,
 } from './constants';
 import AsyncStorage from '../../utils/asyncStorage';
 import { FETCH_CATEGORIES } from '../courses/constants';
-import { initI18n } from '../../i18n';
+import i18n, { initI18n } from '../../i18n';
+import { themeMode } from '../../constants';
 
 function* fetchCurrentUserData({ meta: { callback } = {} }) {
   try {
@@ -91,7 +94,17 @@ function* updateUserProfile({
 
 function* appBoot({ meta: { afterSuccess = () => {}, afterFail = () => {} } = {} }) {
   try {
+    let currentThemeMode = yield call(AsyncStorage.getThemeMode);
+    if (!currentThemeMode) {
+      currentThemeMode = themeMode.dark;
+    }
     yield all([
+      put({
+        type: UPDATE_THEME,
+        payload: {
+          theme: currentThemeMode,
+        },
+      }),
       put({
         type: FETCH_USER_DATA,
       }),
@@ -113,6 +126,31 @@ function* appBoot({ meta: { afterSuccess = () => {}, afterFail = () => {} } = {}
   }
 }
 
+function* changeThemeModeSaga({ payload: { theme }, meta: { afterSuccess = () => {} } = {} }) {
+  try {
+    yield put(changeTheme(theme));
+    yield call(AsyncStorage.setThemeMode, theme);
+    yield call(afterSuccess);
+  } catch (e) {
+    console.log('function*changeThemeModeSaga -> e', e);
+  }
+}
+
+function* changeLanguageSaga({ payload: { language }, meta: { afterSuccess = () => {} } = {} }) {
+  try {
+    const changeLanguage = (lng) => {
+      return new Promise((resolve, reject) => {
+        i18n.changeLanguage(lng).then(resolve).catch(reject);
+      });
+    };
+    yield call(changeLanguage, language);
+    yield call(AsyncStorage.setLanguage, language);
+    yield call(afterSuccess);
+  } catch (e) {
+    console.log('function*changeLanguageSaga -> e', e);
+  }
+}
+
 export default function* () {
   yield takeLatest(FETCH_USER_DATA, fetchCurrentUserData);
   yield takeLatest(LOGIN_ACCOUNT, loginToAccount);
@@ -120,4 +158,6 @@ export default function* () {
   yield takeEvery(LOGOUT, logout);
   yield takeLatest(UPDATE_USER_INFORMATION, updateUserProfile);
   yield takeLatest(BOOT, appBoot);
+  yield takeLatest(UPDATE_THEME, changeThemeModeSaga);
+  yield takeLatest(UPDATE_LANGUAGE, changeLanguageSaga);
 }
