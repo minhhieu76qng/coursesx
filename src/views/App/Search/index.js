@@ -230,7 +230,7 @@ class Search extends React.Component {
           >
             <SearchBar
               ref={(ref) => (this.searchRef = ref)}
-              placeholder="Search courses, instructors,..."
+              placeholder={t('search_bar_placeholder')}
               containerStyle={styles.searchContainer}
               inputStyle={styles.searchInput}
               showCancel

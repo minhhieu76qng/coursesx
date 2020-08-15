@@ -1,14 +1,91 @@
 {
   "course_detail": {
-    "buy_course": "Mua",
-    "like_course": "Yêu thích",
-    "download_course": "Tải về",
-    "describe_course": "Mô tả",
-    "lesson_list": "Bài học",
-    "course_comments": "Bình luận"
+    "buy_course": "Buy",
+    "like_course": "Like",
+    "download_course": "Download",
+    "describe_course": "Description",
+    "lesson_list": "Lesson",
+    "course_comments": "Exercise",
+    "like_course_success": "You have liked this course",
+    "unlike_course_success": "You have disliked this course",
+    "like_course_fail": "An error has occurred when you like this course",
+    "buy_course_success": "Your order has been successfully.",
+    "buy_course_fail": "An error has occurred when you buy this course",
+    "buy_modal_title": "Reload content",
+    "buy_modal_content": "Course has been changed! Please reload it.",
+    "buy_button_ok": "Reload",
+    "course_in_category_title": "Course in same topic",
+    "rating_course": "Reviews"
   },
-  "error": {
-    "not_buy_course": "Bạn chưa mua khoá học này! Vui lòng mua để có thể học.",
-    "wrong_video_url": "Đường dẫn video bị hỏng. Liên hệ admin để khắc phục."
+  "notification": {
+    "not_buy_course": "You have not buy this course!\nPlease buy this course to study",
+    "wrong_video_url": "Video link has been wrong\nContact administrator to resolve it.",
+    "request_password_fail": "Can't send mail to request password.",
+    "request_password_success": "Request password successfully\nPlease check email and follow steps!"
+  },
+  "tab_navigator": {
+    "home": "Home",
+    "download": "Downloads",
+    "browse": "Discovery",
+    "search": "Search",
+    "settings": "Settings"
+  },
+  "download_tab": {
+    "empty_title": "No downloaded course",
+    "empty": "Your downloaded courses will be displayed here."
+  },
+  "search_tab": {
+    "search_bar_placeholder": "Search courses, instructors,...",
+    "search_history_title": "Recently search",
+    "delete_history_title": "Remove history",
+    "delete_history_confirm": "Remove",
+    "delete_history_cancel": "Cancel",
+    "delete_history_text": "Do you want to delete searching history",
+    "cant_get_search_histories": "Can't get searching histories.",
+    "cant_delete_history": "Can't remove searching history.",
+    "cant_search": "Can't search right now.",
+    "all_tab": "All",
+    "course_tab": "Courses",
+    "instructor_tab": "Instructors",
+    "no_instructors": "Not have any instructors",
+    "no_course": "Not have any courses",
+    "no_all": "Not have anythings"
+  },
+  "authentication": {
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "sign_in": "Sign in",
+    "sign_up": "Sign up",
+    "forgot_password": "Forgot password",
+    "sign_up_free": "Sign up for free",
+    "submit": "Submit",
+    "fullname": "Full name",
+    "phone": "Phone number",
+    "confirm_password": "Re-type password",
+    "sign_in_now": "Sign in now"
+  },
+  "settings": {
+    "change_theme": "Change theme",
+    "change_language": "Change language",
+    "update_profile": "Update personal information",
+    "about_us": "About us",
+    "logout": "Logout",
+    "dark_mode": "Dark mode",
+    "light_mode": "Light mode",
+    "vietnamese": "Vietnamese",
+    "english": "Englist",
+    "cancel_modal": "Cancel",
+    "confirm_modal": "Change"
+  },
+  "common": {
+    "total_instructor_courses": "Total courses",
+    "best_seller_courses_title": "Best seller courses",
+    "quality_courses_title": "Good quality courses",
+    "author_list_title": "Instructors",
+    "see_all": "See all",
+    "paid_courses_title": "Bought courses",
+    "liked_courses_title": "Liked courses",
+    "course_in_liked_categories": "Course in liked topics"
   }
 }

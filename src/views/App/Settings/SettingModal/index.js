@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeTheme } from '../../../../services/inapp/actions';
 import { getThemeMode } from '../../../../services/inapp/getters';
 import { LANGUAGE_ID } from '../../../../constants';
+import AsyncStorage from '../../../../utils/asyncStorage';
 
 const Select = ({ type = null, onSelect = () => {} }) => {
   const { t, i18n } = useTranslation('settings');
@@ -56,7 +57,7 @@ const Select = ({ type = null, onSelect = () => {} }) => {
 export default function SettingModal({ modalType, clearModalType = () => {} }) {
   const [isModalVisible, setModalVisible] = useState(true);
   const [selectedData, setSelectedData] = useState();
-  const { t } = useTranslation('settings');
+  const { t, i18n } = useTranslation('settings');
   const dispatch = useDispatch();
 
   const onDataChange = useCallback((data) => {
@@ -106,6 +107,12 @@ export default function SettingModal({ modalType, clearModalType = () => {} }) {
     switch (modalType) {
       case SETTINGS_ID.THEME:
         dispatch(changeTheme(selectedData));
+        closeModal();
+        break;
+      case SETTINGS_ID.LANGUAGE:
+        i18n.changeLanguage(selectedData).then(() => {
+          Promise.resolve(AsyncStorage.setLanguage(selectedData));
+        });
         closeModal();
         break;
       default:

@@ -35,6 +35,7 @@
     "empty": "Các khoá học tải về sẽ hiển thị tại đây."
   },
   "search_tab": {
+    "search_bar_placeholder": "Tìm kiếm khoá học, giảng viên,...",
     "search_history_title": "Tìm kiếm gần đây",
     "delete_history_title": "Xoá lịch sử",
     "delete_history_confirm": "Xoá",
