@@ -2,13 +2,13 @@
 import { Api } from 'services/Api';
 
 class UserRepo {
-  static async registerAccount({ username, email, phone, password }) {
+  static async registerAccount({ name, email, phone, password }) {
     try {
       const data = await Api({
         method: 'post',
         url: '/user/register',
         body: {
-          username,
+          name,
           email,
           phone,
           password,

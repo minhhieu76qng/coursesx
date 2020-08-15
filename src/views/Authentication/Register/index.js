@@ -15,7 +15,7 @@ import Button from 'components/Button';
 import {
   yup,
   isPhoneNumber,
-  isUsername,
+  isFullname,
   isEmail,
   isPassword,
   isConfirmPassword,
@@ -25,7 +25,7 @@ import { showFlashMessage } from '../../../services/inapp/actions';
 import MessageType from '../../../services/inapp/MessageType';
 
 const signUpSchema = yup.object().shape({
-  username: isUsername(),
+  name: isFullname(),
   email: isEmail(),
   phone: isPhoneNumber(),
   password: isPassword(),
@@ -70,14 +70,12 @@ const Register = ({ navigation }) => {
           </Text>
           <Formik
             initialValues={{
-              username: '',
+              name: '',
               email: '',
               phone: '',
               password: '',
               confirmPassword: '',
             }}
-            // validateOnChange={false}
-            // validateOnBlur={false}
             validationSchema={signUpSchema}
             onSubmit={onSignUpSubmit}
           >
@@ -87,8 +85,8 @@ const Register = ({ navigation }) => {
                   <Text style={styles.errorTextMessage}>{Object.values(errors)?.[0]}</Text>
                 )}
                 <Input
-                  onChangeText={handleChange('username')}
-                  value={values.username}
+                  onChangeText={handleChange('name')}
+                  value={values.name}
                   labelStyle={styles.inputLabelStyle}
                   label={t('fullname')}
                 />

@@ -30,6 +30,10 @@ export const isUsername = () => {
   return yup.string().required().lowercase().trim().min(1).max(20);
 };
 
+export const isFullname = () => {
+  return yup.string().required().trim().min(3).max(35);
+};
+
 export const isEmail = () => {
   return yup.string().required().email();
 };
