@@ -11,6 +11,7 @@ import Splash from 'views/Splash';
 import Login from 'views/Authentication/Login';
 import ForgotPassword from 'views/Authentication/ForgotPassword';
 import Register from 'views/Authentication/Register';
+import Settings from 'views/App/Settings';
 // import VerifyAccount from 'views/Authentication/VerifyAccount';
 import MainTab from './MainTab';
 
@@ -87,13 +88,29 @@ const AppNavigator = () => {
           /> */}
 
           {currentUser && (
-            <RootStack.Screen
-              name={screenName.mainTab}
-              component={MainTab}
-              options={{
-                headerShown: false,
-              }}
-            />
+            <>
+              <RootStack.Screen
+                name={screenName.mainTab}
+                component={MainTab}
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <RootStack.Screen
+                name={screenName.settings}
+                component={Settings}
+                options={{
+                  headerShown: false,
+                }}
+                initialParams={{
+                  header: {
+                    backBtnVisibility: true,
+                    headerTitle: 'Settings',
+                    headerShown: true,
+                  },
+                }}
+              />
+            </>
           )}
         </RootStack.Navigator>
       </NavigationContainer>

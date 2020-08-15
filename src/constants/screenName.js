@@ -10,6 +10,7 @@ export default {
   search: 'Search',
   courseDetail: 'courseDetail',
   coursesInSection: 'coursesInSection',
+  settings: 'settings',
 
   // tabs
   mainTab: 'MainTab',

@@ -1,31 +1,31 @@
 import React, { useMemo, useCallback } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { useRoute, useTheme, useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
 import { Avatar } from 'react-native-elements';
 import _, { isString } from 'lodash';
-import { LOGOUT } from 'services/user/constants';
 import Icon from 'themes/Icon';
 import Colors from 'themes/colors';
 import Text from 'components/Text';
+import screenName from 'constants/screenName';
 import styles from './styles';
 
 const Header = ({ paddingTop }) => {
   const route = useRoute();
-  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { colors } = useTheme();
   const header = useMemo(() => {
     return _.get(route, 'params.header');
   }, [route]);
 
-  const navigation = useNavigation();
-
-  const { colors } = useTheme();
-
   const onUserAvatarPress = useCallback(() => {
-    dispatch({
-      type: LOGOUT,
-    });
-  }, []);
+    navigation.navigate(screenName.settings);
+  }, [navigation]);
+
+  const onBackButtonPress = useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
+  }, [navigation]);
 
   return (
     <View
@@ -36,14 +36,7 @@ const Header = ({ paddingTop }) => {
       }}
     >
       {header && header?.backBtnVisibility === true && (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            }
-          }}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={onBackButtonPress}>
           <Icon
             name="angle-left"
             size={40}

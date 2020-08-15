@@ -15,12 +15,12 @@ const AppLayout = ({ children, headerShown = true }) => {
   return (
     <SafeAreaView
       style={{
-        paddingTop: !(header.headerShown !== false && headerShown) ? inset.top : 0,
+        paddingTop: !(header?.headerShown !== false && headerShown) ? inset.top : 0,
         flex: 1,
         paddingBottom: 0,
       }}
     >
-      {header.headerShown !== false && headerShown && <Header paddingTop={inset.top} />}
+      {header?.headerShown !== false && headerShown && <Header paddingTop={inset.top} />}
       <View style={{ flex: 1 }}>{children}</View>
     </SafeAreaView>
   );
