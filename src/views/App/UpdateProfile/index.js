@@ -24,7 +24,7 @@ const updateProfileSchema = yup.object({
 });
 
 const UpdateProfile = () => {
-  const { t } = useTranslation(['authentication', 'settings']);
+  const { t } = useTranslation(['authentication', 'settings', 'notification']);
   const { colors } = useTheme();
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -42,7 +42,7 @@ const UpdateProfile = () => {
             dispatch(
               showFlashMessage({
                 type: MessageType.Type.SUCCESS,
-                description: t('update_profile_success'),
+                description: t('notification:update_profile_success'),
               }),
             );
             navigation.navigate(screenName.settings);
@@ -50,8 +50,7 @@ const UpdateProfile = () => {
           afterFail: () => {
             dispatch(
               showFlashMessage({
-                type: MessageType.Type.SUCCESS,
-                description: t('update_profile_fail'),
+                description: t('notification:update_profile_fail'),
               }),
             );
           },
@@ -60,7 +59,7 @@ const UpdateProfile = () => {
     } catch (e) {
       dispatch(
         showFlashMessage({
-          description: t('update_profile_fail'),
+          description: t('notification:update_profile_fail'),
         }),
       );
     }

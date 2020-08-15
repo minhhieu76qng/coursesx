@@ -62,26 +62,33 @@ const Settings = () => {
     });
   }, [dispatch]);
 
-  const onListItemPress = useCallback((settingId) => {
-    switch (settingId) {
-      case SETTINGS_ID.PROFILE:
-        navigation.navigate(screenName.updateProfile, { isUpdateAvatar: false });
-        break;
-      case SETTINGS_ID.THEME:
-        setModalType(settingId);
-        break;
-      case SETTINGS_ID.LANGUAGE:
-        setModalType(settingId);
-        break;
-      case SETTINGS_ID.ABOUT:
-        break;
-      case SETTINGS_ID.LOGOUT:
-        onLogout();
-        break;
-      default:
-        break;
-    }
-  }, []);
+  const onListItemPress = useCallback(
+    (settingId) => {
+      switch (settingId) {
+        case SETTINGS_ID.PROFILE:
+          navigation.navigate(screenName.updateProfile, { isUpdateAvatar: false });
+          break;
+        case SETTINGS_ID.THEME:
+          setModalType(settingId);
+          break;
+        case SETTINGS_ID.LANGUAGE:
+          setModalType(settingId);
+          break;
+        case SETTINGS_ID.ABOUT:
+          break;
+        case SETTINGS_ID.LOGOUT:
+          onLogout();
+          break;
+        default:
+          break;
+      }
+    },
+    [navigation, onLogout, setModalType],
+  );
+
+  const onEditAvatarPress = useCallback(() => {
+    navigation.navigate(screenName.updateProfile, { isUpdateAvatar: true });
+  }, [navigation]);
 
   const clearModalType = useCallback(() => {
     setModalType(null);
@@ -100,11 +107,12 @@ const Settings = () => {
                     type="clear"
                     title={t('change_avatar')}
                     titleStyle={styles.changeAvatarButtonText}
+                    onPress={onEditAvatarPress}
                   />
                 </View>
                 <View style={styles.profileBox}>
                   <Text style={styles.profileText} type="h3">
-                    {currentUser.name || 'User'}
+                    {currentUser.name}
                   </Text>
                   <Text type="subbody-light" style={styles.profileText}>
                     {currentUser.email}
