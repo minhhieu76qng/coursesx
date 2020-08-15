@@ -56,7 +56,7 @@ const SectionItem = ({ item: { id, name: lessonName, hours: sumHours }, lessonPr
   return (
     <TouchableOpacity style={styles.sectionItem} activeOpacity={0.65} onPress={onLessonPress}>
       <View style={styles.sectionItemTitle}>
-        <Icon name="circle" size={8} color={colors.card} />
+        <Icon name="circle" size={8} color="#1e272e" />
         <Text style={{ paddingLeft: 20 }}>{lessonName}</Text>
       </View>
       {/* <Text>{item.viewedTimes}</Text> */}
