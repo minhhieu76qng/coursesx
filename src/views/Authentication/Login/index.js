@@ -10,9 +10,10 @@ import AppLogo from 'components/AppLogo';
 import screenName from 'constants/screenName';
 import Text from 'components/Text';
 import Input from 'components/Input';
+import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
-import { yup, isPassword, isEmail } from '../../../utils/validator';
-import { LOGIN_ACCOUNT } from '../../../services/user/constants';
+import { yup, isPassword, isEmail } from 'utils/validator';
+import { LOGIN_ACCOUNT } from 'services/user/constants';
 
 const loginSchema = yup.object({
   email: isEmail(),
@@ -20,6 +21,7 @@ const loginSchema = yup.object({
 });
 
 const Login = ({ navigation }) => {
+  const { t } = useTranslation('authentication');
   const { colors } = useTheme();
   const dispatch = useDispatch();
 
@@ -52,7 +54,7 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.form}>
           <Text type="h2" weight="medium" style={styles.screenTitle}>
-            Log In
+            {t('login')}
           </Text>
           <Formik
             initialValues={{
@@ -69,25 +71,29 @@ const Login = ({ navigation }) => {
                 )}
                 <Input
                   labelStyle={styles.inputLabelStyle}
-                  label="Email"
+                  label={t('email')}
                   onChangeText={handleChange('email')}
                   value={values.email}
                 />
                 <Input
                   labelStyle={styles.inputLabelStyle}
                   secureTextEntry
-                  label="Password"
+                  label={t('password')}
                   onChangeText={handleChange('password')}
                   value={values.password}
                 />
-                <Button title="Sign in" titleStyle={styles.btnSubmitTitle} onPress={handleSubmit} />
+                <Button
+                  title={t('sign_in')}
+                  titleStyle={styles.btnSubmitTitle}
+                  onPress={handleSubmit}
+                />
               </>
             )}
           </Formik>
           <Divider style={{ ...styles.divider, backgroundColor: colors.text }} />
 
           <Button
-            title="Forgot password?"
+            title={`${t('forgot_password')}?`}
             type="outline"
             titleStyle={styles.outlineTitle}
             buttonStyle={styles.btnOutline}
@@ -95,7 +101,7 @@ const Login = ({ navigation }) => {
             onPress={onForgotPasswordPress}
           />
           <Button
-            title="Sign up for free"
+            title={t('sign_up_free')}
             type="outline"
             titleStyle={styles.outlineTitle}
             buttonStyle={styles.btnOutline}

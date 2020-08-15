@@ -47,6 +47,20 @@
     "no_course": "Không tồn tại khoá học",
     "no_all": "Không tồn tại dữ liệu"
   },
+  "authentication": {
+    "login": "Đăng nhập",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "sign_in": "Đăng nhập",
+    "sign_up": "Đăng kí",
+    "forgot_password": "Quên mật khẩu",
+    "sign_up_free": "Đăng kí miễn phí",
+    "submit": "Hoàn tất",
+    "fullname": "Họ tên",
+    "phone": "Số điện thoại",
+    "confirm_password": "Nhập lại mật khẩu",
+    "sign_in_now": "Đăng nhập ngay"
+  },
   "common": {
     "total_instructor_courses": "Tổng số khoá học",
     "best_seller_courses_title": "Khoá học bán chạy",

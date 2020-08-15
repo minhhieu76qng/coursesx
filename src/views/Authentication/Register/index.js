@@ -4,6 +4,7 @@ import { Divider } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '@react-navigation/native';
 import { Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import Icon from 'themes/Icon';
 import styles from 'views/Authentication/styles';
 import AppLogo from 'components/AppLogo';
@@ -33,6 +34,7 @@ const signUpSchema = yup.object().shape({
 
 const Register = ({ navigation }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation('authentication');
   const dispatch = useDispatch();
   const onSignInPress = useCallback(() => navigation.navigate(screenName.login), [navigation]);
   const onSignUpSubmit = useCallback((values) => {
@@ -64,7 +66,7 @@ const Register = ({ navigation }) => {
         </View>
         <View style={styles.form}>
           <Text type="h2" weight="medium" style={{ ...styles.screenTitle, color: colors.text }}>
-            Sign Up
+            {t('sign_up')}
           </Text>
           <Formik
             initialValues={{
@@ -88,19 +90,19 @@ const Register = ({ navigation }) => {
                   onChangeText={handleChange('username')}
                   value={values.username}
                   labelStyle={styles.inputLabelStyle}
-                  label="Username"
+                  label={t('fullname')}
                 />
                 <Input
                   onChangeText={handleChange('email')}
                   value={values.email}
                   labelStyle={styles.inputLabelStyle}
-                  label="Email"
+                  label={t('email')}
                 />
                 <Input
                   onChangeText={handleChange('phone')}
                   value={values.phone}
                   labelStyle={styles.inputLabelStyle}
-                  label="Phone"
+                  label={t('phone')}
                 />
 
                 <Input
@@ -108,18 +110,18 @@ const Register = ({ navigation }) => {
                   value={values.password}
                   labelStyle={styles.inputLabelStyle}
                   secureTextEntry
-                  label="Password"
+                  label={t('password')}
                 />
                 <Input
                   onChangeText={handleChange('confirmPassword')}
                   value={values.confirmPassword}
                   labelStyle={styles.inputLabelStyle}
                   secureTextEntry
-                  label="Confirm password"
+                  label={t('confirm_password')}
                 />
 
                 <Button
-                  title="Sign up"
+                  title={t('sign_up')}
                   disabled={Object.values(errors).length > 0}
                   titleStyle={styles.btnSubmitTitle}
                   onPress={handleSubmit}
@@ -131,7 +133,7 @@ const Register = ({ navigation }) => {
           <Divider style={{ ...styles.divider, backgroundColor: colors.text }} />
 
           <Button
-            title="Sign in now"
+            title={t('sign_in_now')}
             type="outline"
             titleStyle={styles.outlineTitle}
             buttonStyle={styles.btnOutline}
