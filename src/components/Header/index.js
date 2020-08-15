@@ -3,6 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { useRoute, useTheme, useNavigation } from '@react-navigation/native';
 import { Avatar } from 'react-native-elements';
 import _, { isString } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import Icon from 'themes/Icon';
 import Colors from 'themes/colors';
 import Text from 'components/Text';
@@ -13,6 +14,7 @@ const Header = ({ paddingTop }) => {
   const route = useRoute();
   const navigation = useNavigation();
   const { colors } = useTheme();
+  const { t } = useTranslation('tab_navigator');
   const header = useMemo(() => {
     return _.get(route, 'params.header');
   }, [route]);
@@ -45,7 +47,7 @@ const Header = ({ paddingTop }) => {
           />
         </TouchableOpacity>
       )}
-      {header && isString(header?.headerTitle) && <Text type="h3">{header?.headerTitle}</Text>}
+      {header && isString(header?.headerTitle) && <Text type="h3">{t(header?.headerTitle)}</Text>}
       <View style={styles.rightWidgets}>
         <TouchableOpacity onPress={onUserAvatarPress}>
           <Avatar

@@ -115,7 +115,7 @@ const HomeStackComp = () => {
         initialParams={{
           header: {
             backBtnVisibility: false,
-            headerTitle: 'Home',
+            headerTitle: 'home',
           },
         }}
       />
@@ -137,7 +137,7 @@ const DownloadsStackComp = () => {
         initialParams={{
           header: {
             backBtnVisibility: false,
-            headerTitle: 'Downloads',
+            headerTitle: 'download',
           },
         }}
       />
@@ -159,7 +159,7 @@ const BrowseStackComp = () => {
         initialParams={{
           header: {
             backBtnVisibility: false,
-            headerTitle: 'Browse',
+            headerTitle: 'browse',
           },
         }}
       />
@@ -185,7 +185,7 @@ const SearchStackComp = () => {
         initialParams={{
           header: {
             backBtnVisibility: false,
-            headerTitle: 'Search',
+            headerTitle: 'search',
             headerShown: false,
           },
         }}

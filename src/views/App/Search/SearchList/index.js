@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { ScrollView, FlatList, View, ActivityIndicator } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import { useTheme, useNavigation } from '@react-navigation/native';
 import { isArray } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +12,13 @@ import InstructorListItem from 'components/InstructorListItem';
 import styles from './styles';
 import { screenName } from '../../../../constants';
 
+const LAZY_LOAD_TIMEOUT = 600;
+
 const SearchList = ({ data, loading, type }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
   const { t } = useTranslation('search_tab');
+  const [virtualLoading, setVirtualLoading] = useState(true);
 
   const onCourseItemPress = useCallback((courseId) => {
     navigation.navigate(screenName.courseDetail, { courseId });
@@ -35,13 +39,11 @@ const SearchList = ({ data, loading, type }) => {
     return null;
   }, []);
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    );
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setVirtualLoading(loading);
+    }, LAZY_LOAD_TIMEOUT);
+  }, [loading, setVirtualLoading]);
 
   if (!loading && (!isArray(data) || data.length === 0)) {
     let emptyStateObject = {
@@ -87,9 +89,21 @@ const SearchList = ({ data, loading, type }) => {
   }
 
   return (
-    <ScrollView>
-      <FlatList data={data} renderItem={renderListItem} />
-    </ScrollView>
+    <>
+      <ScrollView>{data && <FlatList data={data} renderItem={renderListItem} />}</ScrollView>
+      <Animatable.View
+        animation="fadeInUp"
+        duration={300}
+        style={[
+          styles.loadingContainer,
+          styles.absoluteLoading,
+          { backgroundColor: colors.background },
+          !virtualLoading && styles.noneLoading,
+        ]}
+      >
+        <ActivityIndicator size="large" color={colors.primary} />
+      </Animatable.View>
+    </>
   );
 };
 

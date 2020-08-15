@@ -6,4 +6,17 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  absoluteLoading: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 2,
+  },
+  noneLoading: {
+    position: 'relative',
+    width: 0,
+    height: 0,
+    zIndex: 0,
+    overflow: 'hidden',
+  },
 });
