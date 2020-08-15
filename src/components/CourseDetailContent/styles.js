@@ -34,4 +34,14 @@ export default StyleSheet.create({
     flex: 1,
     marginRight: 20,
   },
+  sectionProgress: {
+    backgroundColor: '#44bd32',
+    width: 0,
+    height: 3,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    zIndex: 1,
+    elevation: 1,
+  },
 });

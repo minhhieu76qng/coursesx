@@ -15,12 +15,28 @@ function convertToTime(hours) {
 }
 
 const CourseDetailContentItemHeader = ({
-  headerItem: { name: sectionTitle, idx, sumHours = 0 },
+  headerItem: { name: sectionTitle, idx, sumHours = 0, data: lesson = [] },
 }) => {
   const { colors } = useTheme();
+  const learnedTimes = useMemo(() => {
+    let times = 0;
+    lesson.forEach((l) => {
+      if (l.isFinish) {
+        times += l.hours;
+      }
+    });
+    return times;
+  }, [lesson]);
+
+  const learnedTimesPercent = useMemo(() => Number(learnedTimes / sumHours).toFixed(3) * 100, [
+    learnedTimes,
+    sumHours,
+  ]);
+
   return (
     <View style={[styles.courseContentItemHeader]}>
       <View style={[styles.headerItemIdx, { backgroundColor: colors.card }]}>
+        <View style={[styles.sectionProgress, { width: `${learnedTimesPercent}%` }]} />
         <Text>{idx}</Text>
       </View>
       <View style={styles.itemHeader}>
@@ -28,7 +44,7 @@ const CourseDetailContentItemHeader = ({
           {sectionTitle}
         </Text>
         <Text type="subbody" color={colors.textSecondary} style={styles.viewedTimesHeader}>
-          {convertToTime(sumHours)}
+          {`${convertToTime(learnedTimes)} / ${convertToTime(sumHours)}`}
         </Text>
       </View>
     </View>
@@ -48,7 +64,10 @@ const FooterItemSeparator = ({ show }) => {
   );
 };
 
-const SectionItem = ({ item: { id, name: lessonName, hours: sumHours }, lessonPress }) => {
+const SectionItem = ({
+  item: { id, name: lessonName, hours: sumHours, isFinish = false },
+  lessonPress,
+}) => {
   const { colors } = useTheme();
   const onLessonPress = useCallback(() => {
     lessonPress(id);
@@ -56,7 +75,7 @@ const SectionItem = ({ item: { id, name: lessonName, hours: sumHours }, lessonPr
   return (
     <TouchableOpacity style={styles.sectionItem} activeOpacity={0.65} onPress={onLessonPress}>
       <View style={styles.sectionItemTitle}>
-        <Icon name="circle" size={8} color="#1e272e" />
+        <Icon name="circle" size={8} color={isFinish ? '#44bd32' : '#1e272e'} />
         <Text style={{ paddingLeft: 20 }}>{lessonName}</Text>
       </View>
       {/* <Text>{item.viewedTimes}</Text> */}

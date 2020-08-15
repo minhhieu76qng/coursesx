@@ -134,12 +134,15 @@ class CourseDetail extends React.Component {
 
   onVideoEnded = async () => {
     const { playingLesson } = this.state;
+    try {
+      if (playingLesson?.id && !playingLesson.isFinish) {
+        await CourseRepo.updateFinishLesson(playingLesson.id);
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-empty
+    }
     if (playingLesson?.nextLessonId) {
       await this.selectLesson(playingLesson?.nextLessonId);
-    }
-
-    if (playingLesson?.id && playingLesson?.isFinished) {
-      await CourseRepo.updateFinishLesson(playingLesson.id);
     }
   };
 
@@ -151,7 +154,6 @@ class CourseDetail extends React.Component {
         return;
       }
       const lesson = await CourseRepo.getLesson(courseId, lessonId);
-      console.log('CourseDetail -> selectLesson -> lesson', lesson);
       this.setState({
         playingLesson: lesson,
       });
@@ -212,6 +214,33 @@ class CourseDetail extends React.Component {
             if (lastWatchedLesson?.lessonId) {
               await this.selectLesson(lastWatchedLesson.lessonId);
             }
+
+            const lessonIds =
+              course?.section?.reduce((acc, s) => {
+                return [...acc, ...(s?.lesson?.map((l) => l.id) || [])];
+              }, []) || [];
+
+            const lessonsData =
+              (await Promise.all(lessonIds.map((lId) => CourseRepo.getLesson(course.id, lId)))) ||
+              [];
+
+            course.section = course.section?.map((s) => {
+              const newS = s;
+              newS.lesson = s?.lesson?.map((l) => {
+                let newL = l || {};
+                for (let i = 0; i < lessonsData.length; i += 1) {
+                  if (lessonsData[i].id === l.id) {
+                    newL = {
+                      ...newL,
+                      ...(lessonsData[i] || {}),
+                    };
+                    break;
+                  }
+                }
+                return newL;
+              });
+              return newS;
+            });
           }
         } catch (error) {
           // await this.selectLesson(course)
