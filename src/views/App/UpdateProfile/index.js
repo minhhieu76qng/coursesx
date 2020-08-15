@@ -67,7 +67,6 @@ const UpdateProfile = () => {
   }, []);
 
   const isUpdateAvatar = useMemo(() => route?.params?.isUpdateAvatar, [route]);
-  console.log('UpdateProfile -> isUpdateAvatar', isUpdateAvatar);
 
   return (
     <AppLayout>
@@ -95,18 +94,21 @@ const UpdateProfile = () => {
                   value={values.name}
                   labelStyle={styles.inputLabelStyle}
                   label={t('fullname')}
+                  style={[isUpdateAvatar ? styles.hideInput : {}]}
                 />
                 <Input
                   onChangeText={handleChange('phone')}
                   value={values.phone}
                   labelStyle={styles.inputLabelStyle}
                   label={t('phone')}
+                  style={[isUpdateAvatar ? styles.hideInput : {}]}
                 />
                 <Input
                   onChangeText={handleChange('avatar')}
                   value={values.avatar}
                   labelStyle={styles.inputLabelStyle}
-                  label={t('phone')}
+                  label={t('avatar')}
+                  style={[!isUpdateAvatar ? styles.hideInput : {}]}
                 />
                 <Button
                   title={t('submit')}

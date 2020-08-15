@@ -13,7 +13,7 @@ const StyledInput = ({ style, labelStyle, inputStyle, ...props }) => {
   const { colors } = useTheme();
   return (
     <CustomInput
-      style={[styles.inputStyle, style]}
+      containerStyle={[styles.inputStyle, style]}
       labelStyle={[{ color: colors.textSecondary }, labelStyle]}
       inputStyle={[{ color: colors.text }, inputStyle]}
       {...props}

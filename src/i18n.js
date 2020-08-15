@@ -27,7 +27,7 @@ export const initI18n = async () => {
       ],
       defaultNS: 'common',
 
-      debug: true,
+      // debug: true,
 
       interpolation: {
         escapeValue: false,

@@ -65,7 +65,8 @@
     "fullname": "Full name",
     "phone": "Phone number",
     "confirm_password": "Re-type password",
-    "sign_in_now": "Sign in now"
+    "sign_in_now": "Sign in now",
+    "avatar": "Avatar url"
   },
   "settings": {
     "change_theme": "Change theme",

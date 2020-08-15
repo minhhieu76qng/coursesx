@@ -136,7 +136,7 @@ class UserRepo {
   }
 
   static async updateUserProfile({ name, phone, avatar }) {
-    const { userInfo } = await Api({
+    const { payload: userInfo } = await Api({
       method: 'put',
       url: '/user/update-profile',
       body: {

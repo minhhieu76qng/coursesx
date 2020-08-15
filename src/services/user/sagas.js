@@ -76,7 +76,7 @@ function* updateUserProfile({
   try {
     const userData = yield call(UserRepo.updateUserProfile, { name, phone, avatar });
 
-    yield put(setCurrentUser(userData));
+    yield put(setCurrentUser(userData ?? null));
 
     yield call(afterSuccess);
   } catch (e) {

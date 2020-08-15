@@ -29,6 +29,11 @@ export default StyleSheet.create({
   inputLabelStyle: {
     fontWeight: 'normal',
   },
+  hideInput: {
+    height: 0,
+    opacity: 0,
+    overflow: 'hidden',
+  },
   errorTextMessage: {
     color: 'red',
     marginVertical: 5,

@@ -65,7 +65,8 @@
     "fullname": "Họ tên",
     "phone": "Số điện thoại",
     "confirm_password": "Nhập lại mật khẩu",
-    "sign_in_now": "Đăng nhập ngay"
+    "sign_in_now": "Đăng nhập ngay",
+    "avatar": "Đường dẫn ảnh đại diện"
   },
   "settings": {
     "change_theme": "Thay đổi giao diện",
@@ -79,7 +80,7 @@
     "english": "Tiếng anh",
     "cancel_modal": "Huỷ",
     "confirm_modal": "Thay đổi",
-    "change_avatar": "Thay đổi ảnh đại diện"
+    "change_avatar": "Thay đổi\nảnh đại diện"
   },
   "common": {
     "total_instructor_courses": "Tổng số khoá học",

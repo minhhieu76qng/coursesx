@@ -29,7 +29,6 @@ const Home = () => {
         UserRepo.getFavoriteCourses(),
         UserRepo.getProcessingCourses(),
       ]);
-      console.log('loadData -> likedCs', likedCs);
 
       setLikedCourses(likedCs);
       setPaidCourses(paidCs);
