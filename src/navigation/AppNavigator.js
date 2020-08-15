@@ -105,7 +105,7 @@ const AppNavigator = () => {
                 initialParams={{
                   header: {
                     backBtnVisibility: true,
-                    headerTitle: 'Settings',
+                    headerTitle: 'settings',
                     headerShown: true,
                   },
                 }}

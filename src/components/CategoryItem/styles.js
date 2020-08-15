@@ -8,7 +8,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   imageStyle: {
-    opacity: 0.8,
+    opacity: 0.9,
     // backgroundColor: '#576574',
     width: '100%',
     minHeight: 130,

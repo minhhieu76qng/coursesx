@@ -19,6 +19,7 @@ const CategoryItem = ({
   return (
     <TouchableOpacity activeOpacity={!imageLoaded ? 1 : 0.4} onPress={onPress} style={style}>
       <Image
+        blurRadius={3}
         onLoadEnd={() => setLoaded(true)}
         source={{ uri: background }}
         style={styles.imageStyle}
