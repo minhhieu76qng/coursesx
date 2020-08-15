@@ -1,8 +1,13 @@
 import { call, put, takeLatest, all, takeEvery } from 'redux-saga/effects';
 import UserRepo from './repo';
 import { setCurrentUser, showFlashMessage } from '../inapp/actions';
-import { FETCH_USER_DATA, REGISTER_ACCOUNT, LOGIN_ACCOUNT, LOGOUT } from './constants';
-import MessageType from '../inapp/MessageType';
+import {
+  FETCH_USER_DATA,
+  REGISTER_ACCOUNT,
+  LOGIN_ACCOUNT,
+  LOGOUT,
+  UPDATE_USER_INFORMATION,
+} from './constants';
 import AsyncStorage from '../../utils/asyncStorage';
 
 function* fetchCurrentUserData({ meta: { callback } = {} }) {
@@ -31,12 +36,6 @@ function* loginToAccount({ payload: { email, password } = {}, meta: { callback }
     ]);
 
     if (typeof callback === 'function') {
-      yield put(
-        showFlashMessage({
-          type: MessageType.Type.SUCCESS,
-          description: 'Đăng nhập thành công!',
-        }),
-      );
       yield call(callback);
     }
   } catch (e) {
@@ -70,9 +69,26 @@ function* logout() {
   yield call(AsyncStorage.removeAccessToken);
 }
 
+function* updateUserProfile({
+  payload: { name, phone, avatar } = {},
+  meta: { afterSuccess = () => {}, afterFail = () => {} } = {},
+}) {
+  try {
+    const userData = yield call(UserRepo.updateUserProfile, { name, phone, avatar });
+
+    yield put(setCurrentUser(userData));
+
+    yield call(afterSuccess);
+  } catch (e) {
+    console.log('meta:{afterSuccess -> e', e);
+    yield call(afterFail);
+  }
+}
+
 export default function* () {
   yield takeLatest(FETCH_USER_DATA, fetchCurrentUserData);
   yield takeLatest(LOGIN_ACCOUNT, loginToAccount);
   yield takeLatest(REGISTER_ACCOUNT, registerNewAccount);
   yield takeEvery(LOGOUT, logout);
+  yield takeLatest(UPDATE_USER_INFORMATION, updateUserProfile);
 }

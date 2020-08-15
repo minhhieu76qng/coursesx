@@ -11,6 +11,7 @@ export default {
   courseDetail: 'courseDetail',
   coursesInSection: 'coursesInSection',
   settings: 'settings',
+  updateProfile: 'updateProfile',
 
   // tabs
   mainTab: 'MainTab',

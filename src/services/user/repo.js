@@ -134,6 +134,20 @@ class UserRepo {
       },
     });
   }
+
+  static async updateUserProfile({ name, phone, avatar }) {
+    const { userInfo } = await Api({
+      method: 'put',
+      url: '/user/update-profile',
+      body: {
+        name,
+        phone,
+        avatar,
+      },
+    });
+
+    return userInfo;
+  }
 }
 
 export default UserRepo;

@@ -12,7 +12,7 @@ import Login from 'views/Authentication/Login';
 import ForgotPassword from 'views/Authentication/ForgotPassword';
 import Register from 'views/Authentication/Register';
 import Settings from 'views/App/Settings';
-// import VerifyAccount from 'views/Authentication/VerifyAccount';
+import UpdateProfile from 'views/App/UpdateProfile';
 import MainTab from './MainTab';
 
 const RootStack = createStackNavigator();
@@ -106,6 +106,20 @@ const AppNavigator = () => {
                   header: {
                     backBtnVisibility: true,
                     headerTitle: 'settings',
+                    headerShown: true,
+                  },
+                }}
+              />
+              <RootStack.Screen
+                name={screenName.updateProfile}
+                component={UpdateProfile}
+                options={{
+                  headerShown: false,
+                }}
+                initialParams={{
+                  header: {
+                    backBtnVisibility: true,
+                    headerTitle: '',
                     headerShown: true,
                   },
                 }}
