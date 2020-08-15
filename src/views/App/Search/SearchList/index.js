@@ -90,7 +90,11 @@ const SearchList = ({ data, loading, type }) => {
 
   return (
     <>
-      <ScrollView>{data && <FlatList data={data} renderItem={renderListItem} />}</ScrollView>
+      <ScrollView style={{ flex: 1 }}>
+        {data && (
+          <FlatList keyExtractor={(item) => item.id} data={data} renderItem={renderListItem} />
+        )}
+      </ScrollView>
       <Animatable.View
         animation="fadeInUp"
         duration={300}
