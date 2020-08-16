@@ -12,6 +12,8 @@ import AsyncStorage from './src/utils/asyncStorage';
 import { UNAUTHORIZED } from './src/constants';
 import { LOGOUT } from './src/services/user/constants';
 
+console.disableYellowBox = true;
+
 const App = () => {
   useEffect(() => {
     const reqInterceptor = AxiosInstance.interceptors.request.use(

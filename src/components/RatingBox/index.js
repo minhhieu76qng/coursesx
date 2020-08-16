@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import Text from 'components/Text';
 import Input from 'components/Input';
@@ -22,7 +22,6 @@ const ratingSchema = yup.object({
 const RatingBox = ({ courseId, onRated = () => {} }) => {
   const { t } = useTranslation(['course_detail', 'notification']);
   const dispatch = useDispatch();
-  const commentRef = useRef(null);
 
   const onRatingSubmit = useCallback(
     (values, { resetForm, setSubmitting }) => {
@@ -51,9 +50,6 @@ const RatingBox = ({ courseId, onRated = () => {} }) => {
         })
         .finally(() => {
           resetForm();
-          if (commentRef.current) {
-            commentRef.current.clear();
-          }
         });
     },
     [dispatch, onRated],
@@ -87,7 +83,6 @@ const RatingBox = ({ courseId, onRated = () => {} }) => {
             </View>
 
             <Input
-              ref={commentRef}
               style={styles.commentBox}
               placeholder={t('your_comment')}
               onChangeText={handleChange('comment')}

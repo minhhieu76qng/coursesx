@@ -91,6 +91,7 @@ const UpdateProfile = () => {
                 <Input
                   onChangeText={handleChange('name')}
                   value={values.name}
+                  defaultValue={values.name}
                   labelStyle={styles.inputLabelStyle}
                   label={t('fullname')}
                   style={[isUpdateAvatar ? styles.hideInput : {}]}
@@ -98,6 +99,7 @@ const UpdateProfile = () => {
                 <Input
                   onChangeText={handleChange('phone')}
                   value={values.phone}
+                  defaultValue={values.phone}
                   labelStyle={styles.inputLabelStyle}
                   label={t('phone')}
                   style={[isUpdateAvatar ? styles.hideInput : {}]}
@@ -105,6 +107,7 @@ const UpdateProfile = () => {
                 <Input
                   onChangeText={handleChange('avatar')}
                   value={values.avatar}
+                  defaultValue={values.avatar}
                   labelStyle={styles.inputLabelStyle}
                   label={t('avatar')}
                   style={[!isUpdateAvatar ? styles.hideInput : {}]}
