@@ -93,6 +93,7 @@
     "paid_courses_title": "Bought courses",
     "liked_courses_title": "Liked courses",
     "course_in_liked_categories": "Course in liked topics",
-    "error_occurred": "An error has occurred!"
+    "error_occurred": "An error has occurred!",
+    "free_course": "Free"
   }
 }

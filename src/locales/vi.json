@@ -93,6 +93,7 @@
     "paid_courses_title": "Khoá học đã mua",
     "liked_courses_title": "Khoá học đã thích",
     "course_in_liked_categories": "Khoá học theo chủ đề yêu thích",
-    "error_occurred": "Có lỗi xuất hiện!"
+    "error_occurred": "Có lỗi xuất hiện!",
+    "free_course": "Miễn phí"
   }
 }

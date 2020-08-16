@@ -145,7 +145,7 @@ const Browse = ({ navigation }) => {
                   cardDescriptions={[
                     `${item['instructor.user.name']} - ${
                       !item.price
-                        ? `Miễn phí`
+                        ? t('free_course')
                         : `${new Intl.NumberFormat('vi-VN', {
                             style: 'currency',
                             currency: 'VND',
@@ -175,7 +175,7 @@ const Browse = ({ navigation }) => {
                   cardDescriptions={[
                     `${item['instructor.user.name']} - ${
                       !item.price
-                        ? `Miễn phí`
+                        ? t('free_course')
                         : `${new Intl.NumberFormat('vi-VN', {
                             style: 'currency',
                             currency: 'VND',
