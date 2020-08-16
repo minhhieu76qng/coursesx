@@ -29,7 +29,9 @@
     "update_profile_fail": "Cập nhật thông tin người dùng không thành công.",
     "update_profile_success": "Cập nhật thông tin người dùng thành công.",
     "success": "Thành công",
-    "fail": "Có lỗi"
+    "fail": "Có lỗi",
+    "rate_course_fail": "Có lỗi khi đánh giá khoá học.",
+    "rate_course_success": "Đánh giá khoá học thành công."
   },
   "tab_navigator": {
     "home": "Trang chủ",

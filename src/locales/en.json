@@ -29,7 +29,9 @@
     "update_profile_fail": "Failed to update account information.",
     "update_profile_success": "Update account information successfully.",
     "success": "Success",
-    "fail": "Error"
+    "fail": "Error",
+    "rate_course_fail": "Failed to rate this course.",
+    "rate_course_success": "Rate course successfully."
   },
   "tab_navigator": {
     "home": "Home",

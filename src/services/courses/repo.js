@@ -357,6 +357,27 @@ class CourseRepo {
       throw e;
     }
   }
+
+  static async rateCourse({ courseId, stars = 1, comment = '' }) {
+    try {
+      const { payload: ratedData } = await Api({
+        method: 'post',
+        url: '/course/rating-course',
+        body: {
+          courseId,
+          formalityPoint: stars,
+          contentPoint: stars,
+          presentationPoint: stars,
+          content: comment,
+        },
+      });
+
+      return ratedData;
+    } catch (e) {
+      console.log('rateCourse -> e', e);
+      throw e;
+    }
+  }
 }
 
 export default CourseRepo;
