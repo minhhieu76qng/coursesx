@@ -41,4 +41,6 @@ export const LANGUAGE_ID = {
   EN: 'en',
 };
 
+export const SEARCH_LIMIT = 10;
+
 export const UNAUTHORIZED = 401;

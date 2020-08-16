@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { ScrollView, FlatList, View, ActivityIndicator } from 'react-native';
+import { FlatList, View, ActivityIndicator } from 'react-native';
 import { useTheme, useNavigation } from '@react-navigation/native';
 import { isArray } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -89,11 +89,14 @@ const SearchList = ({ data, loading, type }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {data && (
-          <FlatList keyExtractor={(item) => item.id} data={data} renderItem={renderListItem} />
-        )}
-      </ScrollView>
+      {data && (
+        <FlatList
+          initialNumToRender={6}
+          keyExtractor={(item) => item.id}
+          data={data}
+          renderItem={renderListItem}
+        />
+      )}
       <View
         style={[
           styles.loadingContainer,

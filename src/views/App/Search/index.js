@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { isArray } from 'lodash';
@@ -17,7 +18,7 @@ import { showFlashMessage } from 'services/inapp/actions';
 import styles from './styles';
 import SearchList from './SearchList';
 import SearchContext from './SearchContext';
-import { SEARCH_TAB } from '../../../constants';
+import { SEARCH_TAB, SEARCH_LIMIT } from '../../../constants';
 
 const SearchTopTab = createMaterialTopTabNavigator();
 
@@ -34,6 +35,9 @@ class Search extends React.Component {
       searchHistories: [],
       deletingHistory: null,
       deleteModalVisible: false,
+      totalCourses: 0,
+      totalInstructors: 0,
+      offset: 1,
     };
     this.searchRef = null;
   }
@@ -76,8 +80,7 @@ class Search extends React.Component {
   };
 
   onSearchSubmit = async () => {
-    const { searchText } = this.state;
-    console.log('onSearchSubmit -> searchText', searchText);
+    const { searchText, offset } = this.state;
     try {
       this.setState({
         searchLoading: true,
@@ -85,6 +88,8 @@ class Search extends React.Component {
       const { courses: listCourses, instructors: listInstructors } = await CourseRepo.searchCourses(
         {
           keyword: searchText,
+          limit: SEARCH_LIMIT,
+          offset,
         },
       );
       listCourses.data = (listCourses?.data || []).map((val) => {
@@ -100,6 +105,8 @@ class Search extends React.Component {
       this.setState({
         courses: listCourses?.data || [],
         instructors: listInstructors?.data || [],
+        totalCourses: listCourses.total,
+        totalInstructors: listInstructors.total,
       });
 
       await this.getSearchHistories();
