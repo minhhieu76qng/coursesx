@@ -15,7 +15,11 @@
     "buy_modal_content": "Course has been changed! Please reload it.",
     "buy_button_ok": "Reload",
     "course_in_category_title": "Course in same topic",
-    "rating_course": "Reviews"
+    "rating_course": "Reviews",
+    "rating_comment": "Comment to this course",
+    "your_comment": "What do you think about this course?",
+    "your_rated_stars": "The course quality",
+    "rate": "Rate"
   },
   "notification": {
     "not_buy_course": "You have not buy this course!\nPlease buy this course to study",

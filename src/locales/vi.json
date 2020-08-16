@@ -15,7 +15,11 @@
     "buy_modal_content": "Khoá học thay đổi, vui lòng tải lại.",
     "buy_button_ok": "Tải lại",
     "course_in_category_title": "Các khoá học cùng chủ đề",
-    "rating_course": "Các đánh giá"
+    "rating_course": "Các đánh giá",
+    "rating_comment": "Bình luận khoá học",
+    "your_comment": "Bạn nghĩ gì về khoá học này?",
+    "your_rated_stars": "Chất lượng khoá học",
+    "rate": "Đánh giá"
   },
   "notification": {
     "not_buy_course": "Bạn chưa mua khoá học này!\n Vui lòng mua để có thể học.",

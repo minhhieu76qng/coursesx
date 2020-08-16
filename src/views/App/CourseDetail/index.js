@@ -28,6 +28,7 @@ import { showFlashMessage } from '../../../services/inapp/actions';
 import MessageType from '../../../services/inapp/MessageType';
 import AppModal from '../../../components/AppModal';
 import { screenName } from '../../../constants/index';
+import RatingBox from '../../../components/RatingBox';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
 
@@ -377,7 +378,7 @@ class CourseDetail extends React.Component {
                         courseData?.ratings?.ratingList.length > 0 && (
                           <Section sectionTitle={t('rating_course')}>
                             {courseData?.ratings?.ratingList.map((rating) => (
-                              <View style={styles.ratingSection}>
+                              <View style={styles.ratingSection} key={rating.id}>
                                 <View>
                                   <Avatar
                                     avatarSize={50}
@@ -403,6 +404,10 @@ class CourseDetail extends React.Component {
                             ))}
                           </Section>
                         )}
+
+                      <Section sectionTitle={t('rating_comment')}>
+                        <RatingBox />
+                      </Section>
 
                       {/* related courses */}
                       {isArray(courseData?.coursesLikeCategory) &&
