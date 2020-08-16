@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, ActivityIndicator, FlatList } from 'react-native';
+import { View, ScrollView, ActivityIndicator, FlatList, Share } from 'react-native';
 import { NavigationContext, useTheme } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { withTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ import Rating from '../../../components/Rating';
 import { showFlashMessage } from '../../../services/inapp/actions';
 import MessageType from '../../../services/inapp/MessageType';
 import AppModal from '../../../components/AppModal';
-import { screenName } from '../../../constants/index';
+import { screenName, BASE_URL } from '../../../constants/index';
 import RatingBox from '../../../components/RatingBox';
 
 const CourseDetailTab = createMaterialTopTabNavigator();
@@ -62,7 +62,7 @@ class CourseDetail extends React.Component {
 
     try {
       if (!courseData.price) {
-        Linking.openURL(`https://itedu.me/payment/${courseData.id}`);
+        Linking.openURL(`${BASE_URL}/payment/${courseData.id}`);
         this.setState({
           feeModalVisible: true,
         });
@@ -155,6 +155,40 @@ class CourseDetail extends React.Component {
     const { playingLesson } = this.state;
     if (playingLesson?.id) {
       await CourseRepo.updateLearningTime({ lessonId: playingLesson.id, currentTime });
+    }
+  };
+
+  onShareCourse = async () => {
+    const { showFlashMsg, t } = this.props;
+    const { courseData } = this.state;
+    if (courseData) {
+      try {
+        const url = `${BASE_URL}/course-detail/${courseData.id}`;
+
+        const result = await Share.share({
+          title: t('share_title'),
+          message: url,
+        });
+
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+            showFlashMsg({
+              type: MessageType.Type.SUCCESS,
+              description: t('notification:share_course_success'),
+            });
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (e) {
+        showFlashMsg({
+          type: MessageType.Type.DANGER,
+          description: t('notification:share_course_fail'),
+        });
+      }
     }
   };
 
@@ -298,6 +332,7 @@ class CourseDetail extends React.Component {
       onByModalConfirm,
       onRelatedCoursePress,
       onCourseRated,
+      onShareCourse,
     } = this;
     const { t, colors } = this.props;
 
@@ -385,6 +420,18 @@ class CourseDetail extends React.Component {
                           <IconButton size={25} roundWidth={25} name="cloud-download" />
                           <Text style={styles.iconText} type="subbody" weight="medium">
                             {t('download_course')}
+                          </Text>
+                        </View>
+
+                        <View style={styles.iconContainer}>
+                          <IconButton
+                            size={25}
+                            roundWidth={25}
+                            name="share"
+                            onPress={onShareCourse}
+                          />
+                          <Text style={styles.iconText} type="subbody" weight="medium">
+                            {t('share_course')}
                           </Text>
                         </View>
                       </View>
@@ -528,4 +575,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation(['course_detail'])(WrappedCourseDetail));
+)(withTranslation(['course_detail', 'notification'])(WrappedCourseDetail));

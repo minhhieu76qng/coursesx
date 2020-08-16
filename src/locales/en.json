@@ -3,6 +3,7 @@
     "buy_course": "Buy",
     "like_course": "Like",
     "download_course": "Download",
+    "share_course": "Share",
     "describe_course": "Description",
     "lesson_list": "Lesson",
     "course_comments": "Exercise",
@@ -20,7 +21,8 @@
     "your_comment": "What do you think about this course?",
     "your_rated_stars": "The course quality",
     "rate": "Rate",
-    "rated_course": "You rated this course. Thank you!"
+    "rated_course": "You rated this course. Thank you!",
+    "share_title": "Share course"
   },
   "notification": {
     "not_buy_course": "You have not buy this course!\nPlease buy this course to study",
@@ -32,7 +34,9 @@
     "success": "Success",
     "fail": "Error",
     "rate_course_fail": "Failed to rate this course.",
-    "rate_course_success": "Rate course successfully."
+    "rate_course_success": "Rate course successfully.",
+    "share_course_success": "Share course successfully.",
+    "share_course_fail": "Failed to share this course."
   },
   "tab_navigator": {
     "home": "Home",

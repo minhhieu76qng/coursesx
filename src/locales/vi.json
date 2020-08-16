@@ -3,6 +3,7 @@
     "buy_course": "Mua",
     "like_course": "Yêu thích",
     "download_course": "Tải về",
+    "share_course": "Chia sẻ",
     "describe_course": "Mô tả",
     "lesson_list": "Bài học",
     "course_comments": "Bài tập",
@@ -20,7 +21,8 @@
     "your_comment": "Bạn nghĩ gì về khoá học này?",
     "your_rated_stars": "Chất lượng khoá học",
     "rate": "Đánh giá",
-    "rated_course": "Cảm ơn bạn đã đánh giá khoá học!"
+    "rated_course": "Cảm ơn bạn đã đánh giá khoá học!",
+    "share_title": "Chia sẻ khoá học"
   },
   "notification": {
     "not_buy_course": "Bạn chưa mua khoá học này!\n Vui lòng mua để có thể học.",
@@ -32,7 +34,9 @@
     "success": "Thành công",
     "fail": "Có lỗi",
     "rate_course_fail": "Có lỗi khi đánh giá khoá học.",
-    "rate_course_success": "Đánh giá khoá học thành công."
+    "rate_course_success": "Đánh giá khoá học thành công.",
+    "share_course_success": "Chia sẻ khoá học thành công.",
+    "share_course_fail": "Có lỗi khi chia sẻ khoá học"
   },
   "tab_navigator": {
     "home": "Trang chủ",
