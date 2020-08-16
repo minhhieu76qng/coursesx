@@ -1,18 +1,11 @@
 import React, { useMemo, useContext, useCallback } from 'react';
 import { View, SectionList, TouchableOpacity } from 'react-native';
-import moment from 'moment';
 import { useTheme } from '@react-navigation/native';
 import Text from 'components/Text';
 import Icon from 'themes/Icon';
-import CourseDetailContext from '../../views/App/CourseDetail/CourseDetailContext';
+import CourseDetailContext from 'views/App/CourseDetail/CourseDetailContext';
+import { convertToTime } from 'utils/helpers';
 import styles from './styles';
-
-function convertToTime(hours) {
-  const minutes = moment.duration(hours, 'hours').asMinutes();
-  const m = Math.floor(minutes);
-  const s = Math.floor((minutes - m) * 60);
-  return `${m < 10 ? `0${m}` : m}:${s < 10 ? `0${s}` : s}`;
-}
 
 const CourseDetailContentItemHeader = ({
   headerItem: { name: sectionTitle, idx, sumHours = 0, data: lesson = [] },

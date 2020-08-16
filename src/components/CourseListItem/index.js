@@ -10,15 +10,16 @@ import Rating from 'components/Rating';
 import LogoLoadingIndicator from 'components/LogoLoadingIndicator';
 import { useDispatch } from 'react-redux';
 import UserRepo from 'services/user/repo';
-import ContextMenu from '../ContextMenu';
+import { showFlashMessage } from 'services/inapp/actions';
+import { convertToTime } from 'utils/helpers';
 
 import styles from './styles';
-import { showFlashMessage } from '../../services/inapp/actions';
+import ContextMenu from '../ContextMenu';
 
 const CourseListItem = ({ course, onPress }) => {
   const { colors } = useTheme();
   const dispatch = useDispatch();
-  const { t } = useTranslation('course_detail');
+  const { t } = useTranslation(['course_detail', 'common']);
 
   const onLikePress = useCallback(async () => {
     try {
@@ -81,7 +82,14 @@ const CourseListItem = ({ course, onPress }) => {
           )}
           {!isEmpty(courseData?.publishDate) && (
             <Text style={styles.description} type="subbody-light">
-              {`${courseData?.publishDate} - ${duration}`}
+              {`${courseData?.publishDate} - ${convertToTime(duration)} - ${
+                !courseData.price
+                  ? t('common:free_course')
+                  : `${new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(courseData.price)}`
+              }`}
             </Text>
           )}
         </View>

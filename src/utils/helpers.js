@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { isArray } from 'lodash';
 
 const images = [
@@ -17,4 +16,14 @@ export function transformCategoriesWithImage(categories = []) {
     }));
   }
   return [];
+}
+
+export function convertToTime(hours) {
+  let h = Math.floor(hours);
+  let m = Math.floor((hours - h) * 60);
+  let s = Math.floor(((hours - h) * 60 - m) * 60);
+
+  [h, m, s] = [h < 10 ? `0${h}` : h, m < 10 ? `0${m}` : m, s < 10 ? `0${s}` : s];
+
+  return `${h}:${m}:${s}`;
 }
