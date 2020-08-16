@@ -45,4 +45,5 @@ export const SEARCH_LIMIT = 10;
 
 export const UNAUTHORIZED = 401;
 
-export const BASE_URL = 'https://api.itedu.me';
+export const API_URL = 'https://api.itedu.me';
+export const BASE_URL = 'https://itedu.me';
