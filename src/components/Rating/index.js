@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import Text from 'components/Text';
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   ratingText: { marginLeft: 10 },
 });
 
-function Rating({
+const Rating = ({
   size,
   activeColor,
   inactiveColor,
@@ -22,17 +22,28 @@ function Rating({
   ratedStars,
   style,
   showRating,
-}) {
+  onChange,
+}) => {
   const { dark } = useTheme();
 
-  const renderStar = useCallback((number, idx) => {
-    const name = number === 0.5 ? 'star-half-o' : 'star';
-    let color = activeColor;
-    if (number < 0.5) {
-      color = dark ? inactiveColor : '#95a5a6';
-    }
-    return <Icon key={idx} name={name} size={size} color={color} />;
-  }, []);
+  const renderStar = useCallback(
+    (number, idx) => {
+      const name = number === 0.5 ? 'star-half-o' : 'star';
+      let color = activeColor;
+      if (number < 0.5) {
+        color = dark ? inactiveColor : '#95a5a6';
+      }
+      if (!onChange) {
+        return <Icon key={idx} name={name} size={size} color={color} />;
+      }
+      return (
+        <TouchableOpacity key={idx} activeOpacity={0.85} onPress={() => onChange(idx + 1)}>
+          <Icon name={name} size={size} color={color} />
+        </TouchableOpacity>
+      );
+    },
+    [onChange],
+  );
 
   const arrayStars = useMemo(() => {
     const stars = new Array(numberOfStars).fill(0);
@@ -73,7 +84,7 @@ function Rating({
       )}
     </View>
   );
-}
+};
 
 Rating.propsType = {
   numberOfStars: PropTypes.number,
@@ -83,6 +94,7 @@ Rating.propsType = {
   inactiveColor: PropTypes.string,
   style: PropTypes.object,
   showRating: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 Rating.defaultProps = {
@@ -93,6 +105,7 @@ Rating.defaultProps = {
   inactiveColor: '#ecf0f1',
   style: {},
   showRating: false,
+  onChange: null,
 };
 
 export default Rating;

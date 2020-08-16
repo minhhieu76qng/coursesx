@@ -125,6 +125,31 @@ class CourseDetail extends React.Component {
     );
   };
 
+  onCourseRated = (ratedData) => {
+    if (!ratedData) {
+      return;
+    }
+    const { currentUser } = this.props;
+    const newRatedItem = {
+      ...ratedData,
+      user: currentUser || {},
+    };
+
+    const { courseData } = this.state;
+
+    // courseData?.ratings?.ratingList
+
+    this.setState({
+      courseData: {
+        ...courseData,
+        ratings: {
+          ...(courseData?.ratings || {}),
+          ratingList: [...(courseData?.ratings?.ratingList || []), newRatedItem],
+        },
+      },
+    });
+  };
+
   onStopVideo = async (currentTime) => {
     // call api to update current time
     const { playingLesson } = this.state;
@@ -272,8 +297,10 @@ class CourseDetail extends React.Component {
       onBuyCoursePress,
       onByModalConfirm,
       onRelatedCoursePress,
+      onCourseRated,
     } = this;
     const { t, colors } = this.props;
+
     return (
       <AppLayout>
         <CourseDetailContext.Provider value={{ courseData, playingLesson, selectLesson }}>
@@ -406,7 +433,7 @@ class CourseDetail extends React.Component {
                         )}
 
                       <Section sectionTitle={t('rating_comment')}>
-                        <RatingBox />
+                        <RatingBox courseId={courseData.id} onRated={onCourseRated} />
                       </Section>
 
                       {/* related courses */}

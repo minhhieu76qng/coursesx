@@ -19,7 +19,8 @@
     "rating_comment": "Bình luận khoá học",
     "your_comment": "Bạn nghĩ gì về khoá học này?",
     "your_rated_stars": "Chất lượng khoá học",
-    "rate": "Đánh giá"
+    "rate": "Đánh giá",
+    "rated_course": "Cảm ơn bạn đã đánh giá khoá học!"
   },
   "notification": {
     "not_buy_course": "Bạn chưa mua khoá học này!\n Vui lòng mua để có thể học.",

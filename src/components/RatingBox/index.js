@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import Text from 'components/Text';
 import Input from 'components/Input';
@@ -22,30 +22,42 @@ const ratingSchema = yup.object({
 const RatingBox = ({ courseId, onRated = () => {} }) => {
   const { t } = useTranslation(['course_detail', 'notification']);
   const dispatch = useDispatch();
+  const commentRef = useRef(null);
 
-  const onRatingSubmit = useCallback(async (values) => {
-    try {
-      const ratedData = await CourseRepo.rateCourse({
+  const onRatingSubmit = useCallback(
+    (values, { resetForm, setSubmitting }) => {
+      setSubmitting(true);
+      CourseRepo.rateCourse({
         courseId,
         stars: values.stars,
         comment: values.comment,
-      });
-      onRated(ratedData);
+      })
+        .then((ratedData) => {
+          onRated(ratedData);
 
-      dispatch(
-        showFlashMessage({
-          type: MessageType.Type.SUCCESS,
-          description: t('notification:rate_course_success'),
-        }),
-      );
-    } catch (e) {
-      dispatch(
-        showFlashMessage({
-          description: t('notification:rate_course_fail'),
-        }),
-      );
-    }
-  }, []);
+          dispatch(
+            showFlashMessage({
+              type: MessageType.Type.SUCCESS,
+              description: t('notification:rate_course_success'),
+            }),
+          );
+        })
+        .catch(() => {
+          dispatch(
+            showFlashMessage({
+              description: t('notification:rate_course_fail'),
+            }),
+          );
+        })
+        .finally(() => {
+          resetForm();
+          if (commentRef.current) {
+            commentRef.current.clear();
+          }
+        });
+    },
+    [dispatch, onRated],
+  );
 
   return (
     <KeyboardAvoidingView
@@ -60,25 +72,31 @@ const RatingBox = ({ courseId, onRated = () => {} }) => {
         validationSchema={ratingSchema}
         onSubmit={onRatingSubmit}
       >
-        {({ values, errors, dirty, handleChange, handleSubmit }) => (
+        {({ values, errors, dirty, isSubmitting, handleChange, handleSubmit, setFieldValue }) => (
           <>
             {dirty && Object.values(errors).length > 0 && (
               <Text style={styles.errorTextMessage}>{Object.values(errors)?.[0]}</Text>
             )}
             <View style={styles.ratingContainer}>
               <Text>{`${t('your_rated_stars')} :`}</Text>
-              <Rating style={styles.ratingBox} ratedStars={values.stars} />
+              <Rating
+                style={styles.ratingBox}
+                ratedStars={values.stars}
+                onChange={(stars) => setFieldValue('stars', stars)}
+              />
             </View>
 
             <Input
+              ref={commentRef}
               style={styles.commentBox}
               placeholder={t('your_comment')}
               onChangeText={handleChange('comment')}
               value={values.comment}
+              defaultValue={values.comment}
             />
 
             <Button
-              disabled={!dirty || errors}
+              disabled={!dirty || Object.values(errors).length > 0 || isSubmitting}
               title={t('rate')}
               titleStyle={styles.btnSubmitTitle}
               onPress={handleSubmit}

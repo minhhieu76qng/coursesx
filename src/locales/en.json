@@ -19,7 +19,8 @@
     "rating_comment": "Comment to this course",
     "your_comment": "What do you think about this course?",
     "your_rated_stars": "The course quality",
-    "rate": "Rate"
+    "rate": "Rate",
+    "rated_course": "You rated this course. Thank you!"
   },
   "notification": {
     "not_buy_course": "You have not buy this course!\nPlease buy this course to study",
